@@ -3,12 +3,32 @@
 
 ### start:
 ```bash
-npm install -g @nestjs/cli
-nest new
+$ npm install -g @nestjs/cli
+$ nest new
+
 ```
 
 ### init project
 ```bash
+nest g module
+# ? What name would you like to use for the module? accounts
+# CREATE src/accounts/accounts.module.ts (85 bytes)
+# UPDATE src/app.module.ts (324 bytes)
+
+nest g resource accounts
+# ? What transport layer do you use? REST API
+# ? Would you like to generate CRUD entry points? Yes
+# CREATE src/accounts/accounts.controller.spec.ts (596 bytes)
+# CREATE src/accounts/accounts.controller.ts (957 bytes)
+# CREATE src/accounts/accounts.module.ts (268 bytes)
+# CREATE src/accounts/accounts.service.spec.ts (474 bytes)
+# CREATE src/accounts/accounts.service.ts (651 bytes)
+# CREATE src/accounts/dto/create-account.dto.ts (33 bytes)
+# CREATE src/accounts/dto/update-account.dto.ts (181 bytes)
+# CREATE src/accounts/entities/account.entity.ts (24 bytes)
+# UPDATE package.json (2045 bytes)
+# UPDATE src/app.module.ts (406 bytes)
+# ✔ Packages installed successfully.
 
 ```
 
