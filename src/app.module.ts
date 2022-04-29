@@ -7,11 +7,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 let pgType: any = process.env.POSTGRES_TYPE || 'postgres'
-let pgHost = process.env.POSTGRES_HOST || '192.168.10.111'
-let pgPort = parseInt(process.env.POSTGRES_PORT) || 26257
+let pgHost = process.env.POSTGRES_HOST || '127.0.0.1'
+let pgPort = parseInt(process.env.POSTGRES_PORT) || 5432
 let pgDatabase = process.env.POSTGRES_DATABASE || 'community_folder'
-let pgUsername = process.env.POSTGRES_USERNAME || 'root'
-let pgPassword = process.env.POSTGRES_PASSWORD || ''
+let pgUsername = process.env.POSTGRES_USERNAME || 'istrav'
+let pgPassword = process.env.POSTGRES_PASSWORD || 'furlong'
 
 @Module({
   imports: [  

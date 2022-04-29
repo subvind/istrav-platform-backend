@@ -32,7 +32,14 @@ nest g resource accounts
 
 ```
 
-
+### database
+```bash
+# https://medium.com/coding-blocks/creating-user-database-and-adding-access-on-postgresql-8bfcd2f4a91e
+$ sudo -u postgres psql
+postgres=# create database community_folder;
+postgres=# create user istrav with encrypted password 'furlong';
+postgres=# grant all privileges on database community_folder to istrav;
+```
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
