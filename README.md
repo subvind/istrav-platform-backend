@@ -1,12 +1,28 @@
-/community_folder/
+/community_folder/ - Backend
 ========
+
+Allows "mobile" and "frontend" to connect with one another.
+
+main:
+- https://github.com/trabur/communityfolder.com
+
+source code:
+- https://github.com/trabur/communityfolder-backend
+- https://github.com/trabur/communityfolder-frontend
+- https://github.com/trabur/communityfolder-mobile
+
+containers:
+- https://hub.docker.com/r/istrav/communityfolder-backend
+- https://hub.docker.com/r/istrav/communityfolder-frontend
 
 ### start:
 ```bash
 $ npm install -g @nestjs/cli
 $ nest new
-
 ```
+
+### vnc
+https://www.makeuseof.com/install-ubuntu-vnc-server-linux/
 
 ### init project
 ```bash
@@ -29,7 +45,6 @@ nest g resource accounts
 # UPDATE package.json (2045 bytes)
 # UPDATE src/app.module.ts (406 bytes)
 # ✔ Packages installed successfully.
-
 ```
 
 ### database
