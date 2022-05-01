@@ -51,6 +51,14 @@ $ sudo ufw reload
 # delete ufw rules
 $ sudo ufw status numbered
 $ sudo ufw delete 3
+
+# fix reverse tabbing in vscode
+$ xmodmap -e 'keycode 23 = Tab'
+$ sudo vim /usr/share/X11/xkb/symbols/pc
+# change line from:
+key <TAB> { [ Tab, ISO_Left_Tab ] };
+# change line to:
+key <TAB> { [ Tab ] };
 ```
 
 ### init project
