@@ -26,6 +26,10 @@ https://www.makeuseof.com/install-ubuntu-vnc-server-linux/
 
 ### developer-station
 ```bash
+# node.js
+$ curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+$ sudo apt-get install nodejs -y
+
 # show firewall
 $ sudo ufw status verbose
 
