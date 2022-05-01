@@ -24,6 +24,31 @@ $ nest new
 ### vnc
 https://www.makeuseof.com/install-ubuntu-vnc-server-linux/
 
+### developer-station
+```bash
+# show firewall
+$ sudo ufw status verbose
+
+# toggle
+$ sudo ufw enable
+$ sudo ufw disable
+# command line
+$ sudo ufw allow ssh
+$ sudo ufw allow http
+$ sudo ufw allow https
+# app
+$ sudo ufw allow 3000/tcp
+$ sudo ufw allow 3000/udp
+# vnc
+$ sudo ufw allow 5900/tcp
+$ sudo ufw allow 5900/udp
+# apply
+$ sudo ufw reload
+# delete ufw rules
+$ sudo ufw status numbered
+$ sudo ufw delete 3
+```
+
 ### init project
 ```bash
 nest g module
