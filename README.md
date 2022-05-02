@@ -41,6 +41,9 @@ $ heroku git:remote -a communityfolder
 # push to production
 $ git push heroku main
 
+# check logs
+$ heroku logs --tail
+
 # scale prod
 $ heroku ps:scale web=1
 
