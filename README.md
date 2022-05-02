@@ -25,13 +25,39 @@ $ nest new
 ```bash
 # install cli
 $ curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
-
+$ sudo apt install heroku
+$ heroku --version
 
 # auth
 $ heroku login
 # add ons
 $ heroku addons:create heroku-postgresql:hobby-dev
 
+# https://devcenter.heroku.com/articles/getting-started-with-nodejs
+
+# make git repo
+$ heroku git:remote -a communityfolder
+
+# push to production
+$ git push heroku main
+
+# scale prod
+$ heroku ps:scale web=1
+
+# run app locally
+$ heroku local web
+
+# provision addons
+$ heroku addons
+
+# configuration
+$ heroku config:set TIMES=2
+$ heroku config
+
+# provision a database
+$ heroku addons:create heroku-postgresql:hobby-dev
+# run a SQL command
+$ heroku pg:psql
 ```
 
 ### vnc
