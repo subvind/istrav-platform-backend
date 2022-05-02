@@ -6,11 +6,13 @@ import { AccountsModule } from './accounts/accounts.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-let ssl: boolean
 let url: string
+let ssl: any
 if (process.env.DATABASE_URL) {
   url = process.env.DATABASE_URL
-  ssl = true
+  ssl = {
+    rejectUnauthorized: false
+  }
 } else {
   url = 'postgres://istrav:furlong@127.0.0.1:5432/community_folder'
   ssl = false
@@ -20,10 +22,10 @@ if (process.env.DATABASE_URL) {
   imports: [  
     TypeOrmModule.forRoot({
       url,
+      ssl,
       type: 'postgres',
       autoLoadEntities: true,
       synchronize: true,
-      ssl
     }),
     AccountsModule
   ],
