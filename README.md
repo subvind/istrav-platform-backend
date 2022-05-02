@@ -55,7 +55,7 @@ $ heroku addons
 
 # configuration
 $ heroku config:set TIMES=2
-$ heroku config:set PORT=8080
+$ heroku config:set PORT=80
 $ heroku config
 
 # check config
