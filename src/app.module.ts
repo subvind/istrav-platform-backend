@@ -6,11 +6,14 @@ import { AccountsModule } from './accounts/accounts.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
+let ssl: boolean
 let url: string
 if (process.env.DATABASE_URL) {
   url = process.env.DATABASE_URL
+  ssl = true
 } else {
   url = 'postgres://istrav:furlong@127.0.0.1:5432/community_folder'
+  ssl = false
 }
 
 @Module({
@@ -20,6 +23,7 @@ if (process.env.DATABASE_URL) {
       type: 'postgres',
       autoLoadEntities: true,
       synchronize: true,
+      ssl
     }),
     AccountsModule
   ],
