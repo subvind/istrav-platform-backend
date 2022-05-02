@@ -57,6 +57,9 @@ $ heroku addons
 $ heroku config:set TIMES=2
 $ heroku config
 
+# check config
+$ heroku config
+
 # provision a database
 $ heroku addons:create heroku-postgresql:hobby-dev
 # run a SQL command

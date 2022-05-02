@@ -6,22 +6,18 @@ import { AccountsModule } from './accounts/accounts.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-let pgType: any = process.env.POSTGRES_TYPE || 'postgres'
-let pgHost = process.env.POSTGRES_HOST || '127.0.0.1'
-let pgPort = parseInt(process.env.POSTGRES_PORT) || 5432
-let pgDatabase = process.env.POSTGRES_DATABASE || 'community_folder'
-let pgUsername = process.env.POSTGRES_USERNAME || 'istrav'
-let pgPassword = process.env.POSTGRES_PASSWORD || 'furlong'
+let url: string
+if (process.env.DATABASE_URL) {
+  url = process.env.DATABASE_URL
+} else {
+  url = 'postgres://istrav:furlong@127.0.0.1:5432/community_folder'
+}
 
 @Module({
   imports: [  
     TypeOrmModule.forRoot({
-      type: pgType,
-      host: pgHost,
-      port: pgPort,
-      database: pgDatabase,
-      username: pgUsername,
-      password: pgPassword,
+      url,
+      type: 'postgres',
       autoLoadEntities: true,
       synchronize: true,
     }),
