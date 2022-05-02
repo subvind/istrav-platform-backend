@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { WsAdapter } from '@nestjs/platform-ws';
 
-let port = process.env.PORT || 8080
+let port = process.env.PORT || 4000
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
