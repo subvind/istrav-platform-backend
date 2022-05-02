@@ -21,6 +21,19 @@ $ npm install -g @nestjs/cli
 $ nest new
 ```
 
+### production
+```bash
+# install cli
+$ curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+
+
+# auth
+$ heroku login
+# add ons
+$ heroku addons:create heroku-postgresql:hobby-dev
+
+```
+
 ### vnc
 https://www.makeuseof.com/install-ubuntu-vnc-server-linux/
 
