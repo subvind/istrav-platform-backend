@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AccountsModule } from './accounts/accounts.module';
 import { TenantsModule } from './tenants/tenants.module';
 import { WebsitesModule } from './websites/websites.module';
+import { SocialGroupsModule } from './socialGroups/socialGroups.module';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -31,7 +32,8 @@ if (process.env.DATABASE_URL) {
     }),
     AccountsModule,
     TenantsModule,
-    WebsitesModule
+    WebsitesModule,
+    SocialGroupsModule
   ],
   controllers: [AppController],
   providers: [AppService],
