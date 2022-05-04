@@ -6,31 +6,16 @@ import { Length, IsNotEmpty } from "class-validator"
 // import { TeamMember } from '../teamMembers/teamMember.entity'
 
 @Entity()
-@Unique(["email"])
-@Unique(["username"])
+@Unique(["topLevelDomainName"])
 export class Website extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column()
-  email: string
+  topLevelDomainName: string
 
   @Column()
-  @Length(4, 20)
-  username: string
-
-  @Column()
-  password: string
-
-  @Column({ default: false })
-  subscribe: boolean
-
-  @Column({ default: false })
-  agreement: boolean
-
-  // give full control
-  @Column({ default: false })
-  isRoot: boolean
+  displayName: string
 
   // relations
   // @OneToMany(() => Website, website => website.owner)

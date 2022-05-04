@@ -6,10 +6,6 @@ import { UpdateWebsiteDto } from './dto/update-website.dto';
 import { Website } from './entities/website.entity';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 
-import * as jwt from "jsonwebtoken";
-
-import * as sha512 from 'crypto-js/sha512'
-
 @Injectable()
 export class WebsitesService {
   constructor(
@@ -21,11 +17,8 @@ export class WebsitesService {
   // register
   create(createWebsiteDto: CreateWebsiteDto): Promise<Website> {
     const website = new Website();
-    website.email = createWebsiteDto.email;
-    website.username = createWebsiteDto.username;
-    website.password = sha512(createWebsiteDto.password).toString();
-    website.subscribe = createWebsiteDto.subscribe;
-    website.agreement = createWebsiteDto.agreement;
+    website.topLevelDomainName = createWebsiteDto.topLevelDomainName;
+    website.displayName = createWebsiteDto.displayName;
 
     return this.websitesRepository.save(website)
   }
@@ -33,15 +26,8 @@ export class WebsitesService {
   update(updateWebsiteDto: UpdateWebsiteDto): Promise<Website> {
     const website = new Website();
     website.id = updateWebsiteDto.id;
-    website.email = updateWebsiteDto.email;
-    website.username = updateWebsiteDto.username;
-    website.password = updateWebsiteDto.password;
-    if (updateWebsiteDto.password) {
-      website.password = sha512(updateWebsiteDto.password).toString();
-    }
-    website.subscribe = updateWebsiteDto.subscribe;
-    website.agreement = updateWebsiteDto.agreement;
-    website.isRoot = updateWebsiteDto.isRoot;
+    website.topLevelDomainName = updateWebsiteDto.topLevelDomainName;
+    website.displayName = updateWebsiteDto.displayName;
 
     return this.websitesRepository.update({ id: website.id }, website).then(r => {
       return r.raw
