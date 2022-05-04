@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AccountsModule } from './accounts/accounts.module';
+import { TenantsModule } from './tenants/tenants.module';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -27,7 +28,8 @@ if (process.env.DATABASE_URL) {
       autoLoadEntities: true,
       synchronize: true,
     }),
-    AccountsModule
+    AccountsModule,
+    TenantsModule
   ],
   controllers: [AppController],
   providers: [AppService],
