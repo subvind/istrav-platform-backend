@@ -17,7 +17,7 @@ export class SocialGroupsService {
   // register
   create(createSocialGroupDto: CreateSocialGroupDto): Promise<SocialGroup> {
     const socialGroup = new SocialGroup();
-    socialGroup.topLevelDomainName = createSocialGroupDto.topLevelDomainName;
+    socialGroup.subdomain = createSocialGroupDto.subdomain;
     socialGroup.displayName = createSocialGroupDto.displayName;
 
     return this.socialGroupsRepository.save(socialGroup)
@@ -26,7 +26,7 @@ export class SocialGroupsService {
   update(updateSocialGroupDto: UpdateSocialGroupDto): Promise<SocialGroup> {
     const socialGroup = new SocialGroup();
     socialGroup.id = updateSocialGroupDto.id;
-    socialGroup.topLevelDomainName = updateSocialGroupDto.topLevelDomainName;
+    socialGroup.subdomain = updateSocialGroupDto.subdomain;
     socialGroup.displayName = updateSocialGroupDto.displayName;
 
     return this.socialGroupsRepository.update({ id: socialGroup.id }, socialGroup).then(r => {

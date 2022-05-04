@@ -6,13 +6,13 @@ import { Length, IsNotEmpty } from "class-validator"
 // import { TeamMember } from '../teamMembers/teamMember.entity'
 
 @Entity()
-@Unique(["topLevelDomainName"])
+@Unique(["subdomain"])
 export class SocialGroup extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column()
-  topLevelDomainName: string
+  subdomain: string
 
   @Column()
   displayName: string

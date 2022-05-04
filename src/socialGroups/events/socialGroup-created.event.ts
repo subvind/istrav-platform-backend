@@ -1,4 +1,4 @@
 export class SocialGroupCreatedEvent {
   id: string;
-  topLevelDomainName: string;
+  subdomain: string;
 }

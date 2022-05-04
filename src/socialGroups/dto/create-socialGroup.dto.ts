@@ -1,4 +1,4 @@
 export class CreateSocialGroupDto {
-  topLevelDomainName: string;
+  subdomain: string;
   displayName: string;
 }
