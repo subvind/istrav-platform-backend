@@ -27,8 +27,8 @@ primary client area feature:
 
 primary admin control panel feature:
 - website // access to just 1 website at a time
-- socialGroups // access to all website social groups
-- users // access to all website accounts
+- socialGroups // CRUD multi-tenant communities
+- users // accounts allowed on website
 - admins // accounts allowed on admin control panel
 
 primary social group feature:
