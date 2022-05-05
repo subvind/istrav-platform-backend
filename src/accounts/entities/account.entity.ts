@@ -2,7 +2,7 @@ import { JoinColumn, OneToOne, OneToMany, ManyToMany, Entity, CreateDateColumn, 
 
 import { Length, IsNotEmpty } from "class-validator"
 
-// import { Tenant } from '../tenants/tenant.entity'
+import { Member } from '../../members/entities/member.entity'
 // import { TeamMember } from '../teamMembers/teamMember.entity'
 
 @Entity()
@@ -33,21 +33,8 @@ export class Account extends BaseEntity {
   isRoot: boolean
 
   // relations
-  // @OneToMany(() => Tenant, tenant => tenant.owner)
-  // ownerships: Tenant[];
-
-  // @OneToMany(() => Tenant, tenant => tenant.billingAccount)
-  // accountings: Tenant[];
-
-  // @ManyToMany(() => Tenant, tenant => tenant.collaborators)
-  // collaborations: Tenant[];
-
-  // @Column({ type: "uuid", nullable: true })
-  // teamMemberId: string;
-
-  // @OneToOne(() => TeamMember, teamMember => teamMember.userId)
-  // @JoinColumn({ name: "teamMemberId" })
-  // teamMember: TeamMember;
+  @OneToMany(() => Member, member => member.account)
+  members: Member[];
 
   // record keeping
   @Column()

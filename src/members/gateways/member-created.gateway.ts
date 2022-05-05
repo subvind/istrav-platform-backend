@@ -23,7 +23,7 @@ export class MemberCreatedGateway {
       .then((member: Member) => {
         const memberCreatedEvent = new MemberCreatedEvent();
         memberCreatedEvent.id = member.id;
-        memberCreatedEvent.topLevelDomainName = member.topLevelDomainName;
+        memberCreatedEvent.accountId = member.accountId;
         
         console.log('gateway: member.created', memberCreatedEvent);
         this.membersService.eventEmitter.emit('member.created', memberCreatedEvent)

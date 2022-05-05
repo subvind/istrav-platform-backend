@@ -1,38 +1,20 @@
-import { JoinColumn, OneToOne, OneToMany, ManyToMany, Entity, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, VersionColumn, BaseEntity, PrimaryGeneratedColumn, Column, Unique } from "typeorm";
+import { JoinColumn, ManyToOne, OneToOne, OneToMany, ManyToMany, Entity, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, VersionColumn, BaseEntity, PrimaryGeneratedColumn, Column, Unique } from "typeorm";
 
-import { Length, IsNotEmpty } from "class-validator"
-
-// import { Member } from '../members/member.entity'
-// import { TeamMember } from '../teamMembers/teamMember.entity'
+import { Account } from '../../accounts/entities/account.entity'
 
 @Entity()
-@Unique(["topLevelDomainName"])
+@Unique(["id"])
 export class Member extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
-  topLevelDomainName: string
-
-  @Column()
-  displayName: string
-
   // relations
-  // @OneToMany(() => Member, member => member.owner)
-  // ownerships: Member[];
+  @Column({ type: "uuid", nullable: true })
+  accountId: string;
 
-  // @OneToMany(() => Member, member => member.billingMember)
-  // memberings: Member[];
-
-  // @ManyToMany(() => Member, member => member.collaborators)
-  // collaborations: Member[];
-
-  // @Column({ type: "uuid", nullable: true })
-  // teamMemberId: string;
-
-  // @OneToOne(() => TeamMember, teamMember => teamMember.userId)
-  // @JoinColumn({ name: "teamMemberId" })
-  // teamMember: TeamMember;
+  @ManyToOne(() => Account, account => account.id)
+  @JoinColumn({ name: "accountId" })
+  account: Account;
 
   // record keeping
   @Column()

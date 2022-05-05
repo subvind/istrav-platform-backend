@@ -17,8 +17,7 @@ export class MembersService {
   // register
   create(createMemberDto: CreateMemberDto): Promise<Member> {
     const member = new Member();
-    member.topLevelDomainName = createMemberDto.topLevelDomainName;
-    member.displayName = createMemberDto.displayName;
+    member.accountId = createMemberDto.accountId;
 
     return this.membersRepository.save(member)
   }
@@ -26,8 +25,7 @@ export class MembersService {
   update(updateMemberDto: UpdateMemberDto): Promise<Member> {
     const member = new Member();
     member.id = updateMemberDto.id;
-    member.topLevelDomainName = updateMemberDto.topLevelDomainName;
-    member.displayName = updateMemberDto.displayName;
+    member.accountId = updateMemberDto.accountId;
 
     return this.membersRepository.update({ id: member.id }, member).then(r => {
       return r.raw

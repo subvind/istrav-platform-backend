@@ -1,4 +1,4 @@
 export class MemberCreatedEvent {
   id: string;
-  topLevelDomainName: string;
+  accountId: string;
 }
