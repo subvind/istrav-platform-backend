@@ -107,6 +107,11 @@ key <TAB> { [ Tab, ISO_Left_Tab ] };
 key <TAB> { [ Tab ] };
 ```
 
+### restart postgresql
+```bash
+$ sudo service postgresql restart
+```
+
 ### init project
 ```bash
 nest g module

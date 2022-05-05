@@ -2,52 +2,32 @@ import { JoinColumn, OneToOne, OneToMany, ManyToMany, Entity, CreateDateColumn, 
 
 import { Length, IsNotEmpty } from "class-validator"
 
-// import { Tenant } from '../tenants/tenant.entity'
-// import { TeamMember } from '../teamMembers/teamMember.entity'
+import { Website } from '../../websites/entities/website.entity'
+import { Member } from '../../members/entities/member.entity'
+import { SocialGroup } from '../../socialGroups/entities/socialGroup.entity'
 
 @Entity()
-@Unique(["email"])
-@Unique(["username"])
+@Unique(["referenceId"])
+@Unique(["slugId"])
 export class Tenant extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column()
-  email: string
+  referenceId: string
 
   @Column()
-  @Length(4, 20)
-  username: string
-
-  @Column()
-  password: string
-
-  @Column({ default: false })
-  subscribe: boolean
-
-  @Column({ default: false })
-  agreement: boolean
-
-  // give full control
-  @Column({ default: false })
-  isRoot: boolean
+  slugId: string
 
   // relations
-  // @OneToMany(() => Tenant, tenant => tenant.owner)
-  // ownerships: Tenant[];
+  @OneToMany(() => Website, website => website.tenantId)
+  websites: Website[];
 
-  // @OneToMany(() => Tenant, tenant => tenant.billingTenant)
-  // tenantings: Tenant[];
-
-  // @ManyToMany(() => Tenant, tenant => tenant.collaborators)
-  // collaborations: Tenant[];
-
-  // @Column({ type: "uuid", nullable: true })
-  // teamMemberId: string;
-
-  // @OneToOne(() => TeamMember, teamMember => teamMember.userId)
-  // @JoinColumn({ name: "teamMemberId" })
-  // teamMember: TeamMember;
+  @OneToMany(() => Member, member => member.tenantId)
+  members: Member[];
+  
+  @OneToMany(() => SocialGroup, socialGroup => socialGroup.tenantId)
+  socialGroups: SocialGroup[];
 
   // record keeping
   @Column()

@@ -6,10 +6,6 @@ import { UpdateTenantDto } from './dto/update-tenant.dto';
 import { Tenant } from './entities/tenant.entity';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 
-import * as jwt from "jsonwebtoken";
-
-import * as sha512 from 'crypto-js/sha512'
-
 @Injectable()
 export class TenantsService {
   constructor(
@@ -21,11 +17,7 @@ export class TenantsService {
   // register
   create(createTenantDto: CreateTenantDto): Promise<Tenant> {
     const tenant = new Tenant();
-    tenant.email = createTenantDto.email;
-    tenant.username = createTenantDto.username;
-    tenant.password = sha512(createTenantDto.password).toString();
-    tenant.subscribe = createTenantDto.subscribe;
-    tenant.agreement = createTenantDto.agreement;
+    tenant.referenceId = createTenantDto.referenceId;
 
     return this.tenantsRepository.save(tenant)
   }
@@ -33,15 +25,7 @@ export class TenantsService {
   update(updateTenantDto: UpdateTenantDto): Promise<Tenant> {
     const tenant = new Tenant();
     tenant.id = updateTenantDto.id;
-    tenant.email = updateTenantDto.email;
-    tenant.username = updateTenantDto.username;
-    tenant.password = updateTenantDto.password;
-    if (updateTenantDto.password) {
-      tenant.password = sha512(updateTenantDto.password).toString();
-    }
-    tenant.subscribe = updateTenantDto.subscribe;
-    tenant.agreement = updateTenantDto.agreement;
-    tenant.isRoot = updateTenantDto.isRoot;
+    tenant.referenceId = updateTenantDto.referenceId;
 
     return this.tenantsRepository.update({ id: tenant.id }, tenant).then(r => {
       return r.raw

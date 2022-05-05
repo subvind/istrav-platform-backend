@@ -1,9 +1,8 @@
-import { JoinColumn, OneToOne, OneToMany, ManyToMany, Entity, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, VersionColumn, BaseEntity, PrimaryGeneratedColumn, Column, Unique } from "typeorm";
+import { JoinColumn, ManyToOne, OneToMany, ManyToMany, Entity, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, VersionColumn, BaseEntity, PrimaryGeneratedColumn, Column, Unique } from "typeorm";
 
 import { Length, IsNotEmpty } from "class-validator"
 
-// import { SocialGroup } from '../socialGroups/socialGroup.entity'
-// import { TeamMember } from '../teamMembers/teamMember.entity'
+import { Tenant } from '../../tenants/entities/tenant.entity'
 
 @Entity()
 @Unique(["subdomain"])
@@ -18,21 +17,12 @@ export class SocialGroup extends BaseEntity {
   displayName: string
 
   // relations
-  // @OneToMany(() => SocialGroup, socialGroup => socialGroup.owner)
-  // ownerships: SocialGroup[];
+  @Column({ type: "uuid", nullable: true })
+  tenantId: string;
 
-  // @OneToMany(() => SocialGroup, socialGroup => socialGroup.billingSocialGroup)
-  // socialGroupings: SocialGroup[];
-
-  // @ManyToMany(() => SocialGroup, socialGroup => socialGroup.collaborators)
-  // collaborations: SocialGroup[];
-
-  // @Column({ type: "uuid", nullable: true })
-  // teamMemberId: string;
-
-  // @OneToOne(() => TeamMember, teamMember => teamMember.userId)
-  // @JoinColumn({ name: "teamMemberId" })
-  // teamMember: TeamMember;
+  @ManyToOne(() => Tenant, tenant => tenant.id)
+  @JoinColumn({ name: "tenantId" })
+  tenant: Tenant;
 
   // record keeping
   @Column()

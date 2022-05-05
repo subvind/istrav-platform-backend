@@ -1,9 +1,8 @@
-import { JoinColumn, OneToOne, OneToMany, ManyToMany, Entity, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, VersionColumn, BaseEntity, PrimaryGeneratedColumn, Column, Unique } from "typeorm";
+import { JoinColumn, ManyToOne, OneToOne, OneToMany, ManyToMany, Entity, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, VersionColumn, BaseEntity, PrimaryGeneratedColumn, Column, Unique } from "typeorm";
 
 import { Length, IsNotEmpty } from "class-validator"
 
-// import { Website } from '../websites/website.entity'
-// import { TeamMember } from '../teamMembers/teamMember.entity'
+import { Tenant } from '../../tenants/entities/tenant.entity'
 
 @Entity()
 @Unique(["topLevelDomainName"])
@@ -18,21 +17,12 @@ export class Website extends BaseEntity {
   displayName: string
 
   // relations
-  // @OneToMany(() => Website, website => website.owner)
-  // ownerships: Website[];
+  @Column({ type: "uuid", nullable: true })
+  tenantId: string;
 
-  // @OneToMany(() => Website, website => website.billingWebsite)
-  // websiteings: Website[];
-
-  // @ManyToMany(() => Website, website => website.collaborators)
-  // collaborations: Website[];
-
-  // @Column({ type: "uuid", nullable: true })
-  // teamMemberId: string;
-
-  // @OneToOne(() => TeamMember, teamMember => teamMember.userId)
-  // @JoinColumn({ name: "teamMemberId" })
-  // teamMember: TeamMember;
+  @ManyToOne(() => Tenant, tenant => tenant.id)
+  @JoinColumn({ name: "tenantId" })
+  tenant: Tenant;
 
   // record keeping
   @Column()
