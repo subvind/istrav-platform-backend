@@ -56,3 +56,4 @@ user instant messaging feature:
 
 // Claims-based authorization
 // https://docs.nestjs.com/security/authorization
+// https://casl.js.org/v5/en/cookbook/claim-authorization
