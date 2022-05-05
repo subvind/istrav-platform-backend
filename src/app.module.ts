@@ -30,6 +30,7 @@ if (process.env.DATABASE_URL) {
       type: 'postgres',
       autoLoadEntities: true,
       synchronize: true,
+      schema: 'public'
     }),
     AccountsModule,
     TenantsModule,
