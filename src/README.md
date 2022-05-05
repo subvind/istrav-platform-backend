@@ -54,3 +54,5 @@ social group shoutbox frature:
 user instant messaging feature:
 - directMessages // website wide user to user istant messaging
 
+// Claims-based authorization
+// https://docs.nestjs.com/security/authorization
