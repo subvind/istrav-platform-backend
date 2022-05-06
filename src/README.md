@@ -1,4 +1,4 @@
-design
+design (about 70 tables)
 ========
 
 authentication:
@@ -33,26 +33,11 @@ primary admin control panel feature:
 
 primary social group feature:
 - socialGroup // access to just 1 social group at a time
-- bulletinBoards // for a collection of links
-- bulletinBoardRefs // for each individual link
+- applications // for each individual SG app
 - members // accounts allowed on social group
 
-social group discussion feature:
-- forums
-- forumMains
-- mainCategories
-- categoryTopics
-- topicPosts
-- topicViews
-- postPoints
-- postViews
-
-social group shoutbox frature:
-- rooms
-- roomLogs
-
 user instant messaging feature:
-- directMessages // website wide user to user istant messaging
+- directMessages // website wide user to user instant messaging
 
 user coversation feature:
 - comments
@@ -63,9 +48,83 @@ user coversation feature:
 user profile features:
 - friends
 - statusUpdates
-- statusUpdateComments
+- statusUpdateComments // user conversations
 - statusUpdateViews
 - statusUpdatePoints
 - alerts
 - notifications
 
+social group homepage application:
+- website
+
+social group rules application:
+- rules
+- ruleNumbers
+
+social group affiliate & referrals application:
+- affiliates
+- affiliateLinks
+
+social group bulletin boards application:
+- bulletinBoards
+- bulletinBoardRefs
+
+social group rankings application:
+- rankings
+- rankingPlacements
+
+social group discussion application:
+- forums
+- forumMains
+- mainCategories
+- categoryTopics
+- topicPosts
+- topicViews
+- postPoints
+- postViews
+
+social group shoutbox application:
+- rooms
+- roomLogs
+
+social group showcases application:
+- showcases
+- showcaseDisplay
+- displayComments // user conversations
+- displayViews
+- displayPoints
+
+social group calendars application:
+- calendars
+- calendarEvents
+- eventComments // user conversations
+- eventPoints
+- eventViews
+- eventRegs
+
+social group storefronts application:
+- storefronts
+- storefrontCatalogs
+- catalogProducts
+- productReviews
+- productViews
+- reviewComments // user conversations
+- reviewPoints
+- carts
+
+user subscriptions feature:
+- categorySubscriptions
+- topicSubscriptions
+- showcaseSubscriptions
+- displaySubscriptions
+- statusUpdateSubscriptions
+- calendarSubscriptions
+- eventSubscriptions
+- catalogSubscriptions
+- productSubscriptions
+
+social group access restrictions feature:
+- permissions
+- permissionSets
+- permissionMasks
+- roles
