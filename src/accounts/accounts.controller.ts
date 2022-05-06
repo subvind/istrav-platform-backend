@@ -87,14 +87,11 @@ export class AccountsController {
       return this.accountsService.auth(authAccountDto).then((token) => {
         // signal event
         this.accountsService.eventEmitter.emit('account.auth', token)
-        // save to header
-        let bufferObj = Buffer.from(token, "utf8");
-        let base64String = bufferObj.toString("base64");
-        req.headers['Authorization'] = `Bearer ${base64String}`
-        return token
+        // save to response
+        return { jwt: token }
       });
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 }

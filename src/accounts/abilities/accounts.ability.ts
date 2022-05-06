@@ -20,11 +20,15 @@ export class CaslAbilityFactory {
       can(Action.REMOVE, Account, { id: account.memberId });
     }
 
-    cannot(Action.FIND_ALL, Account);
+    can(Action.CREATE, Account);
+    can(Action.FIND_ALL, Account);
     can(Action.FIND_ONE, Account);
+    can(Action.UPDATE, Account);
+    can(Action.REMOVE, Account);
+    can(Action.AUTH, Account);
 
-    cannot(Action.UPDATE, Account);
-    cannot(Action.REMOVE, Account);
+    // cannot(Action.UPDATE, Account);
+    // cannot(Action.REMOVE, Account);
 
     return build({
       // Read https://casl.js.org/v5/en/guide/subject-type-detection#use-classes-as-subject-types for details

@@ -7,6 +7,6 @@ export default function (req) {
     let token = b.toString("utf8")
     return JSON.parse(token)
   } else {
-    return {}
+    return { error: 'no {Bearer <jwt>} was found in the "Authorization" header' }
   }
 }

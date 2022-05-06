@@ -23,10 +23,11 @@ export class CaslAbilityFactory {
       can(Action.FIND_ONE, 'all'); // read-only access to everything
     }
 
-    cannot(Action.UPDATE, Member);
-    cannot(Action.REMOVE, Member);
-    can(Action.UPDATE, Member, { id: account.member.id });
-    can(Action.REMOVE, Member, { id: account.member.id });
+    can(Action.CREATE, Member);
+    can(Action.FIND_ALL, Member);
+    can(Action.FIND_ONE, Member);
+    can(Action.UPDATE, Member);
+    can(Action.REMOVE, Member);
 
     return build({
       // Read https://casl.js.org/v5/en/guide/subject-type-detection#use-classes-as-subject-types for details

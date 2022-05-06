@@ -69,7 +69,7 @@ export class AccountsService {
     }
 
     // deny auth request
-    return null
+    return { error: 'invalid username and password combination' }
   }
 
   async findAll(): Promise<Account[]> {
