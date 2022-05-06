@@ -15,6 +15,11 @@ containers:
 - https://hub.docker.com/r/istrav/communityfolder-backend
 - https://hub.docker.com/r/istrav/communityfolder-frontend
 
+
+Claims-based authorization:
+- https://docs.nestjs.com/security/authorization
+- https://casl.js.org/v5/en/cookbook/claim-authorization
+
 ### start:
 ```bash
 $ npm install -g @nestjs/cli
