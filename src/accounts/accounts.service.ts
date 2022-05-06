@@ -42,7 +42,6 @@ export class AccountsService {
     }
     account.subscribe = updateAccountDto.subscribe;
     account.agreement = updateAccountDto.agreement;
-    account.isRoot = updateAccountDto.isRoot;
 
     return this.accountsRepository.update({ id: account.id }, account).then(r => {
       return r.raw
@@ -53,7 +52,7 @@ export class AccountsService {
   async auth(authAccountDto: AuthAccountDto): Promise<any> {
     // find account by given username
     const results = await this.accountsRepository.findOne({
-      select: ["id", "email", "password", "username", "isRoot"],
+      select: ["id", "email", "password", "username"],
       where: {
         username: authAccountDto.username
       }
@@ -66,7 +65,6 @@ export class AccountsService {
         accountId: results.id,
         email: results.email,
         username: results.username,
-        isRoot: results.isRoot // give full control
       }, process.env.SECRET || 'development-secret')
     }
 

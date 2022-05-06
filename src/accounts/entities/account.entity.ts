@@ -1,4 +1,4 @@
-import { JoinColumn, OneToOne, OneToMany, ManyToMany, Entity, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, VersionColumn, BaseEntity, PrimaryGeneratedColumn, Column, Unique } from "typeorm";
+import { JoinColumn, OneToOne, OneToMany, ManyToMany, Entity, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, VersionColumn, BaseEntity, PrimaryGeneratedColumn, Column, Unique, ManyToOne } from "typeorm";
 
 import { Length, IsNotEmpty } from "class-validator"
 
@@ -28,9 +28,13 @@ export class Account extends BaseEntity {
   @Column({ default: false })
   agreement: boolean
 
-  // give full control
-  @Column({ default: false })
-  isRoot: boolean
+  // account session cookie
+  @Column({ type: "uuid", nullable: true })
+  memberId: string;
+
+  @ManyToOne(() => Member, tenant => tenant.id)
+  @JoinColumn({ name: "memberId" })
+  member: Member;
 
   // relations
   @OneToMany(() => Member, member => member.account)

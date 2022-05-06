@@ -8,9 +8,12 @@ import { AccountCreatedListener } from './listeners/account-created.listener';
 import { AccountCreatedGateway } from './gateways/account-created.gateway';
 import { AccountsController } from './accounts.controller';
 
+import { CaslAbilityFactory } from './abilities/accounts.ability'
+
 @Module({
   imports: [EventEmitterModule.forRoot(), TypeOrmModule.forFeature([Account])],
   controllers: [AccountsController],
-  providers: [AccountsService, AccountCreatedListener, AccountCreatedGateway]
+  providers: [AccountsService, AccountCreatedListener, AccountCreatedGateway, CaslAbilityFactory],
+  exports: [CaslAbilityFactory]
 })
 export class AccountsModule {}
