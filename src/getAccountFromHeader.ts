@@ -1,12 +1,13 @@
+import * as jwt from "jsonwebtoken";
 
 export default function (req) {
-  let auth = req.headers['Authorization']
+  let auth = req.headers['authorization']
+  
   if (auth) {
-    let s = auth.substring(`Bearer `.length)
-    let b = Buffer.from(s, "base64")
-    let token = b.toString("utf8")
-    return JSON.parse(token)
+    let token = auth.substring(`Bearer `.length)
+    let decoded = jwt.verify(token, process.env.SECRET || 'development-secret')
+    return decoded
   } else {
-    return { error: 'no {Bearer <jwt>} was found in the "Authorization" header' }
+    return { error: 'no (Authorization: Bearer <jwt>) was found in the HTTP header' }
   }
 }
