@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Session } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Request } from '@nestjs/common';
 import { SocialGroupsService } from './socialGroups.service';
 import { CreateSocialGroupDto } from './dto/create-socialGroup.dto';
 import { UpdateSocialGroupDto } from './dto/update-socialGroup.dto';
@@ -8,6 +8,7 @@ import { CaslAbilityFactory } from './abilities/socialGroups.ability'
 import { Action } from './abilities/action.enum'
 
 import { SocialGroup } from './entities/socialGroup.entity';
+import getAccountFromHeader from '../getAccountFromHeader';
 
 @Controller('socialGroups')
 export class SocialGroupsController {
@@ -16,8 +17,8 @@ export class SocialGroupsController {
   ) {}
 
   @Post()
-  create(@Body() createSocialGroupDto: CreateSocialGroupDto, @Session() session: secureSession.Session) {
-    let account = JSON.parse(session.getItem('account'))
+  create(@Body() createSocialGroupDto: CreateSocialGroupDto, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.CREATE, SocialGroup)) {
@@ -28,8 +29,8 @@ export class SocialGroupsController {
   }
 
   @Get()
-  findAll(@Session() session: secureSession.Session) {
-    let account = JSON.parse(session.getItem('account'))
+  findAll(@Req() req: Request) {
+    let account = getAccountFromHeader(req)
     const ability = this.caslAbilityFactory.createForUser(account);
     
     if (ability.can(Action.FIND_ALL, SocialGroup)) {
@@ -40,8 +41,8 @@ export class SocialGroupsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string, @Session() session: secureSession.Session) {
-    let account = JSON.parse(session.getItem('account'))
+  findOne(@Param('id') id: string, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.FIND_ONE, SocialGroup)) {
@@ -52,8 +53,8 @@ export class SocialGroupsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSocialGroupDto: UpdateSocialGroupDto, @Session() session: secureSession.Session) {
-    let account = JSON.parse(session.getItem('account'))
+  update(@Param('id') id: string, @Body() updateSocialGroupDto: UpdateSocialGroupDto, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.UPDATE, SocialGroup)) {
@@ -65,8 +66,8 @@ export class SocialGroupsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string, @Session() session: secureSession.Session) {
-    let account = JSON.parse(session.getItem('account'))
+  remove(@Param('id') id: string, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.REMOVE, SocialGroup)) {

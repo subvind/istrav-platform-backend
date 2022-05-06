@@ -27,6 +27,7 @@
     "@nestjs/event-emitter": "^1.1.0",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^8.4.4",
+    "@nestjs/platform-fastify": "^8.4.4",
     "@nestjs/platform-ws": "^8.4.4",
     "@nestjs/typeorm": "^8.0.3",
     "@nestjs/websockets": "^8.4.4",

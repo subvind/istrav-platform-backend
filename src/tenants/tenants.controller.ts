@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Session } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Request } from '@nestjs/common';
 import { TenantsService } from './tenants.service';
 import { CreateTenantDto } from './dto/create-tenant.dto';
 import { UpdateTenantDto } from './dto/update-tenant.dto';
@@ -8,6 +8,7 @@ import { CaslAbilityFactory } from './abilities/tenants.ability'
 import { Action } from './abilities/action.enum'
 
 import { Tenant } from './entities/tenant.entity';
+import getAccountFromHeader from '../getAccountFromHeader';
 
 @Controller('tenants')
 export class TenantsController {
@@ -16,8 +17,8 @@ export class TenantsController {
   ) {}
 
   @Post()
-  create(@Body() createTenantDto: CreateTenantDto, @Session() session: secureSession.Session) {
-    let account = JSON.parse(session.getItem('account'))
+  create(@Body() createTenantDto: CreateTenantDto, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.CREATE, Tenant)) {
@@ -28,8 +29,8 @@ export class TenantsController {
   }
 
   @Get()
-  findAll(@Session() session: secureSession.Session) {
-    let account = JSON.parse(session.getItem('account'))
+  findAll(@Req() req: Request) {
+    let account = getAccountFromHeader(req)
     const ability = this.caslAbilityFactory.createForUser(account);
     
     if (ability.can(Action.FIND_ALL, Tenant)) {
@@ -40,8 +41,8 @@ export class TenantsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string, @Session() session: secureSession.Session) {
-    let account = JSON.parse(session.getItem('account'))
+  findOne(@Param('id') id: string, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.FIND_ONE, Tenant)) {
@@ -52,8 +53,8 @@ export class TenantsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTenantDto: UpdateTenantDto, @Session() session: secureSession.Session) {
-    let account = JSON.parse(session.getItem('account'))
+  update(@Param('id') id: string, @Body() updateTenantDto: UpdateTenantDto, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.UPDATE, Tenant)) {
@@ -65,8 +66,8 @@ export class TenantsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string, @Session() session: secureSession.Session) {
-    let account = JSON.parse(session.getItem('account'))
+  remove(@Param('id') id: string, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.REMOVE, Tenant)) {

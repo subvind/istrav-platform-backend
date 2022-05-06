@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Session } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Request } from '@nestjs/common';
 import { WebsitesService } from './websites.service';
 import { CreateWebsiteDto } from './dto/create-website.dto';
 import { UpdateWebsiteDto } from './dto/update-website.dto';
@@ -8,6 +8,7 @@ import { CaslAbilityFactory } from './abilities/websites.ability'
 import { Action } from './abilities/action.enum'
 
 import { Website } from './entities/website.entity';
+import getAccountFromHeader from '../getAccountFromHeader';
 
 @Controller('websites')
 export class WebsitesController {
@@ -16,8 +17,8 @@ export class WebsitesController {
   ) {}
 
   @Post()
-  create(@Body() createWebsiteDto: CreateWebsiteDto, @Session() session: secureSession.Session) {
-    let account = JSON.parse(session.getItem('account'))
+  create(@Body() createWebsiteDto: CreateWebsiteDto, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.CREATE, Website)) {
@@ -28,8 +29,8 @@ export class WebsitesController {
   }
 
   @Get()
-  findAll(@Session() session: secureSession.Session) {
-    let account = JSON.parse(session.getItem('account'))
+  findAll(@Req() req: Request) {
+    let account = getAccountFromHeader(req)
     const ability = this.caslAbilityFactory.createForUser(account);
     
     if (ability.can(Action.FIND_ALL, Website)) {
@@ -40,8 +41,8 @@ export class WebsitesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string, @Session() session: secureSession.Session) {
-    let account = JSON.parse(session.getItem('account'))
+  findOne(@Param('id') id: string, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.FIND_ONE, Website)) {
@@ -52,8 +53,8 @@ export class WebsitesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateWebsiteDto: UpdateWebsiteDto, @Session() session: secureSession.Session) {
-    let account = JSON.parse(session.getItem('account'))
+  update(@Param('id') id: string, @Body() updateWebsiteDto: UpdateWebsiteDto, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.UPDATE, Website)) {
@@ -65,8 +66,8 @@ export class WebsitesController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string, @Session() session: secureSession.Session) {
-    let account = JSON.parse(session.getItem('account'))
+  remove(@Param('id') id: string, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.REMOVE, Website)) {

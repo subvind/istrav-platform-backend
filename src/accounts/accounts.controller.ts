@@ -1,14 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Session } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Headers, Session, Req, Request } from '@nestjs/common';
 import { AccountsService } from './accounts.service';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
 import { AuthAccountDto } from './dto/auth-account.dto';
 
-import * as secureSession from 'fastify-secure-session'
 import { CaslAbilityFactory } from './abilities/accounts.ability'
 import { Action } from './abilities/action.enum'
 
 import { Account } from './entities/account.entity';
+
+import getAccountFromHeader from '../getAccountFromHeader';
 
 @Controller('accounts')
 export class AccountsController {
@@ -17,20 +18,20 @@ export class AccountsController {
   ) {}
 
   @Post()
-  create(@Body() createAccountDto: CreateAccountDto, @Session() session: secureSession.Session) {
-    let account = JSON.parse(session.getItem('account'))
+  create(@Body() createAccountDto: CreateAccountDto, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
     const ability = this.caslAbilityFactory.createForUser(account);
-
+    
     if (ability.can(Action.CREATE, Account)) {
       return this.accountsService.create(createAccountDto);
     } else {
       return {}
     }
   }
-
+  
   @Get()
-  findAll(@Session() session: secureSession.Session) {
-    let account = JSON.parse(session.getItem('account'))
+  findAll(@Req() req: Request) {
+    let account = getAccountFromHeader(req)
     const ability = this.caslAbilityFactory.createForUser(account);
     
     if (ability.can(Action.FIND_ALL, Account)) {
@@ -41,8 +42,8 @@ export class AccountsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string, @Session() session: secureSession.Session) {
-    let account = JSON.parse(session.getItem('account'))
+  findOne(@Param('id') id: string, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.FIND_ONE, Account)) {
@@ -53,8 +54,8 @@ export class AccountsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAccountDto: UpdateAccountDto, @Session() session: secureSession.Session) {
-    let account = JSON.parse(session.getItem('account'))
+  update(@Param('id') id: string, @Body() updateAccountDto: UpdateAccountDto, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.UPDATE, Account)) {
@@ -66,8 +67,8 @@ export class AccountsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string, @Session() session: secureSession.Session) {
-    let account = JSON.parse(session.getItem('account'))
+  remove(@Param('id') id: string, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.REMOVE, Account)) {
@@ -78,16 +79,18 @@ export class AccountsController {
   }
 
   @Post('auth')
-  auth(@Body() authAccountDto: AuthAccountDto, @Session() session: secureSession.Session) {
-    let account = JSON.parse(session.getItem('account'))
+  auth(@Body() authAccountDto: AuthAccountDto, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
     const ability = this.caslAbilityFactory.createForUser(account);
     
     if (ability.can(Action.AUTH, Account)) {
       return this.accountsService.auth(authAccountDto).then((token) => {
         // signal event
         this.accountsService.eventEmitter.emit('account.auth', token)
-        // save to session storage
-        sessionStorage.setItem('account', JSON.stringify(token))
+        // save to header
+        let bufferObj = Buffer.from(token, "utf8");
+        let base64String = bufferObj.toString("base64");
+        req.headers['Authorization'] = `Bearer ${base64String}`
         return token
       });
     } else {

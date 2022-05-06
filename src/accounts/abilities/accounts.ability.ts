@@ -15,17 +15,16 @@ export class CaslAbilityFactory {
       Ability<[Action, Subjects]>
     >(Ability as AbilityClass<AppAbility>);
 
-    if (account.member) {
-      can(Action.MANAGE, 'all'); // read-write access to everything
-    } else {
-      can(Action.FIND_ALL, 'all'); // read-only access to everything
-      can(Action.FIND_ONE, 'all'); // read-only access to everything
+    if (account.memberId) {
+      can(Action.UPDATE, Account, { id: account.memberId });
+      can(Action.REMOVE, Account, { id: account.memberId });
     }
+
+    cannot(Action.FIND_ALL, Account);
+    can(Action.FIND_ONE, Account);
 
     cannot(Action.UPDATE, Account);
     cannot(Action.REMOVE, Account);
-    can(Action.UPDATE, Account, { id: account.member.id });
-    can(Action.REMOVE, Account, { id: account.member.id });
 
     return build({
       // Read https://casl.js.org/v5/en/guide/subject-type-detection#use-classes-as-subject-types for details
