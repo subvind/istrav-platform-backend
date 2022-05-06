@@ -17,7 +17,7 @@ export class TenantsController {
 
   @Post()
   create(@Body() createTenantDto: CreateTenantDto, @Session() session: secureSession.Session) {
-    let account = JSON.parse(sessionStorage.getItem('account'))
+    let account = JSON.parse(session.getItem('account'))
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.CREATE, Tenant)) {
@@ -29,7 +29,7 @@ export class TenantsController {
 
   @Get()
   findAll(@Session() session: secureSession.Session) {
-    let account = JSON.parse(sessionStorage.getItem('account'))
+    let account = JSON.parse(session.getItem('account'))
     const ability = this.caslAbilityFactory.createForUser(account);
     
     if (ability.can(Action.FIND_ALL, Tenant)) {
@@ -41,7 +41,7 @@ export class TenantsController {
 
   @Get(':id')
   findOne(@Param('id') id: string, @Session() session: secureSession.Session) {
-    let account = JSON.parse(sessionStorage.getItem('account'))
+    let account = JSON.parse(session.getItem('account'))
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.FIND_ONE, Tenant)) {
@@ -53,7 +53,7 @@ export class TenantsController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTenantDto: UpdateTenantDto, @Session() session: secureSession.Session) {
-    let account = JSON.parse(sessionStorage.getItem('account'))
+    let account = JSON.parse(session.getItem('account'))
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.UPDATE, Tenant)) {
@@ -66,7 +66,7 @@ export class TenantsController {
 
   @Delete(':id')
   remove(@Param('id') id: string, @Session() session: secureSession.Session) {
-    let account = JSON.parse(sessionStorage.getItem('account'))
+    let account = JSON.parse(session.getItem('account'))
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.REMOVE, Tenant)) {

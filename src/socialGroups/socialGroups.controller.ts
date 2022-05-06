@@ -17,7 +17,7 @@ export class SocialGroupsController {
 
   @Post()
   create(@Body() createSocialGroupDto: CreateSocialGroupDto, @Session() session: secureSession.Session) {
-    let account = JSON.parse(sessionStorage.getItem('account'))
+    let account = JSON.parse(session.getItem('account'))
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.CREATE, SocialGroup)) {
@@ -29,7 +29,7 @@ export class SocialGroupsController {
 
   @Get()
   findAll(@Session() session: secureSession.Session) {
-    let account = JSON.parse(sessionStorage.getItem('account'))
+    let account = JSON.parse(session.getItem('account'))
     const ability = this.caslAbilityFactory.createForUser(account);
     
     if (ability.can(Action.FIND_ALL, SocialGroup)) {
@@ -41,7 +41,7 @@ export class SocialGroupsController {
 
   @Get(':id')
   findOne(@Param('id') id: string, @Session() session: secureSession.Session) {
-    let account = JSON.parse(sessionStorage.getItem('account'))
+    let account = JSON.parse(session.getItem('account'))
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.FIND_ONE, SocialGroup)) {
@@ -53,7 +53,7 @@ export class SocialGroupsController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateSocialGroupDto: UpdateSocialGroupDto, @Session() session: secureSession.Session) {
-    let account = JSON.parse(sessionStorage.getItem('account'))
+    let account = JSON.parse(session.getItem('account'))
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.UPDATE, SocialGroup)) {
@@ -66,7 +66,7 @@ export class SocialGroupsController {
 
   @Delete(':id')
   remove(@Param('id') id: string, @Session() session: secureSession.Session) {
-    let account = JSON.parse(sessionStorage.getItem('account'))
+    let account = JSON.parse(session.getItem('account'))
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.REMOVE, SocialGroup)) {

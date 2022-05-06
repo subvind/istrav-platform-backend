@@ -17,7 +17,7 @@ export class WebsitesController {
 
   @Post()
   create(@Body() createWebsiteDto: CreateWebsiteDto, @Session() session: secureSession.Session) {
-    let account = JSON.parse(sessionStorage.getItem('account'))
+    let account = JSON.parse(session.getItem('account'))
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.CREATE, Website)) {
@@ -29,7 +29,7 @@ export class WebsitesController {
 
   @Get()
   findAll(@Session() session: secureSession.Session) {
-    let account = JSON.parse(sessionStorage.getItem('account'))
+    let account = JSON.parse(session.getItem('account'))
     const ability = this.caslAbilityFactory.createForUser(account);
     
     if (ability.can(Action.FIND_ALL, Website)) {
@@ -41,7 +41,7 @@ export class WebsitesController {
 
   @Get(':id')
   findOne(@Param('id') id: string, @Session() session: secureSession.Session) {
-    let account = JSON.parse(sessionStorage.getItem('account'))
+    let account = JSON.parse(session.getItem('account'))
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.FIND_ONE, Website)) {
@@ -53,7 +53,7 @@ export class WebsitesController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateWebsiteDto: UpdateWebsiteDto, @Session() session: secureSession.Session) {
-    let account = JSON.parse(sessionStorage.getItem('account'))
+    let account = JSON.parse(session.getItem('account'))
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.UPDATE, Website)) {
@@ -66,7 +66,7 @@ export class WebsitesController {
 
   @Delete(':id')
   remove(@Param('id') id: string, @Session() session: secureSession.Session) {
-    let account = JSON.parse(sessionStorage.getItem('account'))
+    let account = JSON.parse(session.getItem('account'))
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.REMOVE, Website)) {

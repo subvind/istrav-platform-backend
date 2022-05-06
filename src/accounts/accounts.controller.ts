@@ -18,7 +18,7 @@ export class AccountsController {
 
   @Post()
   create(@Body() createAccountDto: CreateAccountDto, @Session() session: secureSession.Session) {
-    let account = JSON.parse(sessionStorage.getItem('account'))
+    let account = JSON.parse(session.getItem('account'))
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.CREATE, Account)) {
@@ -30,7 +30,7 @@ export class AccountsController {
 
   @Get()
   findAll(@Session() session: secureSession.Session) {
-    let account = JSON.parse(sessionStorage.getItem('account'))
+    let account = JSON.parse(session.getItem('account'))
     const ability = this.caslAbilityFactory.createForUser(account);
     
     if (ability.can(Action.FIND_ALL, Account)) {
@@ -42,7 +42,7 @@ export class AccountsController {
 
   @Get(':id')
   findOne(@Param('id') id: string, @Session() session: secureSession.Session) {
-    let account = JSON.parse(sessionStorage.getItem('account'))
+    let account = JSON.parse(session.getItem('account'))
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.FIND_ONE, Account)) {
@@ -54,7 +54,7 @@ export class AccountsController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAccountDto: UpdateAccountDto, @Session() session: secureSession.Session) {
-    let account = JSON.parse(sessionStorage.getItem('account'))
+    let account = JSON.parse(session.getItem('account'))
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.UPDATE, Account)) {
@@ -67,7 +67,7 @@ export class AccountsController {
 
   @Delete(':id')
   remove(@Param('id') id: string, @Session() session: secureSession.Session) {
-    let account = JSON.parse(sessionStorage.getItem('account'))
+    let account = JSON.parse(session.getItem('account'))
     const ability = this.caslAbilityFactory.createForUser(account);
 
     if (ability.can(Action.REMOVE, Account)) {
@@ -79,7 +79,7 @@ export class AccountsController {
 
   @Post('auth')
   auth(@Body() authAccountDto: AuthAccountDto, @Session() session: secureSession.Session) {
-    let account = JSON.parse(sessionStorage.getItem('account'))
+    let account = JSON.parse(session.getItem('account'))
     const ability = this.caslAbilityFactory.createForUser(account);
     
     if (ability.can(Action.AUTH, Account)) {
