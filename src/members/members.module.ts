@@ -8,7 +8,7 @@ import { MemberCreatedListener } from './listeners/member-created.listener';
 import { MemberCreatedGateway } from './gateways/member-created.gateway';
 import { MembersController } from './members.controller';
 
-import { CaslAbilityFactory } from './abilities/members.ability'
+import { CaslAbilityFactory } from './abilities/member.ability'
 
 @Module({
   imports: [EventEmitterModule.forRoot(), TypeOrmModule.forFeature([Member])],

@@ -4,7 +4,7 @@ import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
 
 import * as secureSession from 'fastify-secure-session'
-import { CaslAbilityFactory } from './abilities/members.ability'
+import { CaslAbilityFactory } from './abilities/member.ability'
 import { Action } from './abilities/action.enum'
 
 import { Member } from './entities/member.entity';

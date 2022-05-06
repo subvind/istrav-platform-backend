@@ -8,7 +8,7 @@ import { WebsiteCreatedListener } from './listeners/website-created.listener';
 import { WebsiteCreatedGateway } from './gateways/website-created.gateway';
 import { WebsitesController } from './websites.controller';
 
-import { CaslAbilityFactory } from './abilities/websites.ability'
+import { CaslAbilityFactory } from './abilities/website.ability'
 
 @Module({
   imports: [EventEmitterModule.forRoot(), TypeOrmModule.forFeature([Website])],

@@ -4,7 +4,7 @@ import { CreateTenantDto } from './dto/create-tenant.dto';
 import { UpdateTenantDto } from './dto/update-tenant.dto';
 
 import * as secureSession from 'fastify-secure-session'
-import { CaslAbilityFactory } from './abilities/tenants.ability'
+import { CaslAbilityFactory } from './abilities/tenant.ability'
 import { Action } from './abilities/action.enum'
 
 import { Tenant } from './entities/tenant.entity';

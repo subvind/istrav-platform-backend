@@ -8,7 +8,7 @@ import { AccountCreatedListener } from './listeners/account-created.listener';
 import { AccountCreatedGateway } from './gateways/account-created.gateway';
 import { AccountsController } from './accounts.controller';
 
-import { CaslAbilityFactory } from './abilities/accounts.ability'
+import { CaslAbilityFactory } from './abilities/account.ability'
 
 @Module({
   imports: [EventEmitterModule.forRoot(), TypeOrmModule.forFeature([Account])],

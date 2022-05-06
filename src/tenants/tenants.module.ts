@@ -8,7 +8,7 @@ import { TenantCreatedListener } from './listeners/tenant-created.listener';
 import { TenantCreatedGateway } from './gateways/tenant-created.gateway';
 import { TenantsController } from './tenants.controller';
 
-import { CaslAbilityFactory } from './abilities/tenants.ability'
+import { CaslAbilityFactory } from './abilities/tenant.ability'
 
 @Module({
   imports: [EventEmitterModule.forRoot(), TypeOrmModule.forFeature([Tenant])],

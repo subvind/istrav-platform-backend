@@ -8,7 +8,7 @@ import { SocialGroupCreatedListener } from './listeners/socialGroup-created.list
 import { SocialGroupCreatedGateway } from './gateways/socialGroup-created.gateway';
 import { SocialGroupsController } from './socialGroups.controller';
 
-import { CaslAbilityFactory } from './abilities/socialGroups.ability'
+import { CaslAbilityFactory } from './abilities/socialGroup.ability'
 
 @Module({
   imports: [EventEmitterModule.forRoot(), TypeOrmModule.forFeature([SocialGroup])],

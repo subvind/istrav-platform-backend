@@ -4,7 +4,7 @@ import { CreateSocialGroupDto } from './dto/create-socialGroup.dto';
 import { UpdateSocialGroupDto } from './dto/update-socialGroup.dto';
 
 import * as secureSession from 'fastify-secure-session'
-import { CaslAbilityFactory } from './abilities/socialGroups.ability'
+import { CaslAbilityFactory } from './abilities/socialGroup.ability'
 import { Action } from './abilities/action.enum'
 
 import { SocialGroup } from './entities/socialGroup.entity';

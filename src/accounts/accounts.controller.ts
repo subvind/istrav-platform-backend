@@ -4,7 +4,7 @@ import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
 import { AuthAccountDto } from './dto/auth-account.dto';
 
-import { CaslAbilityFactory } from './abilities/accounts.ability'
+import { CaslAbilityFactory } from './abilities/account.ability'
 import { Action } from './abilities/action.enum'
 
 import { Account } from './entities/account.entity';
