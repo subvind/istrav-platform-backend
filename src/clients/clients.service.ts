@@ -84,7 +84,7 @@ export class ClientsService {
 
         // return new account
         return jwt.sign({
-          accountId: account.id,
+          id: account.id,
           email: account.email,
           user: account.user,
           admin: account.admin,

@@ -51,7 +51,7 @@ export class AccountsService {
   async auth(authAccountDto: AuthAccountDto): Promise<any> {
     // find account by given username
     const results = await this.accountsRepository.findOne({
-      select: ["id", "email", "password"],
+      select: ["id", "email", "password", "user", "admin", "client", "master"],
       where: {
         email: authAccountDto.email
       }
@@ -61,8 +61,12 @@ export class AccountsService {
     let password = sha512(authAccountDto.password).toString()
     if (results && results.password === password) {
       return jwt.sign({ 
-        accountId: results.id,
+        id: results.id,
         email: results.email,
+        user: results.user,
+        admin: results.admin,
+        client: results.client,
+        master: results.master
       }, process.env.SECRET || 'development-secret')
     }
 
