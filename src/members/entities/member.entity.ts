@@ -6,13 +6,13 @@ import { Tenant } from '../../tenants/entities/tenant.entity'
 import { SocialGroup } from "../../socialGroups/entities/socialGroup.entity";
 
 @Entity()
-@Unique(["id"])
+@Unique(["userId"])
 export class Member extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
   // relation user
-  @Column({ type: "uuid", nullable: true })
+  @Column({ type: "uuid", nullable: false })
   userId: string;
 
   @ManyToOne(() => User, user => user.id)
@@ -20,7 +20,7 @@ export class Member extends BaseEntity {
   user: User;
 
   // relation social group
-  @Column({ type: "uuid", nullable: true })
+  @Column({ type: "uuid", nullable: false })
   socialGroupId: string;
 
   @ManyToOne(() => SocialGroup, socialGroup => socialGroup.id)
@@ -28,7 +28,7 @@ export class Member extends BaseEntity {
   socialGroup: SocialGroup;
 
   // relation website
-  @Column({ type: "uuid", nullable: true })
+  @Column({ type: "uuid", nullable: false })
   websiteId: string;
 
   @ManyToOne(() => Website, website => website.id)
@@ -36,7 +36,7 @@ export class Member extends BaseEntity {
   website: Website;
 
   // relation tenant
-  @Column({ type: "uuid", nullable: true })
+  @Column({ type: "uuid", nullable: false })
   tenantId: string;
 
   @ManyToOne(() => Tenant, tenant => tenant.id)

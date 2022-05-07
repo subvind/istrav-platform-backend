@@ -19,7 +19,7 @@ export class Master extends BaseEntity {
   password: string
 
   // relation account
-  @Column({ type: "uuid", nullable: true })
+  @Column({ type: "uuid", nullable: false })
   accountId: string;
 
   @ManyToOne(() => Account, account => account.id)

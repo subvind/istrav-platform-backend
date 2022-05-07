@@ -17,10 +17,8 @@ export class CaslAbilityFactory {
     >(Ability as AbilityClass<AppAbility>);
 
     if (account.admin) {
-      can(Action.MANAGE, 'all'); // read-write access to everything
-    } else {
-      can(Action.FIND_ALL, 'all'); // read-only access to everything
-      can(Action.FIND_ONE, 'all'); // read-only access to everything
+      can(Action.UPDATE, Admin, { id: account.admin.id });
+      can(Action.REMOVE, Admin, { id: account.admin.id });
     }
 
     can(Action.CREATE, Admin);

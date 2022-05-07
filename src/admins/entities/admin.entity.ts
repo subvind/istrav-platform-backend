@@ -7,7 +7,7 @@ import { Tenant } from '../../tenants/entities/tenant.entity'
 import { Website } from "../../websites/entities/website.entity";
 
 @Entity()
-@Unique(["username"])
+@Unique(["username", "websiteId"])
 export class Admin extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -20,7 +20,7 @@ export class Admin extends BaseEntity {
   password: string
 
   // relation account
-  @Column({ type: "uuid", nullable: true })
+  @Column({ type: "uuid", nullable: false })
   accountId: string;
 
   @ManyToOne(() => Account, account => account.id)
@@ -28,7 +28,7 @@ export class Admin extends BaseEntity {
   account: Account;
 
   // relation website
-  @Column({ type: "uuid", nullable: true })
+  @Column({ type: "uuid", nullable: false })
   websiteId: string;
 
   @ManyToOne(() => Website, website => website.id)
@@ -36,7 +36,7 @@ export class Admin extends BaseEntity {
   website: Website;
 
   // relation tenant
-  @Column({ type: "uuid", nullable: true })
+  @Column({ type: "uuid", nullable: false })
   tenantId: string;
 
   @ManyToOne(() => Tenant, tenant => tenant.id)

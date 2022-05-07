@@ -23,7 +23,6 @@ export class AccountsService {
   create(createAccountDto: CreateAccountDto): Promise<Account> {
     const account = new Account();
     account.email = createAccountDto.email;
-    account.username = createAccountDto.username;
     account.password = sha512(createAccountDto.password).toString();
     account.subscribe = createAccountDto.subscribe;
     account.agreement = createAccountDto.agreement;
@@ -35,7 +34,6 @@ export class AccountsService {
     const account = new Account();
     account.id = updateAccountDto.id;
     account.email = updateAccountDto.email;
-    account.username = updateAccountDto.username;
     account.password = updateAccountDto.password;
     if (updateAccountDto.password) {
       account.password = sha512(updateAccountDto.password).toString();
@@ -52,9 +50,9 @@ export class AccountsService {
   async auth(authAccountDto: AuthAccountDto): Promise<any> {
     // find account by given username
     const results = await this.accountsRepository.findOne({
-      select: ["id", "email", "password", "username"],
+      select: ["id", "email", "password"],
       where: {
-        username: authAccountDto.username
+        email: authAccountDto.email
       }
     })
 
@@ -64,7 +62,6 @@ export class AccountsService {
       return jwt.sign({ 
         accountId: results.id,
         email: results.email,
-        username: results.username,
       }, process.env.SECRET || 'development-secret')
     }
 

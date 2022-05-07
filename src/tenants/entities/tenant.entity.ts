@@ -1,4 +1,4 @@
-import { JoinColumn, OneToOne, OneToMany, ManyToMany, Entity, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, VersionColumn, BaseEntity, PrimaryGeneratedColumn, Column, Unique } from "typeorm";
+import { JoinColumn, ManyToOne, OneToMany, ManyToMany, Entity, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, VersionColumn, BaseEntity, PrimaryGeneratedColumn, Column, Unique } from "typeorm";
 
 import { Length, IsNotEmpty } from "class-validator"
 
@@ -17,6 +17,14 @@ export class Tenant extends BaseEntity {
 
   @Column()
   referenceId: string
+
+  // relation founder
+  @Column({ type: "uuid", nullable: false })
+  ownerId: string;
+
+  @ManyToOne(() => Client, client => client.id)
+  @JoinColumn({ name: "ownerId" })
+  owner: Client;
 
   // relations
   @OneToMany(() => Admin, admin => admin.tenantId)

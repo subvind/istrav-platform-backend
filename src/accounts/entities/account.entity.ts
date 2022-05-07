@@ -26,6 +26,37 @@ export class Account extends BaseEntity {
   @Column({ default: false })
   agreement: boolean
 
+  // within the UI we are allowing the auth of
+  // only 1 session per user
+
+  // relation selected website auth
+  @Column({ type: "uuid", nullable: true })
+  userId: string;
+  @ManyToOne(() => User, user => user.id)
+  @JoinColumn({ name: "accountId" })
+  user: User;
+
+  // relation selected ACP auth
+  @Column({ type: "uuid", nullable: true })
+  adminId: string;
+  @ManyToOne(() => Admin, admin => admin.id)
+  @JoinColumn({ name: "adminId" })
+  admin: Admin;
+
+  // relation selected CA auth
+  @Column({ type: "uuid", nullable: true })
+  clientId: string;
+  @ManyToOne(() => Client, client => client.id)
+  @JoinColumn({ name: "clientId" })
+  client: Client;
+
+  // relation selected webmaster auth
+  @Column({ type: "uuid", nullable: true })
+  masterId: string;
+  @ManyToOne(() => Master, master => master.id)
+  @JoinColumn({ name: "masterId" })
+  master: Master;
+
   // relation users
   @OneToMany(() => User, user => user.accountId)
   users: User[];

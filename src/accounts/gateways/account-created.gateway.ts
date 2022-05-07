@@ -23,7 +23,7 @@ export class AccountCreatedGateway {
       .then((account: Account) => {
         const accountCreatedEvent = new AccountCreatedEvent();
         accountCreatedEvent.id = account.id;
-        accountCreatedEvent.username = account.username;
+        accountCreatedEvent.email = account.email;
         
         console.log('gateway: account.created', accountCreatedEvent);
         this.accountsService.eventEmitter.emit('account.created', accountCreatedEvent)

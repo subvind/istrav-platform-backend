@@ -1,4 +1,4 @@
 export class AuthAccountDto {
-  username: string;
+  email: string;
   password: string;
 }

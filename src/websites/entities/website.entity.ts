@@ -3,6 +3,7 @@ import { JoinColumn, ManyToOne, OneToOne, OneToMany, ManyToMany, Entity, CreateD
 import { Length, IsNotEmpty } from "class-validator"
 
 import { Tenant } from '../../tenants/entities/tenant.entity'
+import { Admin } from "../../admins/entities/admin.entity";
 
 @Entity()
 @Unique(["domainName"])
@@ -16,8 +17,16 @@ export class Website extends BaseEntity {
   @Column()
   displayName: string
 
+  // relation founder
+  @Column({ type: "uuid", nullable: false })
+  ownerId: string;
+
+  @ManyToOne(() => Admin, admin => admin.id)
+  @JoinColumn({ name: "ownerId" })
+  owner: Admin;
+
   // relations
-  @Column({ type: "uuid", nullable: true })
+  @Column({ type: "uuid", nullable: false })
   tenantId: string;
 
   @ManyToOne(() => Tenant, tenant => tenant.id)
