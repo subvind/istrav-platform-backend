@@ -6,6 +6,7 @@ import { TenantsModule } from './tenants/tenants.module';
 import { WebsitesModule } from './websites/websites.module';
 import { SocialGroupsModule } from './socialGroups/socialGroups.module';
 import { MembersModule } from './members/members.module';
+import { UsersModule } from './users/users.module';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -33,10 +34,11 @@ if (process.env.DATABASE_URL) {
       schema: 'public'
     }),
     AccountsModule,
-    TenantsModule,
-    WebsitesModule,
+    MembersModule,
     SocialGroupsModule,
-    MembersModule
+    TenantsModule,
+    UsersModule,
+    WebsitesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
