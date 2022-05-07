@@ -23,7 +23,10 @@ export class UserCreatedGateway {
       .then((user: User) => {
         const userCreatedEvent = new UserCreatedEvent();
         userCreatedEvent.id = user.id;
+        userCreatedEvent.username = user.username;
         userCreatedEvent.accountId = user.accountId;
+        userCreatedEvent.websiteId = user.websiteId;
+        userCreatedEvent.tenantId = user.tenantId;
         
         console.log('gateway: user.created', userCreatedEvent);
         this.usersService.eventEmitter.emit('user.created', userCreatedEvent)

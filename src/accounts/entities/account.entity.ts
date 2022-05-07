@@ -27,7 +27,7 @@ export class Account extends BaseEntity {
   agreement: boolean
 
   // within the UI we are allowing the auth of
-  // only 1 session per user
+  // only 1 session per account
 
   // relation selected website auth
   @Column({ type: "uuid", nullable: true })
