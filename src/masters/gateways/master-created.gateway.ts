@@ -23,6 +23,7 @@ export class MasterCreatedGateway {
       .then((master: Master) => {
         const masterCreatedEvent = new MasterCreatedEvent();
         masterCreatedEvent.id = master.id;
+        masterCreatedEvent.username = master.username;
         masterCreatedEvent.accountId = master.accountId;
         
         console.log('gateway: master.created', masterCreatedEvent);

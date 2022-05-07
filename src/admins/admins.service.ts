@@ -17,7 +17,10 @@ export class AdminsService {
   // register
   create(createAdminDto: CreateAdminDto): Promise<Admin> {
     const admin = new Admin();
+    admin.username = createAdminDto.username;
     admin.accountId = createAdminDto.accountId;
+    admin.websiteId = createAdminDto.websiteId;
+    admin.tenantId = createAdminDto.tenantId;
 
     return this.adminsRepository.save(admin)
   }
@@ -25,7 +28,10 @@ export class AdminsService {
   update(updateAdminDto: UpdateAdminDto): Promise<Admin> {
     const admin = new Admin();
     admin.id = updateAdminDto.id;
+    admin.username = updateAdminDto.username;
     admin.accountId = updateAdminDto.accountId;
+    admin.websiteId = updateAdminDto.websiteId;
+    admin.tenantId = updateAdminDto.tenantId;
 
     return this.adminsRepository.update({ id: admin.id }, admin).then(r => {
       return r.raw

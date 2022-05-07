@@ -18,6 +18,7 @@ export class TenantsService {
   create(createTenantDto: CreateTenantDto): Promise<Tenant> {
     const tenant = new Tenant();
     tenant.referenceId = createTenantDto.referenceId;
+    tenant.ownerId = createTenantDto.ownerId;
 
     return this.tenantsRepository.save(tenant)
   }
@@ -26,6 +27,7 @@ export class TenantsService {
     const tenant = new Tenant();
     tenant.id = updateTenantDto.id;
     tenant.referenceId = updateTenantDto.referenceId;
+    tenant.ownerId = updateTenantDto.ownerId;
 
     return this.tenantsRepository.update({ id: tenant.id }, tenant).then(r => {
       return r.raw

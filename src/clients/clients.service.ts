@@ -17,7 +17,9 @@ export class ClientsService {
   // register
   create(createClientDto: CreateClientDto): Promise<Client> {
     const client = new Client();
+    client.username = createClientDto.username;
     client.accountId = createClientDto.accountId;
+    client.tenantId = createClientDto.tenantId
 
     return this.clientsRepository.save(client)
   }
@@ -25,7 +27,9 @@ export class ClientsService {
   update(updateClientDto: UpdateClientDto): Promise<Client> {
     const client = new Client();
     client.id = updateClientDto.id;
+    client.username = updateClientDto.username;
     client.accountId = updateClientDto.accountId;
+    client.tenantId = updateClientDto.tenantId;
 
     return this.clientsRepository.update({ id: client.id }, client).then(r => {
       return r.raw

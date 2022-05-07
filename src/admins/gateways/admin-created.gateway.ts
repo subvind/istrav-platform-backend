@@ -23,7 +23,10 @@ export class AdminCreatedGateway {
       .then((admin: Admin) => {
         const adminCreatedEvent = new AdminCreatedEvent();
         adminCreatedEvent.id = admin.id;
+        adminCreatedEvent.username = admin.username;
         adminCreatedEvent.accountId = admin.accountId;
+        adminCreatedEvent.websiteId = admin.websiteId;
+        adminCreatedEvent.tenantId = admin.tenantId;
         
         console.log('gateway: admin.created', adminCreatedEvent);
         this.adminsService.eventEmitter.emit('admin.created', adminCreatedEvent)

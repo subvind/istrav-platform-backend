@@ -19,6 +19,8 @@ export class WebsitesService {
     const website = new Website();
     website.domainName = createWebsiteDto.domainName;
     website.displayName = createWebsiteDto.displayName;
+    website.ownerId = createWebsiteDto.ownerId;
+    website.tenantId = createWebsiteDto.tenantId;
 
     return this.websitesRepository.save(website)
   }
@@ -28,6 +30,8 @@ export class WebsitesService {
     website.id = updateWebsiteDto.id;
     website.domainName = updateWebsiteDto.domainName;
     website.displayName = updateWebsiteDto.displayName;
+    website.ownerId = updateWebsiteDto.ownerId;
+    website.tenantId = updateWebsiteDto.tenantId;
 
     return this.websitesRepository.update({ id: website.id }, website).then(r => {
       return r.raw

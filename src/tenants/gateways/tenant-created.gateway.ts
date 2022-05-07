@@ -24,6 +24,7 @@ export class TenantCreatedGateway {
         const tenantCreatedEvent = new TenantCreatedEvent();
         tenantCreatedEvent.id = tenant.id;
         tenantCreatedEvent.referenceId = tenant.referenceId;
+        tenantCreatedEvent.ownerId = tenant.ownerId;
         
         console.log('gateway: tenant.created', tenantCreatedEvent);
         this.tenantsService.eventEmitter.emit('tenant.created', tenantCreatedEvent)

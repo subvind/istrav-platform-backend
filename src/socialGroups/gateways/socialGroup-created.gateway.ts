@@ -24,6 +24,10 @@ export class SocialGroupCreatedGateway {
         const socialGroupCreatedEvent = new SocialGroupCreatedEvent();
         socialGroupCreatedEvent.id = socialGroup.id;
         socialGroupCreatedEvent.subdomain = socialGroup.subdomain;
+        socialGroupCreatedEvent.displayName = socialGroup.displayName;
+        socialGroupCreatedEvent.ownerId = socialGroup.ownerId;
+        socialGroupCreatedEvent.websiteId = socialGroup.websiteId;
+        socialGroupCreatedEvent.tenantId = socialGroup.tenantId;
         
         console.log('gateway: socialGroup.created', socialGroupCreatedEvent);
         this.socialGroupsService.eventEmitter.emit('socialGroup.created', socialGroupCreatedEvent)

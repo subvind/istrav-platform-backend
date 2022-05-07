@@ -19,6 +19,9 @@ export class SocialGroupsService {
     const socialGroup = new SocialGroup();
     socialGroup.subdomain = createSocialGroupDto.subdomain;
     socialGroup.displayName = createSocialGroupDto.displayName;
+    socialGroup.ownerId = createSocialGroupDto.ownerId;
+    socialGroup.websiteId = createSocialGroupDto.websiteId;
+    socialGroup.tenantId = createSocialGroupDto.tenantId;
 
     return this.socialGroupsRepository.save(socialGroup)
   }
@@ -28,6 +31,9 @@ export class SocialGroupsService {
     socialGroup.id = updateSocialGroupDto.id;
     socialGroup.subdomain = updateSocialGroupDto.subdomain;
     socialGroup.displayName = updateSocialGroupDto.displayName;
+    socialGroup.ownerId = updateSocialGroupDto.ownerId;
+    socialGroup.websiteId = updateSocialGroupDto.websiteId;
+    socialGroup.tenantId = updateSocialGroupDto.tenantId;
 
     return this.socialGroupsRepository.update({ id: socialGroup.id }, socialGroup).then(r => {
       return r.raw

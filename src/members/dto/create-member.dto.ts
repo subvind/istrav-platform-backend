@@ -1,3 +1,8 @@
 export class CreateMemberDto {
-  accountId: string;
+  username: string;
+  password: string;
+  userId: string;
+  socialGroupId: string;
+  websiteId: string;
+  tenantId: string;
 }

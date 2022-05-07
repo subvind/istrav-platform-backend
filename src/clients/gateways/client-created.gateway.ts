@@ -23,7 +23,9 @@ export class ClientCreatedGateway {
       .then((client: Client) => {
         const clientCreatedEvent = new ClientCreatedEvent();
         clientCreatedEvent.id = client.id;
+        clientCreatedEvent.username = client.username;
         clientCreatedEvent.accountId = client.accountId;
+        clientCreatedEvent.tenantId = client.tenantId;
         
         console.log('gateway: client.created', clientCreatedEvent);
         this.clientsService.eventEmitter.emit('client.created', clientCreatedEvent)

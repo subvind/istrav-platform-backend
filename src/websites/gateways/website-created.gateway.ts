@@ -24,6 +24,9 @@ export class WebsiteCreatedGateway {
         const websiteCreatedEvent = new WebsiteCreatedEvent();
         websiteCreatedEvent.id = website.id;
         websiteCreatedEvent.domainName = website.domainName;
+        websiteCreatedEvent.displayName = website.displayName;
+        websiteCreatedEvent.ownerId = website.ownerId;
+        websiteCreatedEvent.tenantId = website.tenantId;
         
         console.log('gateway: website.created', websiteCreatedEvent);
         this.websitesService.eventEmitter.emit('website.created', websiteCreatedEvent)

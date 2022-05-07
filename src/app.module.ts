@@ -2,11 +2,14 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AccountsModule } from './accounts/accounts.module';
-import { TenantsModule } from './tenants/tenants.module';
-import { WebsitesModule } from './websites/websites.module';
-import { SocialGroupsModule } from './socialGroups/socialGroups.module';
+import { AdminsModule } from './admins/admins.module';
+import { ClientsModule } from './clients/clients.module';
+import { MastersModule } from './masters/masters.module';
 import { MembersModule } from './members/members.module';
+import { SocialGroupsModule } from './socialGroups/socialGroups.module';
+import { TenantsModule } from './tenants/tenants.module';
 import { UsersModule } from './users/users.module';
+import { WebsitesModule } from './websites/websites.module';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -34,6 +37,9 @@ if (process.env.DATABASE_URL) {
       schema: 'public'
     }),
     AccountsModule,
+    AdminsModule,
+    ClientsModule,
+    MastersModule,
     MembersModule,
     SocialGroupsModule,
     TenantsModule,

@@ -23,7 +23,10 @@ export class MemberCreatedGateway {
       .then((member: Member) => {
         const memberCreatedEvent = new MemberCreatedEvent();
         memberCreatedEvent.id = member.id;
-        memberCreatedEvent.accountId = member.accountId;
+        memberCreatedEvent.userId = member.userId;
+        memberCreatedEvent.socialGroupId = member.socialGroupId;
+        memberCreatedEvent.websiteId = member.websiteId;
+        memberCreatedEvent.tenantId = member.tenantId;
         
         console.log('gateway: member.created', memberCreatedEvent);
         this.membersService.eventEmitter.emit('member.created', memberCreatedEvent)

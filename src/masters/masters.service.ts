@@ -17,6 +17,7 @@ export class MastersService {
   // register
   create(createMasterDto: CreateMasterDto): Promise<Master> {
     const master = new Master();
+    master.username = createMasterDto.username;
     master.accountId = createMasterDto.accountId;
 
     return this.mastersRepository.save(master)
@@ -25,6 +26,7 @@ export class MastersService {
   update(updateMasterDto: UpdateMasterDto): Promise<Master> {
     const master = new Master();
     master.id = updateMasterDto.id;
+    master.username = updateMasterDto.username;
     master.accountId = updateMasterDto.accountId;
 
     return this.mastersRepository.update({ id: master.id }, master).then(r => {

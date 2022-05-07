@@ -17,7 +17,10 @@ export class MembersService {
   // register
   create(createMemberDto: CreateMemberDto): Promise<Member> {
     const member = new Member();
-    member.accountId = createMemberDto.accountId;
+    member.userId = createMemberDto.userId;
+    member.socialGroupId = createMemberDto.socialGroupId;
+    member.websiteId = createMemberDto.websiteId;
+    member.tenantId = createMemberDto.tenantId;
 
     return this.membersRepository.save(member)
   }
@@ -25,7 +28,10 @@ export class MembersService {
   update(updateMemberDto: UpdateMemberDto): Promise<Member> {
     const member = new Member();
     member.id = updateMemberDto.id;
-    member.accountId = updateMemberDto.accountId;
+    member.userId = updateMemberDto.userId;
+    member.socialGroupId = updateMemberDto.socialGroupId;
+    member.websiteId = updateMemberDto.websiteId;
+    member.tenantId = updateMemberDto.tenantId;
 
     return this.membersRepository.update({ id: member.id }, member).then(r => {
       return r.raw

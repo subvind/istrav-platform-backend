@@ -19,6 +19,10 @@ export class Admin extends BaseEntity {
   @Column()
   password: string
 
+  // relation owned websites
+  @OneToMany(() => Website, website => website.ownerId)
+  ownedWebsites: Website[];
+
   // relation account
   @Column({ type: "uuid", nullable: false })
   accountId: string;

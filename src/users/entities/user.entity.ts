@@ -5,6 +5,7 @@ import { Length, IsNotEmpty } from "class-validator"
 import { Account } from '../../accounts/entities/account.entity'
 import { Tenant } from '../../tenants/entities/tenant.entity'
 import { Website } from "../../websites/entities/website.entity";
+import { SocialGroup } from "../../socialGroups/entities/socialGroup.entity";
 
 @Entity()
 @Unique(["username", "websiteId"])
@@ -18,6 +19,10 @@ export class User extends BaseEntity {
 
   @Column()
   password: string
+
+  // relation owned social groups
+  @OneToMany(() => SocialGroup, socialGroup => socialGroup.ownerId)
+  ownedSocialGroups: SocialGroup[];
 
   // relation account
   @Column({ type: "uuid", nullable: false })
