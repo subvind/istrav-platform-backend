@@ -45,20 +45,19 @@ fs.readdirSync(`src/${destDir}`).forEach(file => {
   }  
 });
 
+// rename key labels in files
 function replaceStringInFile (someFile) {
   fs.readFile(someFile, 'utf8', function (err,data) {
     if (err) {
       return console.log(err);
     }
 
-    var re1 = new RegExp(srcDir, "g");
     var re2 = new RegExp(srcFile, "g");
     var re3 = new RegExp(srcFileUpper, "g");
-    var result1 = data.replace(re1, destDir);
-    var result2 = result1.replace(re2, destFile);
-    var result3 = result2.replace(re3, destFileUpper);
+    var result1 = data.replace(re2, destFile);
+    var result2 = result1.replace(re3, destFileUpper);
   
-    fs.writeFile(someFile, result3, 'utf8', function (err) {
+    fs.writeFile(someFile, result2, 'utf8', function (err) {
        if (err) return console.log(err);
     });
   });
