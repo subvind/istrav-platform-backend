@@ -1,4 +1,4 @@
 export class CreateWebsiteDto {
-  topLevelDomainName: string;
+  domainName: string;
   displayName: string;
 }

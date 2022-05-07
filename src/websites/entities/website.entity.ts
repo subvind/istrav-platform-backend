@@ -5,13 +5,13 @@ import { Length, IsNotEmpty } from "class-validator"
 import { Tenant } from '../../tenants/entities/tenant.entity'
 
 @Entity()
-@Unique(["topLevelDomainName"])
+@Unique(["domainName"])
 export class Website extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column()
-  topLevelDomainName: string
+  domainName: string
 
   @Column()
   displayName: string

@@ -3,21 +3,19 @@ import { JoinColumn, OneToOne, OneToMany, ManyToMany, Entity, CreateDateColumn, 
 import { Length, IsNotEmpty } from "class-validator"
 
 import { Member } from '../../members/entities/member.entity'
-// import { TeamMember } from '../teamMembers/teamMember.entity'
+import { User } from "../../users/entities/user.entity";
+import { Admin } from "../../admins/entities/admin.entity";
+import { Client } from "../../clients/entities/client.entity";
+import { Master } from "../../masters/entities/master.entity";
 
 @Entity()
 @Unique(["email"])
-@Unique(["username"])
 export class Account extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column()
   email: string
-
-  @Column()
-  @Length(4, 20)
-  username: string
 
   @Column()
   password: string
@@ -28,17 +26,21 @@ export class Account extends BaseEntity {
   @Column({ default: false })
   agreement: boolean
 
-  // account session cookie
-  @Column({ type: "uuid", nullable: true })
-  memberId: string;
+  // relation users
+  @OneToMany(() => User, user => user.accountId)
+  users: User[];
 
-  @ManyToOne(() => Member, tenant => tenant.id)
-  @JoinColumn({ name: "memberId" })
-  member: Member;
+  // relation admins
+  @OneToMany(() => Admin, admin => admin.accountId)
+  admins: Admin[];
 
-  // relations
-  @OneToMany(() => Member, member => member.account)
-  members: Member[];
+  // relation clients
+  @OneToMany(() => Client, client => client.accountId)
+  clients: Client[];
+
+  // relation masters
+  @OneToMany(() => Master, master => master.accountId)
+  masters: Master[];
 
   // record keeping
   @Column()

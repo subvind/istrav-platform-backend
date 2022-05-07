@@ -5,10 +5,12 @@ import { Length, IsNotEmpty } from "class-validator"
 import { Website } from '../../websites/entities/website.entity'
 import { Member } from '../../members/entities/member.entity'
 import { SocialGroup } from '../../socialGroups/entities/socialGroup.entity'
+import { Admin } from "../../admins/entities/admin.entity";
+import { Client } from "../../clients/entities/client.entity";
+import { User } from "../../users/entities/user.entity";
 
 @Entity()
 @Unique(["referenceId"])
-@Unique(["slugId"])
 export class Tenant extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -16,18 +18,24 @@ export class Tenant extends BaseEntity {
   @Column()
   referenceId: string
 
-  @Column()
-  slugId: string
-
   // relations
-  @OneToMany(() => Website, website => website.tenantId)
-  websites: Website[];
+  @OneToMany(() => Admin, admin => admin.tenantId)
+  admins: Admin[];
 
+  @OneToMany(() => Client, client => client.tenantId)
+  clients: Client[];
+  
   @OneToMany(() => Member, member => member.tenantId)
   members: Member[];
   
   @OneToMany(() => SocialGroup, socialGroup => socialGroup.tenantId)
   socialGroups: SocialGroup[];
+
+  @OneToMany(() => User, user => user.tenantId)
+  users: User[];
+
+  @OneToMany(() => Website, website => website.tenantId)
+  websites: Website[];
 
   // record keeping
   @Column()

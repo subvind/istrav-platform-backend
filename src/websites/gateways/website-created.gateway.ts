@@ -23,7 +23,7 @@ export class WebsiteCreatedGateway {
       .then((website: Website) => {
         const websiteCreatedEvent = new WebsiteCreatedEvent();
         websiteCreatedEvent.id = website.id;
-        websiteCreatedEvent.topLevelDomainName = website.topLevelDomainName;
+        websiteCreatedEvent.domainName = website.domainName;
         
         console.log('gateway: website.created', websiteCreatedEvent);
         this.websitesService.eventEmitter.emit('website.created', websiteCreatedEvent)

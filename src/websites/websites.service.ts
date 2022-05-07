@@ -17,7 +17,7 @@ export class WebsitesService {
   // register
   create(createWebsiteDto: CreateWebsiteDto): Promise<Website> {
     const website = new Website();
-    website.topLevelDomainName = createWebsiteDto.topLevelDomainName;
+    website.domainName = createWebsiteDto.domainName;
     website.displayName = createWebsiteDto.displayName;
 
     return this.websitesRepository.save(website)
@@ -26,7 +26,7 @@ export class WebsitesService {
   update(updateWebsiteDto: UpdateWebsiteDto): Promise<Website> {
     const website = new Website();
     website.id = updateWebsiteDto.id;
-    website.topLevelDomainName = updateWebsiteDto.topLevelDomainName;
+    website.domainName = updateWebsiteDto.domainName;
     website.displayName = updateWebsiteDto.displayName;
 
     return this.websitesRepository.update({ id: website.id }, website).then(r => {
