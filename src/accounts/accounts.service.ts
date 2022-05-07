@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
 import { AuthAccountDto } from './dto/auth-account.dto';
+
 import { Account } from './entities/account.entity';
-import { EventEmitter2 } from '@nestjs/event-emitter';
 
 import * as jwt from "jsonwebtoken";
-
 import * as sha512 from 'crypto-js/sha512'
 
 @Injectable()

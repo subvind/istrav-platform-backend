@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+
 import { CreateSocialGroupDto } from './dto/create-socialGroup.dto';
 import { UpdateSocialGroupDto } from './dto/update-socialGroup.dto';
+
 import { SocialGroup } from './entities/socialGroup.entity';
-import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class SocialGroupsService {
