@@ -7,35 +7,70 @@ import { CreateSocialGroupDto } from './dto/create-socialGroup.dto';
 import { UpdateSocialGroupDto } from './dto/update-socialGroup.dto';
 
 import { SocialGroup } from './entities/socialGroup.entity';
+import { Website } from '../websites/entities/website.entity';
+
+async function findIdByName (domainName) {
+  // // find account by given email
+  // const account = await this.accountsRepository.findOne({
+  //   select: ["id"],
+  //   where: {
+  //     email: email
+  //   }
+  // })
+
+  // find website & tenant by given domainName
+  const website = await this.websitesRepository.findOne({
+    select: ["id", "tenant"],
+    where: {
+      domainName: domainName
+    }
+  })
+
+  return { 
+    // account,
+    website, 
+    tenant: website.tenant
+  }
+}
 
 @Injectable()
 export class SocialGroupsService {
   constructor(
     public eventEmitter: EventEmitter2,
     @InjectRepository(SocialGroup)
-    private readonly socialGroupsRepository: Repository<SocialGroup>
+    private readonly socialGroupsRepository: Repository<SocialGroup>,
+    @InjectRepository(Website)
+    private readonly websitesRepository: Repository<Website>,
   ) {}
 
   // register
-  create(createSocialGroupDto: CreateSocialGroupDto): Promise<SocialGroup> {
+  async create(createSocialGroupDto: CreateSocialGroupDto): Promise<SocialGroup> {
+    let config = await findIdByName(
+      createSocialGroupDto.domainName
+    )
+
     const socialGroup = new SocialGroup();
     socialGroup.subdomain = createSocialGroupDto.subdomain;
     socialGroup.displayName = createSocialGroupDto.displayName;
     socialGroup.ownerId = createSocialGroupDto.ownerId;
-    socialGroup.websiteId = createSocialGroupDto.websiteId;
-    socialGroup.tenantId = createSocialGroupDto.tenantId;
+    socialGroup.websiteId = config.website.id;
+    socialGroup.tenantId = config.tenant.id;
 
     return this.socialGroupsRepository.save(socialGroup)
   }
 
-  update(updateSocialGroupDto: UpdateSocialGroupDto): Promise<SocialGroup> {
+  async update(updateSocialGroupDto: UpdateSocialGroupDto): Promise<SocialGroup> {
+    let config = await findIdByName(
+      updateSocialGroupDto.domainName
+    )
+
     const socialGroup = new SocialGroup();
     socialGroup.id = updateSocialGroupDto.id;
     socialGroup.subdomain = updateSocialGroupDto.subdomain;
     socialGroup.displayName = updateSocialGroupDto.displayName;
     socialGroup.ownerId = updateSocialGroupDto.ownerId;
-    socialGroup.websiteId = updateSocialGroupDto.websiteId;
-    socialGroup.tenantId = updateSocialGroupDto.tenantId;
+    socialGroup.websiteId = config.website.id;
+    socialGroup.tenantId = config.tenant.id;
 
     return this.socialGroupsRepository.update({ id: socialGroup.id }, socialGroup).then(r => {
       return r.raw

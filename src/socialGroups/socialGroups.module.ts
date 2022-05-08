@@ -8,13 +8,15 @@ import { SocialGroupCreatedGateway } from './gateways/socialGroup-created.gatewa
 import { SocialGroupsController } from './socialGroups.controller';
 
 import { SocialGroup } from './entities/socialGroup.entity';
+import { Website } from '../websites/entities/website.entity';
 
 import { CaslAbilityFactory } from './abilities/socialGroup.ability'
 
 @Module({
   imports: [
     EventEmitterModule.forRoot(), 
-    TypeOrmModule.forFeature([SocialGroup])
+    TypeOrmModule.forFeature([SocialGroup]),
+    TypeOrmModule.forFeature([Website]),
   ],
   controllers: [SocialGroupsController],
   providers: [SocialGroupsService, SocialGroupCreatedListener, SocialGroupCreatedGateway, CaslAbilityFactory],

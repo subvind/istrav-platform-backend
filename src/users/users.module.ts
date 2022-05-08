@@ -9,6 +9,7 @@ import { UsersController } from './users.controller';
 
 import { Account } from '../accounts/entities/account.entity';
 import { User } from './entities/user.entity';
+import { Website } from '../websites/entities/website.entity';
 
 import { CaslAbilityFactory } from './abilities/user.ability'
 
@@ -17,6 +18,7 @@ import { CaslAbilityFactory } from './abilities/user.ability'
     EventEmitterModule.forRoot(),
     TypeOrmModule.forFeature([Account]),
     TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([Website]),
   ],
   controllers: [UsersController],
   providers: [UsersService, UserCreatedListener, UserCreatedGateway, CaslAbilityFactory],

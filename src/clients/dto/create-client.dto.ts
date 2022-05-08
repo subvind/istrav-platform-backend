@@ -1,6 +1,6 @@
 export class CreateClientDto {
+  email: string;
   username: string;
   password: string;
-  accountId: string;
-  tenantId: string;
+  domainName: string;
 }

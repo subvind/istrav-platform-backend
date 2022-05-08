@@ -9,9 +9,34 @@ import { AuthUserDto } from './dto/auth-user.dto';
 
 import { User } from './entities/user.entity';
 import { Account } from '../accounts/entities/account.entity';
+import { Website } from '../websites/entities/website.entity';
 
 import * as jwt from "jsonwebtoken";
 import * as sha512 from 'crypto-js/sha512'
+
+async function findIdByName (email, domainName) {
+  // find account by given email
+  const account = await this.accountsRepository.findOne({
+    select: ["id"],
+    where: {
+      email: email
+    }
+  })
+
+  // find website & tenant by given domainName
+  const website = await this.websitesRepository.findOne({
+    select: ["id", "tenant"],
+    where: {
+      domainName: domainName
+    }
+  })
+
+  return { 
+    account,
+    website, 
+    tenant: website.tenant
+  }
+}
 
 @Injectable()
 export class UsersService {
@@ -20,31 +45,43 @@ export class UsersService {
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
     @InjectRepository(Account)
-    private readonly accountsRepository: Repository<Account>
+    private readonly accountsRepository: Repository<Account>,
+    @InjectRepository(Website)
+    private readonly websitesRepository: Repository<Website>,
   ) {}
 
   // register
-  create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    let config = await findIdByName(
+      createUserDto.email,
+      createUserDto.domainName
+    )
+
     const user = new User();
     user.username = createUserDto.username;
     user.password = sha512(createUserDto.password).toString();
-    user.accountId = createUserDto.accountId;
-    user.websiteId = createUserDto.websiteId;
-    user.tenantId = createUserDto.tenantId;
+    user.accountId = config.account.id;
+    user.websiteId = config.website.id;
+    user.tenantId = config.tenant.id;
 
     return this.usersRepository.save(user)
   }
 
-  update(updateUserDto: UpdateUserDto): Promise<User> {
+  async update(updateUserDto: UpdateUserDto): Promise<User> {
+    let config = await findIdByName(
+      updateUserDto.email,
+      updateUserDto.domainName
+    )
+
     const user = new User();
     user.id = updateUserDto.id;
     user.username = updateUserDto.username;
     if (updateUserDto.password) {
       user.password = sha512(updateUserDto.password).toString();
     }
-    user.accountId = updateUserDto.accountId;
-    user.websiteId = updateUserDto.websiteId;
-    user.tenantId = updateUserDto.tenantId;
+    user.accountId = config.account.id;
+    user.websiteId = config.website.id;
+    user.tenantId = config.tenant.id;
 
     return this.usersRepository.update({ id: user.id }, user).then(r => {
       return r.raw
@@ -53,6 +90,11 @@ export class UsersService {
 
   // login
   async auth(authUserDto: AuthUserDto): Promise<any> {
+    let config = await findIdByName(
+      authUserDto.email,
+      authUserDto.domainName
+    )
+
     // find account by given email
     const account = await this.accountsRepository.findOne({
       select: ["id", "email", "password", "user", "admin", "client", "master"],
@@ -67,8 +109,8 @@ export class UsersService {
       where: {
         username: authUserDto.username,
         accountId: account.id,
-        websiteId: authUserDto.websiteId,
-        tenantId: authUserDto.tenantId
+        websiteId: config.website.id,
+        tenantId: config.tenant.id
       }
     })
 

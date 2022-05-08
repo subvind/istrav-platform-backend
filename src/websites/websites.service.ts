@@ -7,33 +7,58 @@ import { CreateWebsiteDto } from './dto/create-website.dto';
 import { UpdateWebsiteDto } from './dto/update-website.dto';
 
 import { Website } from './entities/website.entity';
+import { Tenant } from '../tenants/entities/tenant.entity';
+
+async function findIdByName (tenantReferenceId) {
+  // find tenant by given tenantReferenceId
+  const tenant = await this.tenantsRepository.findOne({
+    select: ["id"],
+    where: {
+      referenceId: tenantReferenceId
+    }
+  })
+
+  return { 
+    tenant
+  }
+}
 
 @Injectable()
 export class WebsitesService {
   constructor(
     public eventEmitter: EventEmitter2,
     @InjectRepository(Website)
-    private readonly websitesRepository: Repository<Website>
+    private readonly websitesRepository: Repository<Website>,
+    @InjectRepository(Tenant)
+    private readonly tenantsRepository: Repository<Tenant>,
   ) {}
 
   // register
-  create(createWebsiteDto: CreateWebsiteDto): Promise<Website> {
+  async create(createWebsiteDto: CreateWebsiteDto): Promise<Website> {
+    let config = await findIdByName(
+      createWebsiteDto.tenantReferenceId,
+    )
+
     const website = new Website();
     website.domainName = createWebsiteDto.domainName;
     website.displayName = createWebsiteDto.displayName;
     website.ownerId = createWebsiteDto.ownerId;
-    website.tenantId = createWebsiteDto.tenantId;
+    website.tenantId = config.tenant.id;
 
     return this.websitesRepository.save(website)
   }
 
-  update(updateWebsiteDto: UpdateWebsiteDto): Promise<Website> {
+  async update(updateWebsiteDto: UpdateWebsiteDto): Promise<Website> {
+    let config = await findIdByName(
+      updateWebsiteDto.tenantReferenceId,
+    )
+
     const website = new Website();
     website.id = updateWebsiteDto.id;
     website.domainName = updateWebsiteDto.domainName;
     website.displayName = updateWebsiteDto.displayName;
     website.ownerId = updateWebsiteDto.ownerId;
-    website.tenantId = updateWebsiteDto.tenantId;
+    website.tenantId = config.tenant.id;
 
     return this.websitesRepository.update({ id: website.id }, website).then(r => {
       return r.raw

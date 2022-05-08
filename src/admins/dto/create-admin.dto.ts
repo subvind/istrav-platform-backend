@@ -1,7 +1,6 @@
 export class CreateAdminDto {
+  email: string;
   username: string;
   password: string;
-  accountId: string;
-  websiteId: string;
-  tenantId: string;
+  domainName: string;
 }

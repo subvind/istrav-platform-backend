@@ -9,9 +9,34 @@ import { AuthMasterDto } from './dto/auth-master.dto';
 
 import { Master } from './entities/master.entity';
 import { Account } from '../accounts/entities/account.entity';
+import { Website } from '../websites/entities/website.entity';
 
 import * as jwt from "jsonwebtoken";
 import * as sha512 from 'crypto-js/sha512'
+
+async function findIdByName (email) {
+  // find account by given email
+  const account = await this.accountsRepository.findOne({
+    select: ["id"],
+    where: {
+      email: email
+    }
+  })
+
+  // // find website & tenant by given domainName
+  // const website = await this.websitesRepository.findOne({
+  //   select: ["id", "tenant"],
+  //   where: {
+  //     domainName: domainName
+  //   }
+  // })
+
+  return { 
+    account,
+    // website, 
+    // tenant: website.tenant
+  }
+}
 
 @Injectable()
 export class MastersService {
@@ -24,23 +49,31 @@ export class MastersService {
   ) {}
 
   // register
-  create(createMasterDto: CreateMasterDto): Promise<Master> {
+  async create(createMasterDto: CreateMasterDto): Promise<Master> {
+    let config = await findIdByName(
+      createMasterDto.email
+    )
+
     const master = new Master();
     master.username = createMasterDto.username;
     master.password = sha512(createMasterDto.password).toString();
-    master.accountId = createMasterDto.accountId;
+    master.accountId = config.account.id;
 
     return this.mastersRepository.save(master)
   }
 
-  update(updateMasterDto: UpdateMasterDto): Promise<Master> {
+  async update(updateMasterDto: UpdateMasterDto): Promise<Master> {
+    let config = await findIdByName(
+      updateMasterDto.email
+    )
+
     const master = new Master();
     master.id = updateMasterDto.id;
     master.username = updateMasterDto.username;
     if (updateMasterDto.password) {
       master.password = sha512(updateMasterDto.password).toString();
     }
-    master.accountId = updateMasterDto.accountId;
+    master.accountId = config.account.id;
 
     return this.mastersRepository.update({ id: master.id }, master).then(r => {
       return r.raw
