@@ -27,7 +27,7 @@ async function findIdByName (email, tenantReferenceId) {
   const tenant = await this.tenantsRepository.findOne({
     select: ["id"],
     where: {
-      tenantReferenceId: tenantReferenceId
+      referenceId: tenantReferenceId
     }
   })
 

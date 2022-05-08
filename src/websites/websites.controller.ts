@@ -3,7 +3,6 @@ import { WebsitesService } from './websites.service';
 import { CreateWebsiteDto } from './dto/create-website.dto';
 import { UpdateWebsiteDto } from './dto/update-website.dto';
 
-import * as secureSession from 'fastify-secure-session'
 import { CaslAbilityFactory } from './abilities/website.ability'
 import { Action } from './abilities/action.enum'
 

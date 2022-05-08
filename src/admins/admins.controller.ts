@@ -2,8 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Request } from 
 import { AdminsService } from './admins.service';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
+import { AuthAdminDto } from './dto/auth-admin.dto';
 
-import * as secureSession from 'fastify-secure-session'
+
 import { CaslAbilityFactory } from './abilities/admin.ability'
 import { Action } from './abilities/action.enum'
 
@@ -74,6 +75,23 @@ export class AdminsController {
       return this.adminsService.remove(id);
     } else {
       return {}
+    }
+  }
+
+  @Post('auth')
+  auth(@Body() authAdminDto: AuthAdminDto, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
+    const ability = this.caslAbilityFactory.createForUser(account);
+    
+    if (ability.can(Action.AUTH, Admin)) {
+      return this.adminsService.auth(authAdminDto).then((token) => {
+        // signal event
+        this.adminsService.eventEmitter.emit('admin.auth', token)
+        // save to response
+        return { jwt: token }
+      });
+    } else {
+      return { error: 'you do not have the ability to do this' }
     }
   }
 }

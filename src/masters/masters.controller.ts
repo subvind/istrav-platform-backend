@@ -2,8 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Request } from 
 import { MastersService } from './masters.service';
 import { CreateMasterDto } from './dto/create-master.dto';
 import { UpdateMasterDto } from './dto/update-master.dto';
+import { AuthMasterDto } from './dto/auth-master.dto';
 
-import * as secureSession from 'fastify-secure-session'
 import { CaslAbilityFactory } from './abilities/master.ability'
 import { Action } from './abilities/action.enum'
 
@@ -74,6 +74,23 @@ export class MastersController {
       return this.mastersService.remove(id);
     } else {
       return {}
+    }
+  }
+
+  @Post('auth')
+  auth(@Body() authMasterDto: AuthMasterDto, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
+    const ability = this.caslAbilityFactory.createForUser(account);
+    
+    if (ability.can(Action.AUTH, Master)) {
+      return this.mastersService.auth(authMasterDto).then((token) => {
+        // signal event
+        this.mastersService.eventEmitter.emit('master.auth', token)
+        // save to response
+        return { jwt: token }
+      });
+    } else {
+      return { error: 'you do not have the ability to do this' }
     }
   }
 }

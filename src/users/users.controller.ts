@@ -3,7 +3,6 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-import * as secureSession from 'fastify-secure-session'
 import { CaslAbilityFactory } from './abilities/user.ability'
 import { Action } from './abilities/action.enum'
 

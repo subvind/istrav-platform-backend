@@ -2,8 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Request } from 
 import { ClientsService } from './clients.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
+import { AuthClientDto } from './dto/auth-client.dto';
 
-import * as secureSession from 'fastify-secure-session'
+
 import { CaslAbilityFactory } from './abilities/client.ability'
 import { Action } from './abilities/action.enum'
 
@@ -74,6 +75,23 @@ export class ClientsController {
       return this.clientsService.remove(id);
     } else {
       return {}
+    }
+  }
+
+  @Post('auth')
+  auth(@Body() authClientDto: AuthClientDto, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
+    const ability = this.caslAbilityFactory.createForUser(account);
+    
+    if (ability.can(Action.AUTH, Client)) {
+      return this.clientsService.auth(authClientDto).then((token) => {
+        // signal event
+        this.clientsService.eventEmitter.emit('client.auth', token)
+        // save to response
+        return { jwt: token }
+      });
+    } else {
+      return { error: 'you do not have the ability to do this' }
     }
   }
 }
