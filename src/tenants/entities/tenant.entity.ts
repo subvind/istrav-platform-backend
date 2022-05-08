@@ -19,7 +19,7 @@ export class Tenant extends BaseEntity {
   referenceId: string
 
   // relation founder
-  @Column({ type: "uuid", nullable: false })
+  @Column({ type: "uuid", nullable: true })
   ownerId: string;
 
   @ManyToOne(() => Client, client => client.id)

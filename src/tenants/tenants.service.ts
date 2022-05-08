@@ -7,29 +7,98 @@ import { CreateTenantDto } from './dto/create-tenant.dto';
 import { UpdateTenantDto } from './dto/update-tenant.dto';
 
 import { Tenant } from './entities/tenant.entity';
+import { Client } from '../clients/entities/client.entity';
+import { Account } from '../accounts/entities/account.entity';
+
+import * as sha512 from 'crypto-js/sha512'
+
+async function findIdByName (that, email, referenceId) {
+  let account
+  let tenant
+
+  // find account by given email
+  if (email) {
+    account = await that.accountsRepository.findOne({
+      select: ["id"],
+      where: {
+        email: email
+      }
+    })
+  }
+
+  // find tenant by given referenceId
+  if (referenceId) {
+    tenant = await that.tenantsRepository.findOne({
+      select: ["id"],
+      where: {
+        referenceId: referenceId
+      }
+    })
+  }
+
+  return { 
+    account,
+    tenant
+  }
+}
 
 @Injectable()
 export class TenantsService {
   constructor(
     public eventEmitter: EventEmitter2,
     @InjectRepository(Tenant)
-    private readonly tenantsRepository: Repository<Tenant>
+    private readonly tenantsRepository: Repository<Tenant>,
+    @InjectRepository(Account)
+    private readonly accountsRepository: Repository<Account>,
+    @InjectRepository(Client)
+    private readonly clientsRepository: Repository<Client>,
   ) {}
 
   // register
-  create(createTenantDto: CreateTenantDto): Promise<Tenant> {
+  async create(createTenantDto: CreateTenantDto): Promise<Tenant> {
+    let config = await findIdByName(
+      this,
+      createTenantDto.ownerAccountEmail,
+      null
+    )
+
+    // create tenant
     const tenant = new Tenant();
     tenant.referenceId = createTenantDto.referenceId;
-    tenant.ownerId = createTenantDto.ownerId;
+    await this.tenantsRepository.save(tenant)
 
-    return this.tenantsRepository.save(tenant)
+    // create client account for tenant
+    const client = new Client();
+    client.username = createTenantDto.ownerNewClientUsername
+    client.password = sha512(createTenantDto.ownerNewClientPassword).toString();
+    client.accountId = config.account.id
+    client.tenantId = tenant.id
+    await this.clientsRepository.save(client)
+
+    // update tenant owner with new client
+    tenant.ownerId = client.id;
+    await this.tenantsRepository.update({ id: tenant.id }, tenant)
+    
+    // return record from db
+    return this.tenantsRepository.findOneBy({ id: tenant.id })
   }
 
-  update(updateTenantDto: UpdateTenantDto): Promise<Tenant> {
+  async update(updateTenantDto: UpdateTenantDto): Promise<Tenant> {
+    let config = await findIdByName(
+      this,
+      null,
+      updateTenantDto.referenceId
+    )
+
+    // change record
     const tenant = new Tenant();
     tenant.id = updateTenantDto.id;
     tenant.referenceId = updateTenantDto.referenceId;
-    tenant.ownerId = updateTenantDto.ownerId;
+    
+    // change ownership 
+    if (updateTenantDto.ownerId) {
+      tenant.ownerId = updateTenantDto.ownerId;
+    }
 
     return this.tenantsRepository.update({ id: tenant.id }, tenant).then(r => {
       return r.raw

@@ -1,4 +1,6 @@
 export class CreateTenantDto {
   referenceId: string;
-  ownerId: string;
+  ownerAccountEmail: string;
+  ownerNewClientUsername: string;
+  ownerNewClientPassword: string;
 }

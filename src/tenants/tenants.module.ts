@@ -8,13 +8,17 @@ import { TenantCreatedGateway } from './gateways/tenant-created.gateway';
 import { TenantsController } from './tenants.controller';
 
 import { Tenant } from './entities/tenant.entity';
+import { Account } from '../accounts/entities/account.entity';
+import { Client } from '../clients/entities/client.entity';
 
 import { CaslAbilityFactory } from './abilities/tenant.ability'
 
 @Module({
   imports: [
     EventEmitterModule.forRoot(),
-    TypeOrmModule.forFeature([Tenant])
+    TypeOrmModule.forFeature([Tenant]),
+    TypeOrmModule.forFeature([Account]),
+    TypeOrmModule.forFeature([Client]),
   ],
   controllers: [TenantsController],
   providers: [TenantsService, TenantCreatedListener, TenantCreatedGateway, CaslAbilityFactory],
