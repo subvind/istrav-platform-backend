@@ -9,7 +9,7 @@ import { ClientsController } from './clients.controller';
 
 import { Account } from '../accounts/entities/account.entity';
 import { Client } from './entities/client.entity';
-import { Website } from '../websites/entities/website.entity';
+import { Tenant } from '../tenants/entities/tenant.entity';
 
 import { CaslAbilityFactory } from './abilities/client.ability'
 
@@ -18,7 +18,7 @@ import { CaslAbilityFactory } from './abilities/client.ability'
     EventEmitterModule.forRoot(),
     TypeOrmModule.forFeature([Account]),
     TypeOrmModule.forFeature([Client]),
-    TypeOrmModule.forFeature([Website]),
+    TypeOrmModule.forFeature([Tenant]),
   ],
   controllers: [ClientsController],
   providers: [ClientsService, ClientCreatedListener, ClientCreatedGateway, CaslAbilityFactory],

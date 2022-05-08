@@ -9,12 +9,12 @@ import { AuthClientDto } from './dto/auth-client.dto';
 
 import { Client } from './entities/client.entity';
 import { Account } from '../accounts/entities/account.entity';
-import { Website } from '../websites/entities/website.entity';
+import { Tenant } from '../tenants/entities/tenant.entity';
 
 import * as jwt from "jsonwebtoken";
 import * as sha512 from 'crypto-js/sha512'
 
-async function findIdByName (email, domainName) {
+async function findIdByName (email, tenantReferenceId) {
   // find account by given email
   const account = await this.accountsRepository.findOne({
     select: ["id"],
@@ -23,18 +23,17 @@ async function findIdByName (email, domainName) {
     }
   })
 
-  // find website & tenant by given domainName
-  const website = await this.websitesRepository.findOne({
-    select: ["id", "tenant"],
+  // find tenant by given tenantReferenceId
+  const tenant = await this.tenantsRepository.findOne({
+    select: ["id"],
     where: {
-      domainName: domainName
+      tenantReferenceId: tenantReferenceId
     }
   })
 
   return { 
     account,
-    website, 
-    tenant: website.tenant
+    tenant
   }
 }
 
@@ -46,15 +45,15 @@ export class ClientsService {
     private readonly clientsRepository: Repository<Client>,
     @InjectRepository(Account)
     private readonly accountsRepository: Repository<Account>,
-    @InjectRepository(Website)
-    private readonly websitesRepository: Repository<Website>,
+    @InjectRepository(Tenant)
+    private readonly tenantsRepository: Repository<Tenant>,
   ) {}
 
   // register
   async create(createClientDto: CreateClientDto): Promise<Client> {
     let config = await findIdByName(
       createClientDto.email,
-      createClientDto.domainName
+      createClientDto.tenantReferenceId
     )
 
     const client = new Client();
@@ -69,7 +68,7 @@ export class ClientsService {
   async update(updateClientDto: UpdateClientDto): Promise<Client> {
     let config = await findIdByName(
       updateClientDto.email,
-      updateClientDto.domainName
+      updateClientDto.tenantReferenceId
     )
 
     const client = new Client();
@@ -90,7 +89,7 @@ export class ClientsService {
   async auth(authClientDto: AuthClientDto): Promise<any> {
     let config = await findIdByName(
       authClientDto.email,
-      authClientDto.domainName
+      authClientDto.tenantReferenceId
     )
 
     // find account by given email
