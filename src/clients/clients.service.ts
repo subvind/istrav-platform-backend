@@ -126,6 +126,9 @@ export class ClientsService {
           return r.raw
         })
 
+        // do not show in jwt
+        delete client.password
+
         // return new account
         return jwt.sign({
           id: account.id,

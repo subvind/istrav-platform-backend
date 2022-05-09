@@ -129,6 +129,9 @@ export class UsersService {
         this.accountsRepository.update({ id: account.id }, account).then(r => {
           return r.raw
         })
+        
+        // do not show in jwt
+        delete user.password
 
         // return new account
         return jwt.sign({

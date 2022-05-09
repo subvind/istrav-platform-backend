@@ -113,7 +113,10 @@ export class MastersService {
         this.accountsRepository.update({ id: account.id }, account).then(r => {
           return r.raw
         })
-
+        
+        // do not show in jwt
+        delete master.password
+        
         // return new account
         return jwt.sign({
           id: account.id,

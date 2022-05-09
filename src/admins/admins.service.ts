@@ -130,6 +130,9 @@ export class AdminsService {
           return r.raw
         })
 
+        // do not show in jwt
+        delete admin.password
+
         // return new account
         return jwt.sign({
           id: account.id,
