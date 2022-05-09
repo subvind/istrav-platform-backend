@@ -14,9 +14,9 @@ import { Tenant } from '../tenants/entities/tenant.entity';
 import * as jwt from "jsonwebtoken";
 import * as sha512 from 'crypto-js/sha512'
 
-async function findIdByName (email, tenantReferenceId) {
+async function findIdByName (that, email, tenantReferenceId) {
   // find account by given email
-  const account = await this.accountsRepository.findOne({
+  const account = await that.accountsRepository.findOne({
     select: ["id"],
     where: {
       email: email
@@ -24,7 +24,7 @@ async function findIdByName (email, tenantReferenceId) {
   })
 
   // find tenant by given tenantReferenceId
-  const tenant = await this.tenantsRepository.findOne({
+  const tenant = await that.tenantsRepository.findOne({
     select: ["id"],
     where: {
       referenceId: tenantReferenceId
@@ -52,6 +52,7 @@ export class ClientsService {
   // register
   async create(createClientDto: CreateClientDto): Promise<Client> {
     let config = await findIdByName(
+      this,
       createClientDto.email,
       createClientDto.tenantReferenceId
     )
@@ -67,6 +68,7 @@ export class ClientsService {
 
   async update(updateClientDto: UpdateClientDto): Promise<Client> {
     let config = await findIdByName(
+      this,
       updateClientDto.email,
       updateClientDto.tenantReferenceId
     )
@@ -88,6 +90,7 @@ export class ClientsService {
   // login
   async auth(authClientDto: AuthClientDto): Promise<any> {
     let config = await findIdByName(
+      this,
       authClientDto.email,
       authClientDto.tenantReferenceId
     )

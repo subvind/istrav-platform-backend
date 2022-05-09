@@ -9,9 +9,9 @@ import { UpdateWebsiteDto } from './dto/update-website.dto';
 import { Website } from './entities/website.entity';
 import { Tenant } from '../tenants/entities/tenant.entity';
 
-async function findIdByName (tenantReferenceId) {
+async function findIdByName (that, tenantReferenceId) {
   // find tenant by given tenantReferenceId
-  const tenant = await this.tenantsRepository.findOne({
+  const tenant = await that.tenantsRepository.findOne({
     select: ["id"],
     where: {
       referenceId: tenantReferenceId
@@ -36,6 +36,7 @@ export class WebsitesService {
   // register
   async create(createWebsiteDto: CreateWebsiteDto): Promise<Website> {
     let config = await findIdByName(
+      this,
       createWebsiteDto.tenantReferenceId,
     )
 
@@ -50,6 +51,7 @@ export class WebsitesService {
 
   async update(updateWebsiteDto: UpdateWebsiteDto): Promise<Website> {
     let config = await findIdByName(
+      this,
       updateWebsiteDto.tenantReferenceId,
     )
 

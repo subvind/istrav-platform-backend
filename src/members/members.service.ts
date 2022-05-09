@@ -10,9 +10,9 @@ import { Member } from './entities/member.entity';
 import { Website } from '../websites/entities/website.entity';
 import { SocialGroup } from '../socialGroups/entities/socialGroup.entity';
 
-async function findIdByName (subdomain, domainName) {
+async function findIdByName (that, subdomain, domainName) {
   // find website & tenant by given domainName
-  const website = await this.websitesRepository.findOne({
+  const website = await that.websitesRepository.findOne({
     select: ["id", "tenant"],
     where: {
       domainName: domainName
@@ -20,7 +20,7 @@ async function findIdByName (subdomain, domainName) {
   })
 
   // find social group by given subdomain
-  const socialGroup = await this.socialGroupsRepository.findOne({
+  const socialGroup = await that.socialGroupsRepository.findOne({
     select: ["id"],
     where: {
       subdomain: subdomain,
@@ -52,6 +52,7 @@ export class MembersService {
   // register
   async create(createMemberDto: CreateMemberDto): Promise<Member> {
     let config = await findIdByName(
+      this,
       createMemberDto.subdomain,
       createMemberDto.domainName
     )
@@ -67,6 +68,7 @@ export class MembersService {
 
   async update(updateMemberDto: UpdateMemberDto): Promise<Member> {
     let config = await findIdByName(
+      this,
       updateMemberDto.subdomain,
       updateMemberDto.domainName
     )

@@ -14,9 +14,9 @@ import { Website } from '../websites/entities/website.entity';
 import * as jwt from "jsonwebtoken";
 import * as sha512 from 'crypto-js/sha512'
 
-async function findIdByName (email) {
+async function findIdByName (that, email) {
   // find account by given email
-  const account = await this.accountsRepository.findOne({
+  const account = await that.accountsRepository.findOne({
     select: ["id"],
     where: {
       email: email
@@ -51,6 +51,7 @@ export class MastersService {
   // register
   async create(createMasterDto: CreateMasterDto): Promise<Master> {
     let config = await findIdByName(
+      this,
       createMasterDto.email
     )
 
@@ -64,6 +65,7 @@ export class MastersService {
 
   async update(updateMasterDto: UpdateMasterDto): Promise<Master> {
     let config = await findIdByName(
+      this,
       updateMasterDto.email
     )
 

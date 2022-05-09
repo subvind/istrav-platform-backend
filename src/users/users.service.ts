@@ -14,9 +14,9 @@ import { Website } from '../websites/entities/website.entity';
 import * as jwt from "jsonwebtoken";
 import * as sha512 from 'crypto-js/sha512'
 
-async function findIdByName (email, domainName) {
+async function findIdByName (that, email, domainName) {
   // find account by given email
-  const account = await this.accountsRepository.findOne({
+  const account = await that.accountsRepository.findOne({
     select: ["id"],
     where: {
       email: email
@@ -24,7 +24,7 @@ async function findIdByName (email, domainName) {
   })
 
   // find website & tenant by given domainName
-  const website = await this.websitesRepository.findOne({
+  const website = await that.websitesRepository.findOne({
     select: ["id", "tenant"],
     where: {
       domainName: domainName
@@ -53,6 +53,7 @@ export class UsersService {
   // register
   async create(createUserDto: CreateUserDto): Promise<User> {
     let config = await findIdByName(
+      this,
       createUserDto.email,
       createUserDto.domainName
     )
@@ -69,6 +70,7 @@ export class UsersService {
 
   async update(updateUserDto: UpdateUserDto): Promise<User> {
     let config = await findIdByName(
+      this,
       updateUserDto.email,
       updateUserDto.domainName
     )
@@ -91,6 +93,7 @@ export class UsersService {
   // login
   async auth(authUserDto: AuthUserDto): Promise<any> {
     let config = await findIdByName(
+      this,
       authUserDto.email,
       authUserDto.domainName
     )

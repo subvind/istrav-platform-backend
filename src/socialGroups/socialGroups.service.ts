@@ -9,7 +9,7 @@ import { UpdateSocialGroupDto } from './dto/update-socialGroup.dto';
 import { SocialGroup } from './entities/socialGroup.entity';
 import { Website } from '../websites/entities/website.entity';
 
-async function findIdByName (domainName) {
+async function findIdByName (that, domainName) {
   // // find account by given email
   // const account = await this.accountsRepository.findOne({
   //   select: ["id"],
@@ -19,7 +19,7 @@ async function findIdByName (domainName) {
   // })
 
   // find website & tenant by given domainName
-  const website = await this.websitesRepository.findOne({
+  const website = await that.websitesRepository.findOne({
     select: ["id", "tenant"],
     where: {
       domainName: domainName
@@ -46,6 +46,7 @@ export class SocialGroupsService {
   // register
   async create(createSocialGroupDto: CreateSocialGroupDto): Promise<SocialGroup> {
     let config = await findIdByName(
+      this,
       createSocialGroupDto.domainName
     )
 
@@ -61,6 +62,7 @@ export class SocialGroupsService {
 
   async update(updateSocialGroupDto: UpdateSocialGroupDto): Promise<SocialGroup> {
     let config = await findIdByName(
+      this,
       updateSocialGroupDto.domainName
     )
 
