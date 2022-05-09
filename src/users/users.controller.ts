@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Request } from 
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { AuthUserDto } from './dto/auth-user.dto';
 
 import { CaslAbilityFactory } from './abilities/user.ability'
 import { Action } from './abilities/action.enum'
@@ -73,6 +74,23 @@ export class UsersController {
       return this.usersService.remove(id);
     } else {
       return {}
+    }
+  }
+
+  @Post('auth')
+  auth(@Body() authUserDto: AuthUserDto, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
+    const ability = this.caslAbilityFactory.createForUser(account);
+    
+    if (ability.can(Action.AUTH, User)) {
+      return this.usersService.auth(authUserDto).then((token) => {
+        // signal event
+        this.usersService.eventEmitter.emit('user.auth', token)
+        // save to response
+        return { jwt: token }
+      });
+    } else {
+      return { error: 'you do not have the ability to do this' }
     }
   }
 }
