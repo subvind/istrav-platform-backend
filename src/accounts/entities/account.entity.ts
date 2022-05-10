@@ -32,45 +32,45 @@ export class Account extends BaseEntity {
   // relation selected website auth
   @Column({ type: "uuid", nullable: true })
   userId: string;
-  @ManyToOne(() => User, user => user.id)
+  @ManyToOne(() => User, user => user.accounts)
   @JoinColumn({ name: "accountId" })
   user: User;
 
   // relation selected ACP auth
   @Column({ type: "uuid", nullable: true })
   adminId: string;
-  @ManyToOne(() => Admin, admin => admin.id)
+  @ManyToOne(() => Admin, admin => admin.accounts)
   @JoinColumn({ name: "adminId" })
   admin: Admin;
 
   // relation selected CA auth
   @Column({ type: "uuid", nullable: true })
   clientId: string;
-  @ManyToOne(() => Client, client => client.id)
+  @ManyToOne(() => Client, client => client.accounts)
   @JoinColumn({ name: "clientId" })
   client: Client;
 
   // relation selected webmaster auth
   @Column({ type: "uuid", nullable: true })
   masterId: string;
-  @ManyToOne(() => Master, master => master.id)
+  @ManyToOne(() => Master, master => master.accounts)
   @JoinColumn({ name: "masterId" })
   master: Master;
 
   // relation users
-  @OneToMany(() => User, user => user.accountId)
+  @OneToMany(() => User, user => user.account)
   users: User[];
 
   // relation admins
-  @OneToMany(() => Admin, admin => admin.accountId)
+  @OneToMany(() => Admin, admin => admin.account)
   admins: Admin[];
 
   // relation clients
-  @OneToMany(() => Client, client => client.accountId)
+  @OneToMany(() => Client, client => client.account)
   clients: Client[];
 
   // relation masters
-  @OneToMany(() => Master, master => master.accountId)
+  @OneToMany(() => Master, master => master.account)
   masters: Master[];
 
   // record keeping

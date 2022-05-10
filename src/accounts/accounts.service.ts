@@ -86,6 +86,21 @@ export class AccountsService {
     await this.accountsRepository.delete(id);
   }
 
+  availableSessions(id: string): Promise<Account> {
+    return this.accountsRepository.findOne({
+      select: ['id'],
+      relations: {
+        users: true,
+        admins: true,
+        clients: true,
+        masters: true
+      },
+      where: {
+        id
+      }
+    });
+  }
+
   // findOneWithHosts(id: string): Promise<Account> {
   //   return this.accountsRepository.findOne(id, {
   //     relations: ["collaborations", "ownerships"]

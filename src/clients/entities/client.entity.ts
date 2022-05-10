@@ -18,11 +18,15 @@ export class Client extends BaseEntity {
   @Column()
   password: string
 
+  // relation accounts
+  @OneToMany(() => Account, account => account.client)
+  accounts: Account[];
+
   // relation account
   @Column({ type: "uuid", nullable: false })
   accountId: string;
   
-  @ManyToOne(() => Account, account => account.id)
+  @ManyToOne(() => Account, account => account.clients)
   @JoinColumn({ name: "accountId" })
   account: Account;
   
@@ -30,7 +34,7 @@ export class Client extends BaseEntity {
   @Column({ type: "uuid", nullable: false })
   tenantId: string;
 
-  @ManyToOne(() => Tenant, tenant => tenant.id)
+  @ManyToOne(() => Tenant, tenant => tenant.clients)
   @JoinColumn({ name: "tenantId" })
   tenant: Tenant;
 

@@ -26,6 +26,7 @@ export class CaslAbilityFactory {
     can(Action.UPDATE, Account);
     can(Action.REMOVE, Account);
     can(Action.AUTH, Account);
+    can(Action.AVAILABLE_SESSIONS, Account);
 
     // cannot(Action.UPDATE, Account);
     // cannot(Action.REMOVE, Account);

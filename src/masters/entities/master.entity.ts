@@ -18,11 +18,15 @@ export class Master extends BaseEntity {
   @Column()
   password: string
 
+  // relation accounts
+  @OneToMany(() => Account, account => account.master)
+  accounts: Account[];
+
   // relation account
   @Column({ type: "uuid", nullable: false })
   accountId: string;
 
-  @ManyToOne(() => Account, account => account.id)
+  @ManyToOne(() => Account, account => account.masters)
   @JoinColumn({ name: "accountId" })
   account: Account;
 

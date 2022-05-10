@@ -15,7 +15,7 @@ export class Member extends BaseEntity {
   @Column({ type: "uuid", nullable: false })
   userId: string;
 
-  @ManyToOne(() => User, user => user.id)
+  @ManyToOne(() => User, user => user.members)
   @JoinColumn({ name: "userId" })
   user: User;
 
@@ -23,7 +23,7 @@ export class Member extends BaseEntity {
   @Column({ type: "uuid", nullable: false })
   socialGroupId: string;
 
-  @ManyToOne(() => SocialGroup, socialGroup => socialGroup.id)
+  @ManyToOne(() => SocialGroup, socialGroup => socialGroup.members)
   @JoinColumn({ name: "socialGroupId" })
   socialGroup: SocialGroup;
 
@@ -31,7 +31,7 @@ export class Member extends BaseEntity {
   @Column({ type: "uuid", nullable: false })
   websiteId: string;
 
-  @ManyToOne(() => Website, website => website.id)
+  @ManyToOne(() => Website, website => website.members)
   @JoinColumn({ name: "websiteId" })
   website: Website;
 
@@ -39,7 +39,7 @@ export class Member extends BaseEntity {
   @Column({ type: "uuid", nullable: false })
   tenantId: string;
 
-  @ManyToOne(() => Tenant, tenant => tenant.id)
+  @ManyToOne(() => Tenant, tenant => tenant.members)
   @JoinColumn({ name: "tenantId" })
   tenant: Tenant;
 

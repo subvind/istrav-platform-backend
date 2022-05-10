@@ -23,19 +23,19 @@ export class SocialGroup extends BaseEntity {
   @Column({ type: "uuid", nullable: false })
   ownerId: string;
 
-  @ManyToOne(() => User, user => user.id)
+  @ManyToOne(() => User, user => user.ownedSocialGroups)
   @JoinColumn({ name: "ownerId" })
   owner: User;
 
   // relation members
-  @OneToMany(() => Member, member => member.socialGroupId)
+  @OneToMany(() => Member, member => member.socialGroup)
   members: Member[];
 
   // relation website
   @Column({ type: "uuid", nullable: false })
   websiteId: string;
 
-  @ManyToOne(() => Website, website => website.id)
+  @ManyToOne(() => Website, website => website.socialGroups)
   @JoinColumn({ name: "websiteId" })
   website: Website;
 
@@ -43,7 +43,7 @@ export class SocialGroup extends BaseEntity {
   @Column({ type: "uuid", nullable: false })
   tenantId: string;
 
-  @ManyToOne(() => Tenant, tenant => tenant.id)
+  @ManyToOne(() => Tenant, tenant => tenant.socialGroups)
   @JoinColumn({ name: "tenantId" })
   tenant: Tenant;
 

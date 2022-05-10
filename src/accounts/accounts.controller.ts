@@ -94,4 +94,16 @@ export class AccountsController {
       return { error: 'you do not have the ability to do this' }
     }
   }
+
+  @Get(':id/availableSessions')
+  availableSessions(@Param('id') id: string, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
+    const ability = this.caslAbilityFactory.createForUser(account);
+
+    if (ability.can(Action.AVAILABLE_SESSIONS, Account)) {
+      return this.accountsService.availableSessions(id);
+    } else {
+      return { error: 'you do not have the ability to do this' }
+    }
+  }
 }

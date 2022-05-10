@@ -5,5 +5,6 @@ export enum Action {
   FIND_ONE = 'find one',
   UPDATE = 'update',
   REMOVE = 'remove',
-  AUTH = 'auth'
+  AUTH = 'auth',
+  AVAILABLE_SESSIONS = 'available sessions'
 }

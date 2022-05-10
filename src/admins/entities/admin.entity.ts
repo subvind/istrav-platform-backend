@@ -19,15 +19,19 @@ export class Admin extends BaseEntity {
   @Column()
   password: string
 
+  // relation accounts
+  @OneToMany(() => Account, account => account.admin)
+  accounts: Account[];
+
   // relation owned websites
-  @OneToMany(() => Website, website => website.ownerId)
+  @OneToMany(() => Website, website => website.owner)
   ownedWebsites: Website[];
 
   // relation account
   @Column({ type: "uuid", nullable: false })
   accountId: string;
 
-  @ManyToOne(() => Account, account => account.id)
+  @ManyToOne(() => Account, account => account.admins)
   @JoinColumn({ name: "accountId" })
   account: Account;
 
@@ -35,7 +39,7 @@ export class Admin extends BaseEntity {
   @Column({ type: "uuid", nullable: false })
   websiteId: string;
 
-  @ManyToOne(() => Website, website => website.id)
+  @ManyToOne(() => Website, website => website.admins)
   @JoinColumn({ name: "websiteId" })
   website: Website;
 
@@ -43,7 +47,7 @@ export class Admin extends BaseEntity {
   @Column({ type: "uuid", nullable: false })
   tenantId: string;
 
-  @ManyToOne(() => Tenant, tenant => tenant.id)
+  @ManyToOne(() => Tenant, tenant => tenant.admins)
   @JoinColumn({ name: "tenantId" })
   tenant: Tenant;
 
