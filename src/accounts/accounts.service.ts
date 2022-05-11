@@ -90,10 +90,21 @@ export class AccountsService {
     return this.accountsRepository.findOne({
       select: ['id'],
       relations: {
-        users: true,
-        admins: true,
-        clients: true,
-        masters: true
+        users: {
+          // password: false,
+          website: true
+        },
+        admins: {
+          // password: false,
+          website: true
+        },
+        clients: {
+          // password: false,
+          tenant: true
+        },
+        masters: {
+          // password: false
+        }
       },
       where: {
         id
