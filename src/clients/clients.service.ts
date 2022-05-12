@@ -95,6 +95,11 @@ export class ClientsService {
       authClientDto.tenantReferenceId
     )
 
+    // check tenant
+    if (!config.tenant) {
+      return { error: `${authClientDto.tenantReferenceId} does not exist.` }
+    }
+
     // find account by given email
     const account = await this.accountsRepository.findOne({
       select: ["id", "email", "password", "user", "admin", "client", "master"],

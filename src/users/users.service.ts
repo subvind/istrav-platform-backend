@@ -98,6 +98,11 @@ export class UsersService {
       authUserDto.domainName
     )
 
+    // check website
+    if (!config.website) {
+      return { error: `${authUserDto.domainName} does not exist.` }
+    }
+
     // find account by given email
     const account = await this.accountsRepository.findOne({
       select: ["id", "email", "password", "user", "admin", "client", "master"],
