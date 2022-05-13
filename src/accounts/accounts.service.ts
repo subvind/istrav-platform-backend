@@ -54,6 +54,11 @@ export class AccountsService {
       select: ["id", "email", "password", "user", "admin", "client", "master"],
       where: {
         email: authAccountDto.email
+      },
+      relations: {
+        client: {
+          tenant: true
+        }
       }
     })
 
