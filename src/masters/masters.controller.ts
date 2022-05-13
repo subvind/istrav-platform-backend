@@ -16,6 +16,18 @@ export class MastersController {
     private caslAbilityFactory: CaslAbilityFactory
   ) {}
 
+  @Post('install')
+  install(@Body() installMasterDto: CreateMasterDto, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
+    const ability = this.caslAbilityFactory.createForUser(account);
+
+    if (ability.can(Action.INSTALL, Master)) {
+      return this.mastersService.install(installMasterDto);
+    } else {
+      return { error: 'you do not have the ability to do this' }
+    }
+  }
+
   @Post()
   create(@Body() createMasterDto: CreateMasterDto, @Req() req: Request) {
     let account = getAccountFromHeader(req)
@@ -24,7 +36,7 @@ export class MastersController {
     if (ability.can(Action.CREATE, Master)) {
       return this.mastersService.create(createMasterDto);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -36,7 +48,7 @@ export class MastersController {
     if (ability.can(Action.FIND_ALL, Master)) {
       return this.mastersService.findAll();
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -48,7 +60,7 @@ export class MastersController {
     if (ability.can(Action.FIND_ONE, Master)) {
       return this.mastersService.findOne(id);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -61,7 +73,7 @@ export class MastersController {
       updateMasterDto.id = id
       return this.mastersService.update(updateMasterDto);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -73,7 +85,7 @@ export class MastersController {
     if (ability.can(Action.REMOVE, Master)) {
       return this.mastersService.remove(id);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 

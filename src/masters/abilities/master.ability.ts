@@ -21,6 +21,7 @@ export class CaslAbilityFactory {
       can(Action.REMOVE, Master, { id: account.master.id });
     }
 
+    can(Action.INSTALL, Master);
     can(Action.CREATE, Master);
     can(Action.FIND_ALL, Master);
     can(Action.FIND_ONE, Master);

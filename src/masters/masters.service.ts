@@ -48,6 +48,33 @@ export class MastersService {
     private readonly accountsRepository: Repository<Account>
   ) {}
 
+  // register first record only
+  async install(installMasterDto: CreateMasterDto): Promise<any> {
+    let config = await findIdByName(
+      this,
+      installMasterDto.email
+    )
+
+    // check for existing record
+    const masters = await this.mastersRepository.find({
+      select: ["id", "username"]
+    })
+    console.log('first', masters[0])
+    if (masters[0]) {
+      return {
+        error: 'install complete: a master account record already exists.'
+      }
+    }
+
+    // else create the record
+    const master = new Master();
+    master.username = installMasterDto.username;
+    master.password = sha512(installMasterDto.password).toString();
+    master.accountId = config.account.id;
+
+    return this.mastersRepository.save(master)
+  }
+
   // register
   async create(createMasterDto: CreateMasterDto): Promise<Master> {
     let config = await findIdByName(
