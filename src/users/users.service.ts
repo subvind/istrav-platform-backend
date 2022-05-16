@@ -107,9 +107,22 @@ export class UsersService {
 
     // find account by given email
     const account = await this.accountsRepository.findOne({
-      select: ["id", "email", "password", "user", "admin", "client", "master"],
+      select: ["id", "email", "password"],
       where: {
         email: authUserDto.email
+      },
+      relations: {
+        user: {
+          website: true,
+        },
+        admin: {
+          website: true,
+          tenant: true
+        },
+        client: {
+          tenant: true
+        },
+        master: true
       }
     })
     

@@ -50,14 +50,22 @@ export class AccountsService {
   async auth(authAccountDto: AuthAccountDto): Promise<any> {
     // find account by given username
     const results = await this.accountsRepository.findOne({
-      select: ["id", "email", "password", "user", "admin", "client", "master"],
+      select: ["id", "email", "password"],
       where: {
         email: authAccountDto.email
       },
       relations: {
+        user: {
+          website: true,
+        },
+        admin: {
+          website: true,
+          tenant: true
+        },
         client: {
           tenant: true
-        }
+        },
+        master: true
       }
     })
 
