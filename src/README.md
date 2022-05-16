@@ -25,6 +25,7 @@ stripe feature:
 - invoices // bills
 - subscriptions // licenseKeys
 - paymentIntents // charges
+- paymentMethods // moneyAddress
 
 primary webmaster feature:
 - amounts // CRUD pricing table
