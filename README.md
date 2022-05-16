@@ -19,6 +19,12 @@ Claims-based authorization:
 - https://docs.nestjs.com/security/authorization
 - https://casl.js.org/v5/en/cookbook/claim-authorization
 
+third party services:
+- credit card: https://www.npmjs.com/package/nestjs-stripe
+- sms: https://www.npmjs.com/package/nestjs-twilio
+- email: https://www.npmjs.com/package/@ntegral/nestjs-sendgrid
+- cron: https://github.com/cloudflare/wrangler
+
 ### start:
 ```bash
 $ npm install -g @nestjs/cli
