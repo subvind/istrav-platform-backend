@@ -104,9 +104,8 @@ export class MastersService {
     }
     master.accountId = config.account.id;
 
-    return this.mastersRepository.update({ id: master.id }, master).then(r => {
-      return r.raw
-    })
+    await this.mastersRepository.update(master.id, master)
+    return this.mastersRepository.findOneBy({ id: master.id });
   }
 
   // login

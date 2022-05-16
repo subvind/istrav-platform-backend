@@ -100,9 +100,8 @@ export class TenantsService {
       tenant.ownerId = updateTenantDto.ownerId;
     }
 
-    return this.tenantsRepository.update({ id: tenant.id }, tenant).then(r => {
-      return r.raw
-    })
+    await this.tenantsRepository.update(tenant.id, tenant)
+    return this.tenantsRepository.findOneBy({ id: tenant.id });
   }
 
   async findAll(): Promise<Tenant[]> {

@@ -80,9 +80,8 @@ export class MembersService {
     member.websiteId = config.website.id;
     member.tenantId = config.tenant.id;
 
-    return this.membersRepository.update({ id: member.id }, member).then(r => {
-      return r.raw
-    })
+    await this.membersRepository.update(member.id, member)
+    return this.membersRepository.findOneBy({ id: member.id });
   }
 
   async findAll(): Promise<Member[]> {

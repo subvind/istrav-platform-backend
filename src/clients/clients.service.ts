@@ -82,9 +82,8 @@ export class ClientsService {
     client.accountId = config.account.id;
     client.tenantId = config.tenant.id;
 
-    return this.clientsRepository.update({ id: client.id }, client).then(r => {
-      return r.raw
-    })
+    await this.clientsRepository.update(client.id, client)
+    return this.clientsRepository.findOneBy({ id: client.id });
   }
 
   // login

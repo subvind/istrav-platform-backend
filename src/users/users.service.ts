@@ -85,9 +85,8 @@ export class UsersService {
     user.websiteId = config.website.id;
     user.tenantId = config.tenant.id;
 
-    return this.usersRepository.update({ id: user.id }, user).then(r => {
-      return r.raw
-    })
+    await this.usersRepository.update(user.id, user)
+    return this.usersRepository.findOneBy({ id: user.id });
   }
 
   // login

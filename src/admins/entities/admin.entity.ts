@@ -36,7 +36,7 @@ export class Admin extends BaseEntity {
   account: Account;
 
   // relation website
-  @Column({ type: "uuid", nullable: false })
+  @Column({ type: "uuid", nullable: true })
   websiteId: string;
 
   @ManyToOne(() => Website, website => website.admins)
@@ -44,7 +44,7 @@ export class Admin extends BaseEntity {
   website: Website;
 
   // relation tenant
-  @Column({ type: "uuid", nullable: false })
+  @Column({ type: "uuid", nullable: true })
   tenantId: string;
 
   @ManyToOne(() => Tenant, tenant => tenant.admins)

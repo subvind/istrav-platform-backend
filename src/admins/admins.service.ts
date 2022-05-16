@@ -58,12 +58,17 @@ export class AdminsService {
       createAdminDto.domainName
     )
 
+    
     const admin = new Admin();
     admin.username = createAdminDto.username;
     admin.password = sha512(createAdminDto.password).toString();
     admin.accountId = config.account.id;
-    admin.websiteId = config.website.id;
-    admin.tenantId = config.tenant.id;
+    // check if this is the very first admin for this website
+    // because we don't know what websiteId is yet
+    if (config.tenant) {
+      admin.websiteId = config.website.id;
+      admin.tenantId = config.tenant.id;
+    }
 
     return this.adminsRepository.save(admin)
   }
@@ -85,9 +90,8 @@ export class AdminsService {
     admin.websiteId = config.website.id;
     admin.tenantId = config.tenant.id;
 
-    return this.adminsRepository.update({ id: admin.id }, admin).then(r => {
-      return r.raw
-    })
+    await this.adminsRepository.update(admin.id, admin)
+    return this.adminsRepository.findOneBy({ id: admin.id });
   }
 
   // login

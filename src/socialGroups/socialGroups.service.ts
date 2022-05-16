@@ -74,9 +74,8 @@ export class SocialGroupsService {
     socialGroup.websiteId = config.website.id;
     socialGroup.tenantId = config.tenant.id;
 
-    return this.socialGroupsRepository.update({ id: socialGroup.id }, socialGroup).then(r => {
-      return r.raw
-    })
+    await this.socialGroupsRepository.update(socialGroup.id, socialGroup)
+    return this.socialGroupsRepository.findOneBy({ id: socialGroup.id });
   }
 
   async findAll(): Promise<SocialGroup[]> {

@@ -31,7 +31,7 @@ export class AccountsService {
     return this.accountsRepository.save(account)
   }
 
-  update(updateAccountDto: UpdateAccountDto): Promise<Account> {
+  async update(updateAccountDto: UpdateAccountDto): Promise<Account> {
     const account = new Account();
     account.id = updateAccountDto.id;
     account.email = updateAccountDto.email;
@@ -42,9 +42,8 @@ export class AccountsService {
     account.subscribe = updateAccountDto.subscribe;
     account.agreement = updateAccountDto.agreement;
 
-    return this.accountsRepository.update({ id: account.id }, account).then(r => {
-      return r.raw
-    })
+    await this.accountsRepository.update(account.id, account)
+    return this.accountsRepository.findOneBy({ id: account.id });
   }
 
   // login

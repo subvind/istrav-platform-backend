@@ -50,21 +50,19 @@ export class WebsitesService {
   }
 
   async update(updateWebsiteDto: UpdateWebsiteDto): Promise<Website> {
-    let config = await findIdByName(
-      this,
-      updateWebsiteDto.tenantReferenceId,
-    )
+    // let config = await findIdByName(
+    //   this,
+    //   updateWebsiteDto.tenantReferenceId,
+    // )
 
     const website = new Website();
     website.id = updateWebsiteDto.id;
     website.domainName = updateWebsiteDto.domainName;
     website.displayName = updateWebsiteDto.displayName;
     website.ownerId = updateWebsiteDto.ownerId;
-    website.tenantId = config.tenant.id;
 
-    return this.websitesRepository.update({ id: website.id }, website).then(r => {
-      return r.raw
-    })
+    await this.websitesRepository.update(website.id, website)
+    return this.websitesRepository.findOneBy({ id: website.id });
   }
 
   async findAll(): Promise<Website[]> {
