@@ -13,17 +13,30 @@ primary support & help desk feature:
 - tickets
 - ticketReplies
 
+root feature:
+- platforms
+- applications
+- themes
+
+stripe feature:
+- customers // tenants
+- products // websites
+- prices // amounts
+- invoices // bills
+- subscriptions // licenseKeys
+- paymentIntents // charges
+
 primary webmaster feature:
-- pricingPlans // CRUD pricing table
+- amounts // CRUD pricing table
 - tenants // customers in the system
 - masters // accounts allowed on root
 - applications // features
-- payments // for tenants that have been billed
+- bills // for tenants that have been invoiced
+- charges // for keeping track of receipts
+- licenseKeys // for auth of source code usage
 
 primary client area feature:
 - tenant // access to just 1 tenant at a time
-- pricingPlans // for showing the pricing table
-- licenseKeys // for auth of source code usage
 - websites // for software install location
 - clients // accounts allowed on tenant
 
