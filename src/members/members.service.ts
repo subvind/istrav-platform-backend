@@ -13,7 +13,10 @@ import { SocialGroup } from '../socialGroups/entities/socialGroup.entity';
 async function findIdByName (that, subdomain, domainName) {
   // find website & tenant by given domainName
   const website = await that.websitesRepository.findOne({
-    select: ["id", "tenant"],
+    select: ["id"],
+    relations: {
+      tenant: true
+    },
     where: {
       domainName: domainName
     }

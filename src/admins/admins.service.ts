@@ -25,7 +25,10 @@ async function findIdByName (that, email, domainName) {
 
   // find website & tenant by given domainName
   const website = await that.websitesRepository.findOne({
-    select: ["id", "tenant"],
+    select: ["id"],
+    relations: {
+      tenant: true
+    },
     where: {
       domainName: domainName
     }
@@ -58,17 +61,12 @@ export class AdminsService {
       createAdminDto.domainName
     )
 
-    
     const admin = new Admin();
     admin.username = createAdminDto.username;
     admin.password = sha512(createAdminDto.password).toString();
     admin.accountId = config.account.id;
-    // check if this is the very first admin for this website
-    // because we don't know what websiteId is yet
-    if (config.tenant) {
-      admin.websiteId = config.website.id;
-      admin.tenantId = config.tenant.id;
-    }
+    admin.websiteId = config.website.id;
+    admin.tenantId = config.tenant.id;
 
     return this.adminsRepository.save(admin)
   }
