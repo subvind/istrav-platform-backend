@@ -14,13 +14,15 @@ primary support & help desk feature:
 - ticketReplies
 
 primary webmaster feature:
-- services // CRUD pricing table
-- tenants // CRUD (websites, clients, plans, licenseKeys)
+- pricingPlans // CRUD pricing table
+- tenants // customers in the system
 - masters // accounts allowed on root
+- applications // features
+- payments // for tenants that have been billed
 
 primary client area feature:
-- services // for showing the pricing table
-- plans // for tenants that have purchased a service
+- tenant // access to just 1 tenant at a time
+- pricingPlans // for showing the pricing table
 - licenseKeys // for auth of source code usage
 - websites // for software install location
 - clients // accounts allowed on tenant
@@ -33,7 +35,6 @@ primary admin control panel feature:
 
 primary social group feature:
 - socialGroup // access to just 1 social group at a time
-- applications // for each individual SG app
 - members // accounts allowed on social group
 
 user instant messaging feature:
@@ -61,19 +62,19 @@ social group rules application:
 - rules
 - ruleNumbers
 
-social group affiliate & referrals application:
+social group affiliates application:
 - affiliates
 - affiliateLinks
 
-social group bulletin boards application:
-- bulletinBoards
-- bulletinBoardRefs
+social group activity feeds application:
+- feeds
+- feedActions
 
-social group rankings application:
+social group leaderboards application:
 - rankings
 - rankingPlacements
 
-social group discussion application:
+social group discussions application:
 - forums
 - forumMains
 - mainCategories
@@ -83,16 +84,16 @@ social group discussion application:
 - postPoints
 - postViews
 
-social group shoutbox application:
+social group shoutboxes application:
 - rooms
 - roomLogs
 
-social group showcases application:
-- showcases
-- showcaseDisplay
-- displayComments // user conversations
-- displayViews
-- displayPoints
+social group downloads application:
+- downloads
+- downloadFiles
+- fileComments // user conversations
+- fileViews
+- filePoints
 
 social group calendars application:
 - calendars
