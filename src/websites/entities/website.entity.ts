@@ -33,7 +33,7 @@ export class Website extends BaseEntity {
   admins: Admin[]
 
   // relation founder
-  @Column({ type: "uuid", nullable: false })
+  @Column({ type: "uuid", nullable: true })
   ownerId: string;
 
   @ManyToOne(() => Admin, admin => admin.ownedWebsites)
