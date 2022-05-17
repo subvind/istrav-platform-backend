@@ -8,6 +8,7 @@ import { UpdateLicenseKeyDto } from './dto/update-licenseKey.dto';
 import { VerifyLicenseKeyDto } from './dto/verify-licenseKey.dto';
 
 import { LicenseKey } from './entities/licenseKey.entity';
+import { Tenant } from '../tenants/entities/tenant.entity';
 import { Website } from '../websites/entities/website.entity';
 
 import * as jwt from "jsonwebtoken";
@@ -36,7 +37,7 @@ async function findIdByName (that, tenantReferenceId, domainName) {
   })
 
   // find website by given domainName
-  const website = await that.tenantsRepository.findOne({
+  const website = await that.websitesRepository.findOne({
     select: ["id"],
     where: {
       domainName: domainName
@@ -55,6 +56,8 @@ export class LicenseKeysService {
     public eventEmitter: EventEmitter2,
     @InjectRepository(LicenseKey)
     private readonly licenseKeysRepository: Repository<LicenseKey>,
+    @InjectRepository(Tenant)
+    private readonly tenantsRepository: Repository<Tenant>,
     @InjectRepository(Website)
     private readonly websitesRepository: Repository<Website>,
   ) {}
@@ -110,7 +113,11 @@ export class LicenseKeysService {
   }
 
   async findAll(): Promise<LicenseKey[]> {
-    return this.licenseKeysRepository.find();
+    return this.licenseKeysRepository.find({
+      relations: {
+        website: true
+      }
+    });
   }
 
   findOne(id: string): Promise<LicenseKey> {
