@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Request } from 
 import { LicenseKeysService } from './licenseKeys.service';
 import { CreateLicenseKeyDto } from './dto/create-licenseKey.dto';
 import { UpdateLicenseKeyDto } from './dto/update-licenseKey.dto';
+import { VerifyLicenseKeyDto } from './dto/verify-licenseKey.dto';
 
 import { CaslAbilityFactory } from './abilities/licenseKey.ability'
 import { Action } from './abilities/action.enum'
@@ -71,6 +72,18 @@ export class LicenseKeysController {
 
     if (ability.can(Action.REMOVE, LicenseKey)) {
       return this.licenseKeysService.remove(id);
+    } else {
+      return { error: 'you do not have the ability to do this' }
+    }
+  }
+
+  @Post('verify')
+  verify(@Body() verifyLicenseKeyDto: VerifyLicenseKeyDto, @Req() req: Request) {
+    let account = getAccountFromHeader(req)
+    const ability = this.caslAbilityFactory.createForUser(account);
+
+    if (ability.can(Action.VERIFY, LicenseKey)) {
+      return this.licenseKeysService.verify(verifyLicenseKeyDto);
     } else {
       return { error: 'you do not have the ability to do this' }
     }

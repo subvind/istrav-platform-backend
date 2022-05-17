@@ -26,6 +26,7 @@ export class CaslAbilityFactory {
     can(Action.FIND_ONE, LicenseKey);
     can(Action.UPDATE, LicenseKey);
     can(Action.REMOVE, LicenseKey);
+    can(Action.VERIFY, LicenseKey);
 
     return build({
       // Read https://casl.js.org/v5/en/guide/subject-type-detection#use-classes-as-subject-types for details
