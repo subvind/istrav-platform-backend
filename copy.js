@@ -5,11 +5,11 @@ const fse = require('fs-extra');
 const fs = require('fs')
 
 const srcDir = `websites`;
-const destDir = `licenseKeys`;
+const destDir = `charges`;
 const srcFile = `website`;
-const destFile = `licenseKey`;
+const destFile = `charge`;
 const srcFileUpper = `Website`;
-const destFileUpper = `LicenseKey`;
+const destFileUpper = `Charge`;
                               
 // copy entire directory  
 fse.copySync(`src/${srcDir}`, `src/${destDir}`);
