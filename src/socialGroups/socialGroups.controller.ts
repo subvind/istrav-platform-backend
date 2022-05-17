@@ -23,7 +23,7 @@ export class SocialGroupsController {
     if (ability.can(Action.CREATE, SocialGroup)) {
       return this.socialGroupsService.create(createSocialGroupDto);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -35,7 +35,7 @@ export class SocialGroupsController {
     if (ability.can(Action.FIND_ALL, SocialGroup)) {
       return this.socialGroupsService.findAll();
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -47,7 +47,7 @@ export class SocialGroupsController {
     if (ability.can(Action.FIND_ONE, SocialGroup)) {
       return this.socialGroupsService.findOne(id);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -60,7 +60,7 @@ export class SocialGroupsController {
       updateSocialGroupDto.id = id
       return this.socialGroupsService.update(updateSocialGroupDto);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -72,7 +72,7 @@ export class SocialGroupsController {
     if (ability.can(Action.REMOVE, SocialGroup)) {
       return this.socialGroupsService.remove(id);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 }

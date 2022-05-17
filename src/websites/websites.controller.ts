@@ -23,7 +23,7 @@ export class WebsitesController {
     if (ability.can(Action.CREATE, Website)) {
       return this.websitesService.create(createWebsiteDto);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -35,7 +35,7 @@ export class WebsitesController {
     if (ability.can(Action.FIND_ALL, Website)) {
       return this.websitesService.findAll();
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -47,7 +47,7 @@ export class WebsitesController {
     if (ability.can(Action.FIND_ONE, Website)) {
       return this.websitesService.findOne(id);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -60,7 +60,7 @@ export class WebsitesController {
       updateWebsiteDto.id = id
       return this.websitesService.update(updateWebsiteDto);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -72,7 +72,7 @@ export class WebsitesController {
     if (ability.can(Action.REMOVE, Website)) {
       return this.websitesService.remove(id);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 }

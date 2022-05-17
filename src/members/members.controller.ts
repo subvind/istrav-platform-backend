@@ -23,7 +23,7 @@ export class MembersController {
     if (ability.can(Action.CREATE, Member)) {
       return this.membersService.create(createMemberDto);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -35,7 +35,7 @@ export class MembersController {
     if (ability.can(Action.FIND_ALL, Member)) {
       return this.membersService.findAll();
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -47,7 +47,7 @@ export class MembersController {
     if (ability.can(Action.FIND_ONE, Member)) {
       return this.membersService.findOne(id);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -60,7 +60,7 @@ export class MembersController {
       updateMemberDto.id = id
       return this.membersService.update(updateMemberDto);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -72,7 +72,7 @@ export class MembersController {
     if (ability.can(Action.REMOVE, Member)) {
       return this.membersService.remove(id);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 }

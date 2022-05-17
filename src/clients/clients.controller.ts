@@ -25,7 +25,7 @@ export class ClientsController {
     if (ability.can(Action.CREATE, Client)) {
       return this.clientsService.create(createClientDto);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -37,7 +37,7 @@ export class ClientsController {
     if (ability.can(Action.FIND_ALL, Client)) {
       return this.clientsService.findAll();
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -49,7 +49,7 @@ export class ClientsController {
     if (ability.can(Action.FIND_ONE, Client)) {
       return this.clientsService.findOne(id);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -62,7 +62,7 @@ export class ClientsController {
       updateClientDto.id = id
       return this.clientsService.update(updateClientDto);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -74,7 +74,7 @@ export class ClientsController {
     if (ability.can(Action.REMOVE, Client)) {
       return this.clientsService.remove(id);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 

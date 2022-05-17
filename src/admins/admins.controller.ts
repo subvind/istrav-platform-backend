@@ -25,7 +25,7 @@ export class AdminsController {
     if (ability.can(Action.CREATE, Admin)) {
       return this.adminsService.create(createAdminDto);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -37,7 +37,7 @@ export class AdminsController {
     if (ability.can(Action.FIND_ALL, Admin)) {
       return this.adminsService.findAll();
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -49,7 +49,7 @@ export class AdminsController {
     if (ability.can(Action.FIND_ONE, Admin)) {
       return this.adminsService.findOne(id);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -62,7 +62,7 @@ export class AdminsController {
       updateAdminDto.id = id
       return this.adminsService.update(updateAdminDto);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -74,7 +74,7 @@ export class AdminsController {
     if (ability.can(Action.REMOVE, Admin)) {
       return this.adminsService.remove(id);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 

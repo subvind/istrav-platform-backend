@@ -24,7 +24,7 @@ export class UsersController {
     if (ability.can(Action.CREATE, User)) {
       return this.usersService.create(createUserDto);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -36,7 +36,7 @@ export class UsersController {
     if (ability.can(Action.FIND_ALL, User)) {
       return this.usersService.findAll();
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -48,7 +48,7 @@ export class UsersController {
     if (ability.can(Action.FIND_ONE, User)) {
       return this.usersService.findOne(id);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -61,7 +61,7 @@ export class UsersController {
       updateUserDto.id = id
       return this.usersService.update(updateUserDto);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -73,7 +73,7 @@ export class UsersController {
     if (ability.can(Action.REMOVE, User)) {
       return this.usersService.remove(id);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 

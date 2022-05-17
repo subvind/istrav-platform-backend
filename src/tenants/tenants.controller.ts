@@ -23,7 +23,7 @@ export class TenantsController {
     if (ability.can(Action.CREATE, Tenant)) {
       return this.tenantsService.create(createTenantDto);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -35,7 +35,7 @@ export class TenantsController {
     if (ability.can(Action.FIND_ALL, Tenant)) {
       return this.tenantsService.findAll();
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -47,7 +47,7 @@ export class TenantsController {
     if (ability.can(Action.FIND_ONE, Tenant)) {
       return this.tenantsService.findOne(id);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -60,7 +60,7 @@ export class TenantsController {
       updateTenantDto.id = id
       return this.tenantsService.update(updateTenantDto);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 
@@ -72,7 +72,7 @@ export class TenantsController {
     if (ability.can(Action.REMOVE, Tenant)) {
       return this.tenantsService.remove(id);
     } else {
-      return {}
+      return { error: 'you do not have the ability to do this' }
     }
   }
 }
