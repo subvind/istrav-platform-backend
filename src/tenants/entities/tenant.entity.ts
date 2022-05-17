@@ -8,6 +8,7 @@ import { SocialGroup } from '../../socialGroups/entities/socialGroup.entity'
 import { Admin } from "../../admins/entities/admin.entity";
 import { Client } from "../../clients/entities/client.entity";
 import { User } from "../../users/entities/user.entity";
+import { LicenseKey } from "../../licenseKeys/entities/licenseKey.entity";
 
 @Entity()
 @Unique(["referenceId"])
@@ -44,6 +45,9 @@ export class Tenant extends BaseEntity {
 
   @OneToMany(() => Website, website => website.tenantId)
   websites: Website[];
+
+  @OneToMany(() => LicenseKey, licenseKey => licenseKey.tenantId)
+  licenseKeys: LicenseKey[];
 
   // record keeping
   @Column()

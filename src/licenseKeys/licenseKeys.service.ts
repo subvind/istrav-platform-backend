@@ -9,7 +9,7 @@ import { UpdateLicenseKeyDto } from './dto/update-licenseKey.dto';
 import { LicenseKey } from './entities/licenseKey.entity';
 import { Tenant } from '../tenants/entities/tenant.entity';
 
-async function findIdByName (that, tenantReferenceId) {
+async function findIdByName (that, tenantReferenceId, domainName) {
   // find tenant by given tenantReferenceId
   const tenant = await that.tenantsRepository.findOne({
     select: ["id"],
@@ -18,8 +18,17 @@ async function findIdByName (that, tenantReferenceId) {
     }
   })
 
+  // find website by given domainName
+  const website = await that.tenantsRepository.findOne({
+    select: ["id"],
+    where: {
+      domainName: domainName
+    }
+  })
+
   return { 
-    tenant
+    tenant,
+    website
   }
 }
 
@@ -38,28 +47,29 @@ export class LicenseKeysService {
     let config = await findIdByName(
       this,
       createLicenseKeyDto.tenantReferenceId,
+      createLicenseKeyDto.domainName
     )
 
     const licenseKey = new LicenseKey();
-    licenseKey.domainName = createLicenseKeyDto.domainName;
-    licenseKey.displayName = createLicenseKeyDto.displayName;
-    licenseKey.ownerId = createLicenseKeyDto.ownerId;
+    licenseKey.token = createLicenseKeyDto.token;
+    licenseKey.websiteId = config.website.id;
     licenseKey.tenantId = config.tenant.id;
 
     return this.licenseKeysRepository.save(licenseKey)
   }
 
   async update(updateLicenseKeyDto: UpdateLicenseKeyDto): Promise<LicenseKey> {
-    // let config = await findIdByName(
-    //   this,
-    //   updateLicenseKeyDto.tenantReferenceId,
-    // )
+    let config = await findIdByName(
+      this,
+      updateLicenseKeyDto.tenantReferenceId,
+      updateLicenseKeyDto.domainName
+    )
 
     const licenseKey = new LicenseKey();
     licenseKey.id = updateLicenseKeyDto.id;
-    licenseKey.domainName = updateLicenseKeyDto.domainName;
-    licenseKey.displayName = updateLicenseKeyDto.displayName;
-    licenseKey.ownerId = updateLicenseKeyDto.ownerId;
+    licenseKey.token = updateLicenseKeyDto.token;
+    licenseKey.websiteId = config.website.id;
+    licenseKey.tenantId = config.tenant.id;
 
     await this.licenseKeysRepository.update(licenseKey.id, licenseKey)
     return this.licenseKeysRepository.findOneBy({ id: licenseKey.id });

@@ -1,7 +1,6 @@
 export class LicenseKeyCreatedEvent {
   id: string;
-  domainName: string;
-  displayName: string;
-  ownerId: string;
+  token: string;
+  websiteId: string;
   tenantId: string;
 }

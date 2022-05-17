@@ -7,6 +7,7 @@ import { Admin } from "../../admins/entities/admin.entity";
 import { User } from "../../users/entities/user.entity";
 import { Member } from "../../members/entities/member.entity";
 import { SocialGroup } from "../../socialGroups/entities/socialGroup.entity";
+import { LicenseKey } from "../..//licenseKeys/entities/licenseKey.entity";
 
 @Entity()
 @Unique(["domainName"])
@@ -19,6 +20,10 @@ export class Website extends BaseEntity {
 
   @Column()
   displayName: string
+
+  // relation social groups
+  @OneToMany(() => LicenseKey, licenseKey => licenseKey.website)
+  licenseKeys: LicenseKey[];
 
   // relation social groups
   @OneToMany(() => SocialGroup, socialGroup => socialGroup.website)

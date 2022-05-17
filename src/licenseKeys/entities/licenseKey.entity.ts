@@ -3,46 +3,24 @@ import { JoinColumn, ManyToOne, OneToOne, OneToMany, ManyToMany, Entity, CreateD
 import { Length, IsNotEmpty } from "class-validator"
 
 import { Tenant } from '../../tenants/entities/tenant.entity'
-import { Admin } from "../../admins/entities/admin.entity";
-import { User } from "../../users/entities/user.entity";
-import { Member } from "../../members/entities/member.entity";
-import { SocialGroup } from "../../socialGroups/entities/socialGroup.entity";
+import { Website } from "../../websites/entities/website.entity";
 
 @Entity()
-@Unique(["domainName"])
+@Unique(["token"])
 export class LicenseKey extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column()
-  domainName: string
-
-  @Column()
-  displayName: string
-
-  // relation social groups
-  @OneToMany(() => SocialGroup, socialGroup => socialGroup.licenseKey)
-  socialGroups: SocialGroup[];
-
-  // relation users
-  @OneToMany(() => User, user => user.licenseKey)
-  users: User[]
-
-  // relation admins
-  @OneToMany(() => Admin, admin => admin.licenseKey)
-  admins: Admin[]
+  token: string
 
   // relation founder
-  @Column({ type: "uuid", nullable: true })
-  ownerId: string;
+  @Column({ type: "uuid", nullable: false })
+  websiteId: string;
 
-  @ManyToOne(() => Admin, admin => admin.ownedLicenseKeys)
-  @JoinColumn({ name: "ownerId" })
-  owner: Admin;
-
-  // relation members
-  @OneToMany(() => Member, member => member.licenseKey)
-  members: Member[];
+  @ManyToOne(() => Website, website => website.licenseKeys)
+  @JoinColumn({ name: "websiteId" })
+  website: Website;
 
   // relation tenant
   @Column({ type: "uuid", nullable: false })
