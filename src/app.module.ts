@@ -3,6 +3,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AccountsModule } from './accounts/accounts.module';
 import { AdminsModule } from './admins/admins.module';
+import { AmountsModule } from './amounts/amounts.module';
+import { BillsModule } from './bills/bills.module';
+import { ChargesModule } from './charges/charges.module';
 import { ClientsModule } from './clients/clients.module';
 import { LicenseKeysModule } from './licenseKeys/licenseKeys.module';
 import { MastersModule } from './masters/masters.module';
@@ -39,6 +42,9 @@ if (process.env.DATABASE_URL) {
     }),
     AccountsModule,
     AdminsModule,
+    AmountsModule,
+    BillsModule,
+    ChargesModule,
     ClientsModule,
     LicenseKeysModule,
     MastersModule,

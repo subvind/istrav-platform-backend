@@ -23,9 +23,9 @@ export class AmountCreatedGateway {
       .then((amount: Amount) => {
         const amountCreatedEvent = new AmountCreatedEvent();
         amountCreatedEvent.id = amount.id;
-        amountCreatedEvent.domainName = amount.domainName;
-        amountCreatedEvent.displayName = amount.displayName;
-        amountCreatedEvent.ownerId = amount.ownerId;
+        amountCreatedEvent.value = amount.value;
+        amountCreatedEvent.licenseKeyId = amount.licenseKeyId;
+        amountCreatedEvent.billId = amount.billId;
         amountCreatedEvent.tenantId = amount.tenantId;
         
         console.log('gateway: amount.created', amountCreatedEvent);

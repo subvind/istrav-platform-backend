@@ -1,6 +1,6 @@
 export class CreateAmountDto {
-  domainName: string;
-  displayName: string;
-  ownerId: string;
+  value: number;
+  licenseKeyId: string;
+  billId: string;
   tenantReferenceId: string;
 }

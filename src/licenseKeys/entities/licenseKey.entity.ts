@@ -4,6 +4,10 @@ import { Length, IsNotEmpty } from "class-validator"
 
 import { Tenant } from '../../tenants/entities/tenant.entity'
 import { Website } from "../../websites/entities/website.entity";
+import { Amount } from "../../amounts/entities/amount.entity";
+import { Bill } from "../../bills/entities/bill.entity";
+
+import { SUBSCRIPTION_STATUS } from '../enums/status.enum'
 
 @Entity()
 @Unique(["token"])
@@ -11,10 +15,16 @@ export class LicenseKey extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
+  @Column({ default: 'unpaid' })
+  status: SUBSCRIPTION_STATUS
+
   @Column()
   token: string
 
-  // relation founder
+  @Column({ default: '' })
+  description: string
+
+  // relation activate
   @Column({ type: "uuid", nullable: false })
   websiteId: string;
 
@@ -22,7 +32,16 @@ export class LicenseKey extends BaseEntity {
   @JoinColumn({ name: "websiteId" })
   website: Website;
 
-  // relation tenant
+  // invoices that have been generated for this subscription
+  @OneToMany(() => Bill, bill => bill.licenseKey)
+  bills: Bill[];
+  
+  // subscription items with attached price
+  // relation amounts
+  @OneToMany(() => Amount, amount => amount.licenseKey)
+  amounts: Amount[];
+
+  // relation tenant/customer
   @Column({ type: "uuid", nullable: false })
   tenantId: string;
 

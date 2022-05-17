@@ -8,6 +8,7 @@ import { User } from "../../users/entities/user.entity";
 import { Member } from "../../members/entities/member.entity";
 import { SocialGroup } from "../../socialGroups/entities/socialGroup.entity";
 import { LicenseKey } from "../..//licenseKeys/entities/licenseKey.entity";
+import { Amount } from "../../amounts/entities/amount.entity";
 
 @Entity()
 @Unique(["domainName"])
@@ -20,6 +21,15 @@ export class Website extends BaseEntity {
 
   @Column()
   displayName: string
+
+  // the price of this product
+  // relations amounts
+  @Column({ type: "uuid", nullable: true })
+  amountId: string;
+
+  @ManyToOne(() => Amount, amount => amount.websites)
+  @JoinColumn({ name: "amountId" })
+  amount: Amount;
 
   // relation social groups
   @OneToMany(() => LicenseKey, licenseKey => licenseKey.website)

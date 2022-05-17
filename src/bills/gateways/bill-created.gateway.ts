@@ -23,9 +23,12 @@ export class BillCreatedGateway {
       .then((bill: Bill) => {
         const billCreatedEvent = new BillCreatedEvent();
         billCreatedEvent.id = bill.id;
-        billCreatedEvent.domainName = bill.domainName;
-        billCreatedEvent.displayName = bill.displayName;
-        billCreatedEvent.ownerId = bill.ownerId;
+        billCreatedEvent.status = bill.status;
+        billCreatedEvent.description = bill.description;
+        billCreatedEvent.paid = bill.paid;
+        billCreatedEvent.total = bill.total;
+        billCreatedEvent.chargeId = bill.chargeId;
+        billCreatedEvent.licenseKeyId = bill.licenseKeyId;
         billCreatedEvent.tenantId = bill.tenantId;
         
         console.log('gateway: bill.created', billCreatedEvent);

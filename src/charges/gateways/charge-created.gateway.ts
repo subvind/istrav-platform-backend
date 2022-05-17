@@ -23,9 +23,10 @@ export class ChargeCreatedGateway {
       .then((charge: Charge) => {
         const chargeCreatedEvent = new ChargeCreatedEvent();
         chargeCreatedEvent.id = charge.id;
-        chargeCreatedEvent.domainName = charge.domainName;
-        chargeCreatedEvent.displayName = charge.displayName;
-        chargeCreatedEvent.ownerId = charge.ownerId;
+        chargeCreatedEvent.status = charge.status;
+        chargeCreatedEvent.description = charge.description;
+        chargeCreatedEvent.amount = charge.amount;
+        chargeCreatedEvent.billId = charge.billId;
         chargeCreatedEvent.tenantId = charge.tenantId;
         
         console.log('gateway: charge.created', chargeCreatedEvent);

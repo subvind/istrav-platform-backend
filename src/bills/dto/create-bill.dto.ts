@@ -1,6 +1,11 @@
+import { INVOICE_STATUS } from '../enums/status.enum'
+
 export class CreateBillDto {
-  domainName: string;
-  displayName: string;
-  ownerId: string;
+  status: INVOICE_STATUS;
+  description: string;
+  paid: boolean;
+  total: number;
+  chargeId: string;
+  licenseKeyId: string;
   tenantReferenceId: string;
 }

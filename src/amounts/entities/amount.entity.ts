@@ -3,51 +3,42 @@ import { JoinColumn, ManyToOne, OneToOne, OneToMany, ManyToMany, Entity, CreateD
 import { Length, IsNotEmpty } from "class-validator"
 
 import { Tenant } from '../../tenants/entities/tenant.entity'
-import { Admin } from "../../admins/entities/admin.entity";
-import { User } from "../../users/entities/user.entity";
-import { Member } from "../../members/entities/member.entity";
-import { SocialGroup } from "../../socialGroups/entities/socialGroup.entity";
-import { LicenseKey } from "../..//licenseKeys/entities/licenseKey.entity";
+import { Website } from "../../websites/entities/website.entity";
+import { Bill } from "../../bills/entities/bill.entity";
+import { LicenseKey } from "../../licenseKeys/entities/licenseKey.entity";
 
 @Entity()
-@Unique(["domainName"])
+// @Unique([])
 export class Amount extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
+  // amount for what? 
+  // to license a tenant's website.
   @Column()
-  domainName: string
+  value: number // amount in USD / Pennies per mounth
 
-  @Column()
-  displayName: string
+  // relation product/website
+  // many websites may belong to the same amount
+  // relation websites
+  @OneToMany(() => Website, website => website.amount)
+  websites: Website[];
 
-  // relation social groups
-  @OneToMany(() => LicenseKey, licenseKey => licenseKey.amount)
-  licenseKeys: LicenseKey[];
-
-  // relation social groups
-  @OneToMany(() => SocialGroup, socialGroup => socialGroup.amount)
-  socialGroups: SocialGroup[];
-
-  // relation users
-  @OneToMany(() => User, user => user.amount)
-  users: User[]
-
-  // relation admins
-  @OneToMany(() => Admin, admin => admin.amount)
-  admins: Admin[]
-
-  // relation founder
+  // relation licenseKey/subscription
   @Column({ type: "uuid", nullable: true })
-  ownerId: string;
+  licenseKeyId: string;
 
-  @ManyToOne(() => Admin, admin => admin.ownedAmounts)
-  @JoinColumn({ name: "ownerId" })
-  owner: Admin;
+  @ManyToOne(() => LicenseKey, licenseKey => licenseKey.amounts)
+  @JoinColumn({ name: "licenseKeyId" })
+  licenseKey: LicenseKey;
 
-  // relation members
-  @OneToMany(() => Member, member => member.amount)
-  members: Member[];
+  // relation bill/invoice
+  @Column({ type: "uuid", nullable: true })
+  billId: string;
+
+  @ManyToOne(() => Bill, bill => bill.amounts)
+  @JoinColumn({ name: "billId" })
+  bill: Bill;
 
   // relation tenant
   @Column({ type: "uuid", nullable: false })

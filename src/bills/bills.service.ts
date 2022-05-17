@@ -41,9 +41,12 @@ export class BillsService {
     )
 
     const bill = new Bill();
-    bill.domainName = createBillDto.domainName;
-    bill.displayName = createBillDto.displayName;
-    bill.ownerId = createBillDto.ownerId;
+    bill.status = createBillDto.status;
+    bill.description = createBillDto.description;
+    bill.paid = createBillDto.paid;
+    bill.total = createBillDto.total;
+    bill.chargeId = createBillDto.chargeId;
+    bill.licenseKeyId = createBillDto.licenseKeyId;
     bill.tenantId = config.tenant.id;
 
     return this.billsRepository.save(bill)
@@ -57,9 +60,12 @@ export class BillsService {
 
     const bill = new Bill();
     bill.id = updateBillDto.id;
-    bill.domainName = updateBillDto.domainName;
-    bill.displayName = updateBillDto.displayName;
-    bill.ownerId = updateBillDto.ownerId;
+    bill.status = updateBillDto.status;
+    bill.description = updateBillDto.description;
+    bill.paid = updateBillDto.paid;
+    bill.total = updateBillDto.total;
+    bill.chargeId = updateBillDto.chargeId;
+    bill.licenseKeyId = updateBillDto.licenseKeyId;
 
     await this.billsRepository.update(bill.id, bill)
     return this.billsRepository.findOneBy({ id: bill.id });

@@ -71,6 +71,7 @@ export class LicenseKeysService {
     )
 
     const licenseKey = new LicenseKey();
+    licenseKey.status = createLicenseKeyDto.status
     let website = await this.websitesRepository.findOne({
       select: ["id", "domainName"],
       where: {
@@ -80,7 +81,7 @@ export class LicenseKeysService {
     licenseKey.token =  jwt.sign({
       website
     }, process.env.SECRET || 'development-secret')
-
+    licenseKey.description = createLicenseKeyDto.description
     licenseKey.websiteId = config.website.id;
     licenseKey.tenantId = config.tenant.id;
 
@@ -95,6 +96,7 @@ export class LicenseKeysService {
     )
 
     const licenseKey = new LicenseKey();
+    licenseKey.status = updateLicenseKeyDto.status
     licenseKey.id = updateLicenseKeyDto.id;
     let website = await this.websitesRepository.findOne({
       select: ["id", "domainName"],
@@ -105,6 +107,7 @@ export class LicenseKeysService {
     licenseKey.token =  jwt.sign({
       website
     }, process.env.SECRET || 'development-secret')
+    licenseKey.description = updateLicenseKeyDto.description
     licenseKey.websiteId = config.website.id;
     licenseKey.tenantId = config.tenant.id;
 

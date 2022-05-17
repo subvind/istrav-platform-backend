@@ -41,9 +41,10 @@ export class ChargesService {
     )
 
     const charge = new Charge();
-    charge.domainName = createChargeDto.domainName;
-    charge.displayName = createChargeDto.displayName;
-    charge.ownerId = createChargeDto.ownerId;
+    charge.status = createChargeDto.status;
+    charge.description = createChargeDto.description;
+    charge.amount = createChargeDto.amount;
+    charge.billId = createChargeDto.billId;
     charge.tenantId = config.tenant.id;
 
     return this.chargesRepository.save(charge)
@@ -57,9 +58,10 @@ export class ChargesService {
 
     const charge = new Charge();
     charge.id = updateChargeDto.id;
-    charge.domainName = updateChargeDto.domainName;
-    charge.displayName = updateChargeDto.displayName;
-    charge.ownerId = updateChargeDto.ownerId;
+    charge.status = updateChargeDto.status;
+    charge.description = updateChargeDto.description;
+    charge.amount = updateChargeDto.amount;
+    charge.billId = updateChargeDto.billId;
 
     await this.chargesRepository.update(charge.id, charge)
     return this.chargesRepository.findOneBy({ id: charge.id });

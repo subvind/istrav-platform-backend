@@ -3,53 +3,38 @@ import { JoinColumn, ManyToOne, OneToOne, OneToMany, ManyToMany, Entity, CreateD
 import { Length, IsNotEmpty } from "class-validator"
 
 import { Tenant } from '../../tenants/entities/tenant.entity'
-import { Admin } from "../../admins/entities/admin.entity";
-import { User } from "../../users/entities/user.entity";
-import { Member } from "../../members/entities/member.entity";
-import { SocialGroup } from "../../socialGroups/entities/socialGroup.entity";
-import { LicenseKey } from "../..//licenseKeys/entities/licenseKey.entity";
+import { Bill } from "../../bills/entities/bill.entity";
+
+import { PAYMENT_INTENT_STATUS } from '../enums/status.enum'
 
 @Entity()
-@Unique(["domainName"])
+// @Unique([])
 export class Charge extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
-  domainName: string
+  @Column({ default: 'processing' })
+  status: PAYMENT_INTENT_STATUS
 
   @Column()
-  displayName: string
+  description: string
 
-  // relation social groups
-  @OneToMany(() => LicenseKey, licenseKey => licenseKey.charge)
-  licenseKeys: LicenseKey[];
+  @Column()
+  amount: number
 
-  // relation social groups
-  @OneToMany(() => SocialGroup, socialGroup => socialGroup.charge)
-  socialGroups: SocialGroup[];
-
-  // relation users
-  @OneToMany(() => User, user => user.charge)
-  users: User[]
-
-  // relation admins
-  @OneToMany(() => Admin, admin => admin.charge)
-  admins: Admin[]
-
-  // relation founder
+  // relation bill/invoice
   @Column({ type: "uuid", nullable: true })
-  ownerId: string;
+  billId: string;
 
-  @ManyToOne(() => Admin, admin => admin.ownedCharges)
-  @JoinColumn({ name: "ownerId" })
-  owner: Admin;
+  @OneToOne(() => Bill, bill => bill.charge)
+  @JoinColumn({ name: "billId" })
+  bill: Bill;
 
-  // relation members
-  @OneToMany(() => Member, member => member.charge)
-  members: Member[];
+  // // relation members
+  // @OneToMany(() => Member, member => member.charge)
+  // members: Member[];
 
-  // relation tenant
+  // relation tenant/customer
   @Column({ type: "uuid", nullable: false })
   tenantId: string;
 

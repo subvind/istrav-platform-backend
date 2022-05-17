@@ -3,53 +3,57 @@ import { JoinColumn, ManyToOne, OneToOne, OneToMany, ManyToMany, Entity, CreateD
 import { Length, IsNotEmpty } from "class-validator"
 
 import { Tenant } from '../../tenants/entities/tenant.entity'
-import { Admin } from "../../admins/entities/admin.entity";
-import { User } from "../../users/entities/user.entity";
-import { Member } from "../../members/entities/member.entity";
-import { SocialGroup } from "../../socialGroups/entities/socialGroup.entity";
-import { LicenseKey } from "../..//licenseKeys/entities/licenseKey.entity";
+import { Amount } from "../../amounts/entities/amount.entity";
+import { Charge } from "../../charges/entities/charge.entity";
+import { LicenseKey } from "../../licenseKeys/entities/licenseKey.entity";
+
+import { INVOICE_STATUS } from '../enums/status.enum'
 
 @Entity()
-@Unique(["domainName"])
+// @Unique([])
 export class Bill extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
-  domainName: string
+  @Column({ default: 'open' })
+  status: INVOICE_STATUS
 
   @Column()
-  displayName: string
+  description: string
 
-  // relation social groups
-  @OneToMany(() => LicenseKey, licenseKey => licenseKey.bill)
-  licenseKeys: LicenseKey[];
+  // Whether payment was successfully collected for this invoice. An invoice can be paid (most commonly) with a charge or with credit from the customer’s account balance
+  @Column({ default: false })
+  paid: boolean
+  
+  // Total after discounts and taxes.
+  @Column()
+  total: number
 
-  // relation social groups
-  @OneToMany(() => SocialGroup, socialGroup => socialGroup.bill)
-  socialGroups: SocialGroup[];
+  // bill/invoice is a statement of amounts/prices owned by a tenant/customer
+  // relation amounts
+  @OneToMany(() => Amount, amount => amount.bill)
+  amounts: Amount[];
 
-  // relation users
-  @OneToMany(() => User, user => user.bill)
-  users: User[]
-
-  // relation admins
-  @OneToMany(() => Admin, admin => admin.bill)
-  admins: Admin[]
-
-  // relation founder
+  // ability to change status from open to paid
+  // The PaymentIntent associated with this invoice. The PaymentIntent is generated when the invoice is finalized, and can then be used to pay the invoice. Note that voiding an invoice will cancel the PaymentIntent.
+  // relation charge/paymentIntents
   @Column({ type: "uuid", nullable: true })
-  ownerId: string;
+  chargeId: string;
 
-  @ManyToOne(() => Admin, admin => admin.ownedBills)
-  @JoinColumn({ name: "ownerId" })
-  owner: Admin;
+  @OneToOne(() => Charge, charge => charge.bill)
+  @JoinColumn({ name: "chargeId" })
+  charge: Charge;
 
-  // relation members
-  @OneToMany(() => Member, member => member.bill)
-  members: Member[];
+  // The subscription that this invoice was prepared for, if any
+  // relation licenseKey/subscription
+  @Column({ type: "uuid", nullable: true })
+  licenseKeyId: string;
 
-  // relation tenant
+  @ManyToOne(() => LicenseKey, licenseKey => licenseKey.bills)
+  @JoinColumn({ name: "licenseKeyId" })
+  licenseKey: LicenseKey;
+
+  // relation tenant/customer
   @Column({ type: "uuid", nullable: false })
   tenantId: string;
 

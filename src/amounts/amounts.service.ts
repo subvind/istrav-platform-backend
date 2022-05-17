@@ -41,9 +41,9 @@ export class AmountsService {
     )
 
     const amount = new Amount();
-    amount.domainName = createAmountDto.domainName;
-    amount.displayName = createAmountDto.displayName;
-    amount.ownerId = createAmountDto.ownerId;
+    amount.value = createAmountDto.value;
+    amount.licenseKeyId = createAmountDto.licenseKeyId;
+    amount.billId = createAmountDto.billId;
     amount.tenantId = config.tenant.id;
 
     return this.amountsRepository.save(amount)
@@ -57,9 +57,9 @@ export class AmountsService {
 
     const amount = new Amount();
     amount.id = updateAmountDto.id;
-    amount.domainName = updateAmountDto.domainName;
-    amount.displayName = updateAmountDto.displayName;
-    amount.ownerId = updateAmountDto.ownerId;
+    amount.value = updateAmountDto.value;
+    amount.licenseKeyId = updateAmountDto.licenseKeyId;
+    amount.billId = updateAmountDto.billId;
 
     await this.amountsRepository.update(amount.id, amount)
     return this.amountsRepository.findOneBy({ id: amount.id });

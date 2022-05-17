@@ -23,7 +23,9 @@ export class LicenseKeyCreatedGateway {
       .then((licenseKey: LicenseKey) => {
         const licenseKeyCreatedEvent = new LicenseKeyCreatedEvent();
         licenseKeyCreatedEvent.id = licenseKey.id;
+        licenseKeyCreatedEvent.status = licenseKey.status;
         licenseKeyCreatedEvent.token = licenseKey.token;
+        licenseKeyCreatedEvent.description = licenseKey.description;
         licenseKeyCreatedEvent.websiteId = licenseKey.websiteId;
         licenseKeyCreatedEvent.tenantId = licenseKey.tenantId;
         

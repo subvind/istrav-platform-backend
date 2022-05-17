@@ -17,8 +17,8 @@ export class CaslAbilityFactory {
     >(Ability as AbilityClass<AppAbility>);
 
     if (account.admin) {
-      can(Action.UPDATE, Amount, { ownerId: account.admin.id });
-      can(Action.REMOVE, Amount, { ownerId: account.admin.id });
+      can(Action.UPDATE, Amount, { tenantId: account.admin.id });
+      can(Action.REMOVE, Amount, { tenantId: account.admin.id });
     }
     
     can(Action.CREATE, Amount);

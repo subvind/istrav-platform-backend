@@ -43,6 +43,7 @@ export class WebsitesService {
     const website = new Website();
     website.domainName = createWebsiteDto.domainName;
     website.displayName = createWebsiteDto.displayName;
+    website.amountId = createWebsiteDto.amountId;
     website.ownerId = createWebsiteDto.ownerId;
     website.tenantId = config.tenant.id;
 
@@ -59,6 +60,7 @@ export class WebsitesService {
     website.id = updateWebsiteDto.id;
     website.domainName = updateWebsiteDto.domainName;
     website.displayName = updateWebsiteDto.displayName;
+    website.amountId = updateWebsiteDto.amountId;
     website.ownerId = updateWebsiteDto.ownerId;
 
     await this.websitesRepository.update(website.id, website)

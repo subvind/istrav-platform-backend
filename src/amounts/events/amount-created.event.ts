@@ -1,7 +1,7 @@
 export class AmountCreatedEvent {
   id: string;
-  domainName: string;
-  displayName: string;
-  ownerId: string;
+  value: number;
+  licenseKeyId: string;
+  billId: string;
   tenantId: string;
 }

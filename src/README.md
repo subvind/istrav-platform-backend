@@ -2,7 +2,7 @@ design (about 70 tables)
 ========
 
 authentication:
-- ok so "accounts" is where username and passwords exists.
+- ok so "accounts" is where phone number and pin number / email and passwords exists.
 - "members" is where "socialGroups" accounts exist
 - "users" is where "websites" accounts exist
 - "admins" is where ACP accounts exist
@@ -14,132 +14,154 @@ primary support & help desk feature:
 - ticketReplies
 
 root feature:
-- platforms
+- platforms [dev, staging, production]
+- applications
+- themes
+- communications [channels, conversations, discussions]
+- analytics
+
+main feature:
+- channels (websocket) [chats, rooms]
+- conversations (server-sent events) [statusUpdates, files, events, reviews]
+- discussions (REST) [blogs, topics]
+
+business feature:
+- stripeCustomers // tenants
+- stripeProducts // websites
+- stripePrices // amounts
+- stripeInvoices // bills
+- stripeSubscriptions // licenseKeys
+- stripePaymentIntents // charges
+- stripePaymentMethods // moneyAddresses
+
+interface user 2 user feature:
+- chats (websocket) // channels
+- directMessages
+
+interface webmaster feature:
+- platform
+- tenants // stripeCustomers
+- websites // stripeProducts
+- amounts // stripePrices
+- licenseKeys // stripeSubscriptions
+- bills // stripeInvoices
+- charges // stripePaymentIntents
+- masters
+- accounts
 - applications
 - themes
 
-stripe feature:
-- customers // tenants
-- products // websites
-- prices // amounts
-- invoices // bills
-- subscriptions // licenseKeys
-- paymentIntents // charges
-- paymentMethods // moneyAddresses
+interface client area feature:
+- tenant // stripeCustomer
+- websites // stripeProducts
+- licenseKeys // stripeSubscriptions
+- bills // stripeInvoices
+- charges // stripePaymentIntents
+- clients
 
-primary webmaster feature:
-- amounts // CRUD pricing table
-- tenants // customers in the system
-- masters // accounts allowed on root
-- applications // features
-- bills // for tenants that have been invoiced
-- charges // for keeping track of receipts
-- licenseKeys // for auth of source code usage
+interface admin control panel feature:
+- website // stripeProduct
+- socialGroups
+- admins
+- users
 
-primary client area feature:
-- tenant // access to just 1 tenant at a time
-- websites // for software install location
-- clients // accounts allowed on tenant
+interface social group feature:
+- socialGroup
+- members // profiles
 
-primary admin control panel feature:
-- website // access to just 1 website at a time
-- socialGroups // CRUD multi-tenant communities
-- users // accounts allowed on website
-- admins // accounts allowed on admin control panel
-
-primary social group feature:
-- socialGroup // access to just 1 social group at a time
-- members // accounts allowed on social group
-
-user instant messaging feature:
-- directMessages // website wide user to user instant messaging
-
-user coversation feature:
-- comments
+social group comments feature:
+- comments // conversations
 - commentPoints
 - commentResponses
 - commentResponsePoints
 
-user profile features:
-- friends
-- statusUpdates
-- statusUpdateComments // user conversations
-- statusUpdateViews
-- statusUpdatePoints
-- alerts
-- notifications
+social group writings feature:
+- writings // discussions
+- writingPoints
+- writingViews
+- writingPosts
+- writingPostPoints
+- writingPostViews
 
-social group homepage application:
-- website
+social group profile features:
+- profileFriends
+- profileStatusUpdates
+- profileStatusUpdateComments // comments
+- profileStatusUpdateViews // analytics
+- profileStatusUpdatePoints // leaderboards
+- profileAlerts
+- profileNotifications
+
+social group blogs application:
+- blogs
+- blogCategories
+- blogPosts // writings
 
 social group rules application:
 - rules
 - ruleNumbers
 
-social group affiliates application:
-- affiliates
-- affiliateLinks
+social group referrals application:
+- referrals
+- referralLinks
 
 social group activity feeds application:
-- feeds
-- feedActions
+- activityFeeds
+- activityFeedActions
 
 social group leaderboards application:
-- rankings
-- rankingPlacements
+- leaderboards
+- leaderboardPlacements
 
-social group discussions application:
+social group forums application:
 - forums
 - forumMains
-- mainCategories
-- categoryTopics
-- topicPosts
-- topicViews
-- postPoints
-- postViews
+- forumCategories
+- forumTopics // writings
 
 social group shoutboxes application:
-- rooms
+- rooms (websocket) // channels
 - roomLogs
+- roomMembers
 
 social group downloads application:
 - downloads
 - downloadFiles
-- fileComments // user conversations
-- fileViews
-- filePoints
+- downloadFileComments // conversations
+- downloadFilePoints // leaderboards
+- downloadFileViews // analytics
 
 social group calendars application:
 - calendars
 - calendarEvents
-- eventComments // user conversations
-- eventPoints
-- eventViews
-- eventRegs
+- calendarEventComments // conversations
+- calendarEventPoints // leaderboards
+- calendarEventViews // analytics
+- calendarEventRegisters
 
 social group storefronts application:
 - storefronts
 - storefrontCatalogs
-- catalogProducts
-- productReviews
-- productViews
-- reviewComments // user conversations
-- reviewPoints
-- carts
-
-user subscriptions feature:
-- categorySubscriptions
-- topicSubscriptions
-- showcaseSubscriptions
-- displaySubscriptions
-- statusUpdateSubscriptions
-- calendarSubscriptions
-- eventSubscriptions
-- catalogSubscriptions
-- productSubscriptions
+- storefrontProducts
+- storefrontProductViews // analytics
+- storefrontReviews
+- storefrontReviewComments // conversations
+- storefrontReviewPoints // leaderboards
+- storefrontCarts
 
 social group access restrictions feature:
-- permissions
-- permissionSets
-- permissionMasks
-- roles
+- accessPermissions
+- accessPermissionSets
+- accessPermissionMasks
+- accessRoles
+
+social group subscriptions feature:
+- subscribeToForumCategories
+- subscribeToForumTopics
+- subscribeToDownloads
+- subscribeToStorefronts
+- subscribeToStorefrontCatalogs
+- subscribeToStorefrontProducts
+- subscribeToStatusUpdates
+- subscribeToCalendars
+- subscribeToCalendarEvents

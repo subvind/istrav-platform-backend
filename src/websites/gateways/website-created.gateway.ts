@@ -25,6 +25,7 @@ export class WebsiteCreatedGateway {
         websiteCreatedEvent.id = website.id;
         websiteCreatedEvent.domainName = website.domainName;
         websiteCreatedEvent.displayName = website.displayName;
+        websiteCreatedEvent.amountId = website.amountId;
         websiteCreatedEvent.ownerId = website.ownerId;
         websiteCreatedEvent.tenantId = website.tenantId;
         
