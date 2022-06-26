@@ -3,6 +3,10 @@ istrav-platform-backend
 
 ## Production
 ```bash
+# firewall
+$ sudo ufw allow 4000:7000/tcp
+$ sudo ufw reload
+
 # start
 $ PORT=4004 pm2 start dist/main.js --update-env --name="communityfolder"
 
