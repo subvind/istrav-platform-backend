@@ -24,6 +24,13 @@ third party services:
 - sms: https://www.npmjs.com/package/nestjs-twilio
 - email: https://www.npmjs.com/package/@ntegral/nestjs-sendgrid
 - cron: https://github.com/cloudflare/wrangler
+- logger: https://www.npmjs.com/package/nest-winston
+- files: https://www.npmjs.com/package/nestjs-minio-client
+- keys: https://www.npmjs.com/package/jsonwebtoken
+- consensus: https://github.com/unshiftio/liferaft
+- chains: https://www.npmjs.com/package/js-markov
+- bots: https://www.npmjs.com/package/node-nlp
+- ai: https://beta.openai.com/
 
 ### start:
 ```bash
