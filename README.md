@@ -4,7 +4,7 @@ istrav-platform-backend
 ## Production
 ```bash
 # firewall
-$ sudo ufw allow 3000:8000/tcp
+$ sudo ufw allow 3000:65000/tcp
 $ sudo ufw reload
 
 # start
