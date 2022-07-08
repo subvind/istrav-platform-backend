@@ -29,7 +29,7 @@
     "@nestjs/platform-express": "^8.4.4",
     "@nestjs/platform-fastify": "^8.4.4",
     "@nestjs/platform-ws": "^8.4.4",
-    "@nestjs/typeorm": "^8.0.3",
+    "@nestjs/typeorm": "^9.0.0",
     "@nestjs/websockets": "^8.4.4",
     "class-validator": "^0.13.2",
     "crypto-js": "^4.1.1",
