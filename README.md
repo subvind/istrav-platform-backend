@@ -30,6 +30,9 @@ $ pm2 save
 
 # Remove Startup Script
 $ pm2 unstartup
+
+# after code change
+$ pm2 reload all
 ```
 
 ## Installation
