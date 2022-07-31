@@ -26,7 +26,7 @@ if (process.env.DATABASE_URL) {
     rejectUnauthorized: false
   }
 } else {
-  url = 'postgres://istrav:furlong@127.0.0.1:5432/community_folder'
+  url = 'postgres://istrav:furlong@127.0.0.1:5432/istrav'
   ssl = false
 }
 

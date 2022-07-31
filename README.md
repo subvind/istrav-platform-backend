@@ -8,16 +8,16 @@ $ sudo ufw allow 3000:65000/tcp
 $ sudo ufw reload
 
 # start
-$ PORT=3000 pm2 start dist/main.js --update-env --name="communityfolder"
+$ PORT=3000 pm2 start dist/main.js --update-env --name="istrav"
 
 # stop
-$ pm2 stop dist/main.js --name="communityfolder"
+$ pm2 stop dist/main.js --name="istrav"
 
 # logs
-$ pm2 logs communityfolder
+$ pm2 logs istrav
 
 # delete
-$ pm2 delete communityfolder
+$ pm2 delete istrav
 
 # list
 $ pm2 status

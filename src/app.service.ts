@@ -5,7 +5,7 @@ var whois = require('whois')
 @Injectable()
 export class AppService {
   getHello(): string {
-    return `/community_folder/v${process.env.npm_package_version}`;
+    return `/istrav/v${process.env.npm_package_version}`;
   }
 
   async getHowis(id): Promise<string> {

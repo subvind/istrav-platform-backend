@@ -22,7 +22,7 @@ istrav.com:
 - stripePaymentIntents // charges
 - stripePaymentMethods // moneyAddresses
 
-communityfolder.com:
+istrav.net:
 - platforms: partnerPlatforms
 - features [channels, conversations, discussions, assistants, components, themes]
 
