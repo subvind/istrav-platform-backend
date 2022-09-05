@@ -8,7 +8,7 @@ istrav source code:
 - istrav.net: https://github.com/trabur/istrav-platform-frontgate
 - meta.istrav.net: https://github.com/trabur/istrav-platform-frontend
 - istrav.istrav.dev: https://github.com/trabur/istrav-platform-backend
-- istrav-load-balanacer: https://github.com/trabur/istrav-load-balanacer
+- istrav-load-balancer: https://github.com/trabur/istrav-load-balancer
 - istrav.dev: https://github.com/trabur/istrav.dev
 - istrav-headquarters: https://github.com/trabur/istrav-headquarters
 - istrav.stream: https://github.com/trabur/istrav.stream
